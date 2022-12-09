@@ -16,18 +16,19 @@
           rel="stylesheet">
 
     <!--캘린더_psh_css  -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css_psh/subMain.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css_psh/bootstrap-datetimepicer.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css_psh/daterangepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap-datetimepicer.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/daterangepicker.css">
   
   <!-- 캘린더_psh_js -->
-  <script src="<%=request.getContextPath()%>/js_psh/jquery-3.6.1.min.js"></script>
-  <script src="<%=request.getContextPath()%>/js_psh/plugins/moment/moment-with-locales.js"></script>
-  <script src="<%=request.getContextPath()%>/js_psh/plugins/bootstrap/transition.js"></script>
-  <script src="<%=request.getContextPath()%>/js_psh/plugins/bootstrap/collapse.js"></script>
-  <script src="<%=request.getContextPath()%>/js_psh/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-  <script src="<%=request.getContextPath()%>/js_psh/plugins/date-rage-picker/daterangepicker.min.js"></script>
-  <script src="<%=request.getContextPath()%>/js_psh/plugins/rangeslider/rangeslider.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/plugins/moment/moment-with-locales.js"></script>
+  <script src="<%=request.getContextPath()%>/js/plugins/bootstrap/transition.js"></script>
+  <script src="<%=request.getContextPath()%>/js/plugins/bootstrap/collapse.js"></script>
+  <script src="<%=request.getContextPath()%>/js/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/plugins/date-rage-picker/daterangepicker.min.js"></script>
+  <script src="<%=request.getContextPath()%>/js/plugins/rangeslider/rangeslider.min.js"></script>
  
 
 <script>
@@ -51,9 +52,7 @@
 </script>
 
 </head>
-<body>
-    <header id="mainHeader">
-        <header>
+	<body>
             <div id="header">
                 <nav>
                     <div class="sidebar">
@@ -126,8 +125,7 @@
                     </div>
                 </nav>
             <section class="overlay"></section>
-            </div> 
-        </header>
+            </div>
         
         <div id="mainHeaderDiv">
             <div class="logo">
@@ -137,9 +135,8 @@
             </div>
             <!-- <div id="blank"></div> -->
             <div id="logo"><a href=""><img src="<%=request.getContextPath()%>/images/mainlogo.gif" alt="로고" height="70px"></a></div>
-            <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <div id="login"><a href=""><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
         </div>
-    </header>
 
     <header id="subHeader">
         <div id="subHeaderDiv">
