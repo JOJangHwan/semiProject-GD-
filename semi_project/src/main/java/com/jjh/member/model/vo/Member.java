@@ -21,5 +21,7 @@ public class Member {
 	private char gender;
 	private String nickName;
 	private Date enrollDate;
+	private String address;
+	private int age;
 
 }

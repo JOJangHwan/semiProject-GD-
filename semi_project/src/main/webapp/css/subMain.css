@@ -1,11 +1,14 @@
+@charset "UTF-8";
+
 html,body{
     width: 100%;
     height: 100%;
     margin:0;
     padding:0;
 }
-/* mainheader */
-header{
+
+/* Main header */
+#mainHeaderDiv{
     width: 100%; 
     height: 15%;
     display: flex;
@@ -13,39 +16,22 @@ header{
     align-items: center;
     padding-top: 1%;
     padding-bottom: 1%;
- } 
-#login{
-    width: 10%;
-    height: 100%;
-    float: left;
-    text-align: center;
-}
-#login>img{
-    width: 50px;
-    height: 50px;
-}
-#header{
-  width: 100%;
-  height: 100%;
+    justify-content: space-between;
+    padding-left: 20px;
 }
 
-/* Main header */
-#mainHeaderDiv{
-    width: 100%;
-    height: 15%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    /* background-color: green; */
+#mainHeader a{
+    text-decoration: none;
+    color:black;
 }
-#blank{
-    width: 10%;
-    height: 100%;
+
+#mainHeaderDiv a{
+    text-decoration: none;
+    color:black;
 }
+
 #logo{
-    width: 80%;
+    width: 60%;
     height: 100%;
     font-family: jua;
     font-weight: bolder;
@@ -64,10 +50,9 @@ header{
     height: 100%;
     text-align: center;
 }
-#login>img{
+#loginlogo{
     width: 40px;
     height: 40px;
-    
 }
 
 /* sub Header */
@@ -112,13 +97,25 @@ header{
 #mainSection{
     display: flex;
     height: 80%;
-    margin-left: 17%;
-    margin-right: 17%;
+    margin-left: 260px;
+    margin-right: 260px;
+    padding-top: 10%;
     border:1px solid gray;
-    /* flex-direction: row; */
+    flex-direction: column;
+}
+/* 캘린더 */
+#dateBox_psh{
+  display: flex;
+  height: 50px;
+  align-items: center;
+}
+#dateInput_psh{
+  width: fit-content;
+  margin: auto;
+  justify-content: center;
 }
 
-/* sidebar */
+
 nav {
     /* position: fixed; */
     top: 0;
@@ -151,7 +148,7 @@ nav {
     top: 0;
     left: -100%;
     height: 100%;
-    width: 20%;
+    width: 260px;
     padding: 20px 0;
     background-color: #fff;
     box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
@@ -163,7 +160,6 @@ nav {
   .sidebar .sidebar-content {
     display: flex;
     height: 100%;
-    /* width: 100%; */
     flex-direction: column;
     justify-content: space-between;
     padding: 30px 16px;
@@ -213,115 +209,6 @@ nav {
     pointer-events: auto;
   }
 
-/* content */
-
-/* #content{
-    justify-content: space-between;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 80%;
-    align-items: center;
-    
-}
-.carousel-inner{
-    width: 100%;
-    height: 100%;
-}
-#carouselExampleControls{
-    width: 70%;
-    height: 40%;
-}
-.carousel-item{
-    width: 100%;
-    height: 100%;
-}
-.d-block w-100{
-    width: 100%;
-    height: 100%;
-}
-.carousel-caption{
-    height: fit-content;
-    width: 70%;
-}
-.form-control{
-    width: 100%;
-}
-#search{
-    display: flex;
-    flex-direction: row;
-    margin: auto;
-}
-#snb{
-    width: 100%;
-    height: 30%;
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    justify-content: center;
-}
-#map{
-    width: 25%;
-    height: 100%;
-    align-items: center;
-}
-#route{
-    width: 25%;
-    height: 100%;
-    align-items: center;
-}
-#rec{
-    width: 25%;
-    height: 100%;
-    align-items: center;
-}
-#like{
-    width: 25%;
-    height: 100%;
-    align-items: center;
-}
-#map>img{
-    width: 100px;
-    height: 100px;
-    text-align: center;
-}
-#route>img{
-    width: 100px;
-    height: 100px;
-    text-align: center;
-}
-#rec>img{
-    width: 100px;
-    height: 100px;
-    text-align: center;
-}
-#like>img{
-    width: 100px;
-    height: 100px;
-    text-align: center;
-}
-aside{
-    width: 10%;
-    height: 100%;
-} */
-
-
-/* ngb */
-#nav flex-column{
-    float: left;
-    height: 100%;
-    width: 100%;
-   
-}
-.nav flex-column{
-    height: 100%;
-    width: 100%;
-}
-.nav-item{
-    height: 100%;
-    width: 100%;
-    color: #E78f00;
-}
 /* weather */
 #right{
     float: right;
