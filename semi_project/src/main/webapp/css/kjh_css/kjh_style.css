@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+#listContainer{
+	width:100%;
+	height:600px;
+}
+
+#boardTitleArea{
+	margin:0px 10px 10px 10px;
+}
+
+.lineGray{
+	border:1px solid lightgray;
+	color: lightgray;
+}
+
