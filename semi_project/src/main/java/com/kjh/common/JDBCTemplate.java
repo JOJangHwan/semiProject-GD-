@@ -14,7 +14,7 @@ public class JDBCTemplate {
 		Properties driver=new Properties();
 		try {
 			String path=JDBCTemplate.class.
-					getResource("/sql/driver/kjhdev_driver.properties").getPath();
+					getResource("/sql/driver/driver.properties").getPath();
 			driver.load(new FileReader(path));
 			Class.forName(driver.getProperty("driver"));
 			conn=DriverManager.getConnection(
