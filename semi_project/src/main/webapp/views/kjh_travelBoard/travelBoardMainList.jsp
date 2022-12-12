@@ -6,6 +6,7 @@
 ,com.kjh.admin.model.vo.BoardTag" %>
 <%
 	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
+
 	List<TravelBoard> boards=(List<TravelBoard>)request.getAttribute("boards");
 	List<BoardTag> boardTags=(List<BoardTag>)request.getAttribute("boardTags");
 %>
