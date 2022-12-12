@@ -1,16 +1,29 @@
 package com.jjh.loginMember.model.service;
 
-import com.jjh.common.JDBCTemplate;
+import static com.jjh.common.JDBCTemplate.getConnection;
+import static com.jjh.common.JDBCTemplate.close;
+import static com.jjh.common.JDBCTemplate.commit;
+import static com.jjh.common.JDBCTemplate.rollback;
+
+import com.jjh.loginMember.model.dao.LoginMemberdao;
 
 import java.sql.Connection;
 
 import com.jjh.member.model.vo.Member;
 
 public class LoginMemberService {
+
+	private LoginMemberdao loginDao=new LoginMemberdao();
 	
-	//public int insertMember(Member m) {
-//		Connection conn =getC
+	public int insertMember(Member m) {
+		Connection conn=getConnection();
+		int result=loginDao.insertMember(conn, m);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 		
-	//}
+		
+	}
 
 }

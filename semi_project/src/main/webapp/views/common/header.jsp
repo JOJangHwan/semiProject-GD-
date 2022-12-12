@@ -58,25 +58,25 @@
                     <div class="sidebar">
                         <div class="logo">
                             <i class="bx bx-menu menu-icon"></i>
-                            <span class="logo-name"><a href="">여행가자고</a></span>
+                            <span class="logo-name"><a href="<%=request.getContextPath()%>">여행가자고</a></span>
                         </div>
                                 
                         <div class="sidebar-content">
                             <ul class="lists">
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/matter/matterListView.do" class="nav-link">
                                         <i class="bx bx-home-alt icon"></i>
                                         <span class="link">문의사항</span>
                                         </a>
                                     </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/notice/noticeListView.do" class="nav-link">
                                         <i class="bx bx-bar-chart-alt-2 icon"></i>
                                         <span class="link">공지사항</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/traffic/trafficView/do" class="nav-link">
                                         <i class="bx bx-bell icon"></i>
                                         <span class="link">교통</span>
                                     </a>
@@ -131,11 +131,11 @@
             <div class="logo">
                 <!-- <i class="bx bx-menu menu-icon"></i> -->
                 <i class="bx bx-menu menu-icon"></i>
-                <span class="logo-name"><a href="">여행가자고</a></span>
+                <span class="logo-name"><a href="<%=request.getContextPath()%>">여행가자고</a></span>
             </div>
             <!-- <div id="blank"></div> -->
-            <div id="logo"><a href=""><img src="<%=request.getContextPath()%>/images/mainlogo.gif" alt="로고" height="70px"></a></div>
-            <div id="login"><a href=""><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <div id="logo"><a href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/images/mainlogo.gif" alt="로고" height="70px"></a></div>
+            <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
         </div>
 
     <header id="subHeader">
