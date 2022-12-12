@@ -2,15 +2,118 @@
 
 #listContainer{
 	width:100%;
-	height:600px;
+	height:auto;
 }
 
 #boardTitleArea{
 	margin:0px 10px 10px 10px;
+	padding-left:20px;
 }
 
 .lineGray{
 	border:1px solid lightgray;
 	color: lightgray;
+	margin-left:30px;
+	margin-right:40px;
+}
+
+#boardTagArea{
+	margin:10px;
+	padding-left:20px;
+	padding-right:20px;
+}
+
+#boardTagArea button{
+	font-family:'IBM Plex Sans KR', sans-serif;
+	font-weight:200;
+	margin-right:5px;
+	margin-top:5px;
+	margin-bottom:5px;
+}
+
+#boardPostArea{
+	position:relative;
+	margin:10px;
+	border:1px solid blue;
+	height:600px;
+	justify-content:space-between;
+}
+
+.kjh_boardPostBasic{
+	/* position:absolute; */
+	display:inline-block;
+	border:1px solid gray;
+	width:300px;
+	height:280px;
+	margin:10px 10px 10px 10px;
+}
+
+.kjh_boardPostImg{
+	width:300px;
+	height:200px;
+	border:1px solid red;
+	position:relative;
+}
+
+.kjh_boardPostImg>img{
+	position: absolute;
+	top:0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.kjh_boardPostTagConteiner{
+	margin-top:170px;
+	margin-left:5px;
+	width:auto;
+	height:20px;
+	flex-direction:row;
+	display:flex;
+	position:absolute;
+	/* border:1px solid green; */
+}
+
+.kjh_boardPostTag{
+	width:auto;
+	height:20px;
+	margin-right:5px;
+	/* border:1px solid blue; */
+}
+
+.kjh_boardPostTag>button{
+	font-size:12px;
+	font-family:'IBM Plex Sans KR', sans-serif;
+}
+
+.kjh_boardPostTitle{
+	width:300px;
+	height:70px;
+	border:1px solid blue;
+	margin-top:10px;
+	position:relative;
+}
+
+.kjh_boardPostTitle>a{
+	position:absolute;
+	font-size:20px;
+	font-family:'IBM Plex Sans KR', sans-serif;
+	text-decoration:none;
+	color:black;
+}
+
+
+#boardPagingConteiner{
+	text-align:center;
+	border:1px solid red;
+	height:50px;
+	margin:10px;
+}
+
+#boardPagingBar{
+	display:inline-block;
+	width:500px;
+	height:50px;
+	border:1px solid blue;
 }
 
