@@ -63,6 +63,7 @@ public class LoginMemberdao {
 				.gender(rs.getString("user_gender").charAt(0))
 				.enrollDate(rs.getDate("user_enroller_date"))
 				.address(rs.getString("user_address"))
+				
 				.build();
 	}
 
