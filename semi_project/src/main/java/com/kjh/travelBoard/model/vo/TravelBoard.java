@@ -20,5 +20,5 @@ public class TravelBoard {
 	private char openYn;
 	private String thumbFilename;
 	private List<Tag> tags;
-	
+	private char travelPick;
 }

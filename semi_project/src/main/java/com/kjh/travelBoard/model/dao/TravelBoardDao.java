@@ -30,7 +30,7 @@ public class TravelBoardDao {
 		}
 	}
 	
-	public List<Tag> searchTagList(Connection conn){
+	public List<Tag> searchTagList(Connection conn){ //태그 전체 리스트 가져오기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<Tag> list=new ArrayList();
@@ -48,7 +48,45 @@ public class TravelBoardDao {
 		}return list;
 	}
 	
-	public List<TravelBoard> searchTravelBoardList(Connection conn, int cPage, int numPerpage){
+	public List<Tag> searchTagBoardList(Connection conn, int boardNo){ //각 보드 태그 가져오기
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<Tag> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTagBoardList"));
+			pstmt.setInt(1, boardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getTagBoard(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+	
+	public List<TravelPick> searchTravelBoardPick(Connection conn, String userId, int boardNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TravelPick> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTravelPick"));
+			pstmt.setInt(1, boardNo);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getTravelPick(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+	
+	public List<TravelBoard> searchTravelBoardList(Connection conn, int cPage, int numPerpage){ //전체 보드 리스트 가져오기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		List<TravelBoard> list=new ArrayList();
@@ -68,7 +106,7 @@ public class TravelBoardDao {
 		}return list;
 	}
 	
-	public int searchTravelBoardCount(Connection conn) {
+	public int searchTravelBoardCount(Connection conn) { //페이징처리를 위한 카운트
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		int result=0;
@@ -84,33 +122,20 @@ public class TravelBoardDao {
 		}return result;
 	}
 	
-	public List<BoardTag> searchTravelBoardTag(Connection conn){
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		List<BoardTag> list=new ArrayList();
-		try {
-			pstmt=conn.prepareStatement(sql.getProperty("searchTravelBoardTag"));
-			rs=pstmt.executeQuery();
-			while(rs.next()) list.add(getBoardTag(rs));
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}return list;
-	}
-	
-	public List<TravelPick> searchTravelPick(Connection conn){
-		return null;
-	}
-	
-	private Tag getTag(ResultSet rs) throws SQLException{
+	private Tag getTag(ResultSet rs) throws SQLException{ //태그 객체 빌더. board_no 포함 X
 		return Tag.builder().tagNo(rs.getInt("tag_no"))
 				.tagTitle(rs.getString("tag_title"))
 				.build();
 	}
 	
-	private TravelBoard getTravelBoard(ResultSet rs) throws SQLException{
+	private Tag getTagBoard(ResultSet rs) throws SQLException{ // 보드에 연결된 태그 빌더. board_no 포함.
+		return Tag.builder().tagNo(rs.getInt("tag_no"))
+				.tagTitle(rs.getString("tag_title"))
+				.boardNo(rs.getInt("board_no"))
+				.build();
+	}
+	
+	private TravelBoard getTravelBoard(ResultSet rs) throws SQLException{ //보드 객체 빌더
 		return TravelBoard.builder().
 				boardNo(rs.getInt("board_no")).
 				userNo(rs.getString("user_no")).
@@ -123,10 +148,10 @@ public class TravelBoardDao {
 				build();
 	}
 	
-	private BoardTag getBoardTag(ResultSet rs) throws SQLException{
-		return BoardTag.builder()
-				.boardNo(rs.getInt("board_no"))
-				.tagNo(rs.getInt("tag_no"))
-				.build();
+	private TravelPick getTravelPick(ResultSet rs) throws SQLException{
+		return TravelPick.builder().
+				boardNo(rs.getInt("board_no")).
+				userNo(rs.getInt("board_no")).
+				build();
 	}
 }
