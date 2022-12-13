@@ -1,14 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <style>
+        #mapwrap{position:relative;overflow:hidden;}
+        .category, .category *{margin:0;padding:0;color:#000;}   
+        .category {position:absolute;overflow:hidden;top:10px;left:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
+        .category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
+        .category li{list-style:none;float:left;width:50px;height:45px;padding-top:5px;cursor:pointer;} 
+        .category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png') no-repeat;} 
+        .category .ico_coffee {background-position:-10px 0;}  
+        .category .ico_store {background-position:-10px -36px;}   
+        .category .ico_carpark {background-position:-10px -72px;} 
+	</style>
 <%@ include file="/views/common/header.jsp" %>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 
-				<div>
+				<div id="movelineView">
 					<!-- 제목 -->
-				   <div id="wrrTitle">
-					   <input type="text" placeholder="제목을 입력하세요">
+				   <div id="mlvTitle">
+					   <H2></H2>
 				   </div>
 				   <hr>
 				   <!-- 지도 시작 -->
@@ -36,7 +47,8 @@
 				   </div>
 				   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
 				   <!-- 지도 끝 -->
-			    </div>
+                   <button type="button" onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do')">공유</button>
+                </div>
             </div>
 	    <div id="rightMarginMain"></div>
     </section>
