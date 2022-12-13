@@ -15,7 +15,6 @@
     <link
           href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css_psh/main.css">
 </head>
 <body>
     <header id="mainHeader">
@@ -177,19 +176,12 @@
             <div class="blank"></div>
             <!-- 메인 메뉴 -->
             <div id="snb">
-                <a id="map" href="<%=request.getContextPath()%>/travelboard/travelboardmain.do"><img src="<%=request.getContextPath()%>/images/여행지.png" alt=""><br>여행지</a>
-                <a id="route"><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
+                <a id="map"><img src="<%=request.getContextPath()%>/images/여행지.png" alt=""><br>여행지</a>
+                <a id="route" ><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
                 <a id="rec"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
                 <a id="like"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
             </div>
     </div>
 </section> 
 <div class="blank3"></div>
-    <footer>
-        <div id="footer">  
-            <p>JJHcompany : 010-1234-5678</p><br>
-            <p>서울시 금천구 구디아카데미 / 이 페이지는....</p>
-        </div>
-    </footer>
-</body>
-</html>
+<%@ include file="/views/common/footer.jsp" %>		

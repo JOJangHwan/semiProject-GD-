@@ -9,12 +9,13 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class JDBCTemplate {
+		
 	public static Connection getConnection() {
 		Connection conn=null;
 		Properties driver=new Properties();
 		try {
 			String path=JDBCTemplate.class.
-					getResource("/driver.properties").getPath();
+					getResource("/sql/driver/driver.properties").getPath();
 			driver.load(new FileReader(path));
 			Class.forName(driver.getProperty("driver"));
 			conn=DriverManager.getConnection(

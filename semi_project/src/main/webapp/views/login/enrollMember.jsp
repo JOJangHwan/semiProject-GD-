@@ -5,9 +5,11 @@
   <%@ include file="/views/common/header.jsp" %>
     
         <section id="mainSection">
+        
+    
           	
           		<form name="enrollerMemberFrm" action="<%=request.getContextPath() %>/login/enrollerMemberEnd.do">
-          		
+          		<h3>회원가입</h3>
           			<table>
           				<tr>
           					<td>
