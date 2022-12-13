@@ -1,48 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@include file="/views/common/header.jsp"%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_style.css">
+<%@ include file="/views/common/header.jsp" %>
 	<section id="mainSection">
-		<!-- 캘린더 -->
-        <div id="dateBox_psh" class="input-container input-container-md">
-            <div id="dateInput_psh" class="input-group">
-                <input type="text" placeholder="yyyy.mm.dd" class="input-box" id="date-rage-picker">
-                <div class="input-group-tools">
-                    <button class="clear on">
-                        <i class="cancel-sh">취소</i>
-                    </button>
+		<div id="leftMarginMain"></div>
+		    <div id="mainSectionContainer">
+                <!-- 캘린더 -->
+                <div id="psh_calBox">
+                    <form id="psh_calForm">
+                        <input class="input-box" type="text" name="daterange"/>
+                        <input type="reset" value="취소">
+                    </form>
                 </div>
-            </div>
-            <p class="status-message"></p>
-        </div>
-        <script>
-            $('#date-rage-picker').daterangepicker({
-                format : 'YYYY.MM.DD hh:mm A',
-                applyButtonClasses : 'btn btn-container btn-secondary btn-sm wth-80',
-                cancelClass : 'btn btn-container btn-gray btn-sm wth-80',
-                // locale: moment.locale('ko'),
-                locale : {
-                    daysOfWeek : moment.locale('ko').daysOfWeek,
-                    monthNames : moment.locale('ko').monthNames,
-                        'applyLabel' : '적용',
-                        'cancelLabel' : '취소'
-                },
-                // timePicker: true
-             });
-             $(".input-box").change(e=>{
-                const duration=$(".input-box").val().split("-")
-                const durDate=duration[0].split(".");
-                const durDate2=duration[1].split(".");
-                
-                const strDate=new Date(durDate[0], durDate[1], durDate[2]);
-                const endDate=new Date(durDate2[0], durDate2[1], durDate2[2])
-                
-                const minous = endDate.getTime() - strDate.getTime() ;
-                const total = minous / (1000*60*60*24) ;//일차
-				console.log(total);
-            });  
-        </script>
-        <!-- 캘린더 끝 -->
 
-        <!-- 지도 -->
-	</section>
-<%@include file="/views/common/footer.jsp"%>
+                <script>
+                    $(function() {
+                        $('input[name="daterange"]').daterangepicker({
+                            opens: 'left'
+                            }, function(start, end, label) {
+                                //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                            });
+                    });
+                    $(".input-box").change(e=>{
+                        const duration=$(".input-box").val().split("-");
+                    
+                        const durDate=duration[0].trim().split("/");
+                        const durDate2=duration[1].trim().split("/");
+                        
+                        const strDate=new Date(durDate[2], durDate[0], durDate[1]);
+                        const endDate=new Date(durDate2[2], durDate2[0], durDate2[1])
+
+                        const minous = endDate.getTime() - strDate.getTime();
+                        const total = minous / (1000*60*60*24) ;//일차
+                        console.log(total);
+                    });  
+                </script>
+                <!-- 캘린더 끝 -->
+
+                <!-- 지도 -->
+		    </div>
+	    <div id="rightMarginMain"></div>
+    </section>
+<%@ include file="/views/common/footer.jsp" %>

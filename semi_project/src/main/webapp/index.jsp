@@ -15,7 +15,6 @@
     <link
           href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
           rel="stylesheet">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css_psh/main.css">
 </head>
 <body>
     <header id="mainHeader">
@@ -178,7 +177,7 @@
             <!-- 메인 메뉴 -->
             <div id="snb">
                 <a id="map"><img src="<%=request.getContextPath()%>/images/여행지.png" alt=""><br>여행지</a>
-                <a id="route"><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
+                <a id="route" ><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
                 <a id="rec"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
                 <a id="like"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
             </div>
