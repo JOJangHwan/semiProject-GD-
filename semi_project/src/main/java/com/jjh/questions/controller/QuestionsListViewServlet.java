@@ -1,4 +1,4 @@
-package com.jjh.loginMember.controller;
+package com.jjh.questions.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class MemberLoginServlet
+ * Servlet implementation class QuestionsListViewServlet
  */
-@WebServlet("/login/loginView.do")
-public class MemberLoginServlet extends HttpServlet {
+@WebServlet("/matter/matterListView.do")
+public class QuestionsListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public MemberLoginServlet() {
+    public QuestionsListViewServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -27,7 +28,7 @@ public class MemberLoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("/views/jjh_login/loginView.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/questions/questionsListView.jsp").forward(request, response);
 	}
 
 	/**

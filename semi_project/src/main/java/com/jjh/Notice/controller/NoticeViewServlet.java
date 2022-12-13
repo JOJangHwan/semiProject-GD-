@@ -1,23 +1,29 @@
-package com.jjh.loginMember.controller;
+package com.jjh.Notice.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class MemberLoginServlet
- */
-@WebServlet("/login/loginView.do")
-public class MemberLoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+import com.jjh.Notice.model.service.MemberNoticeService;
+import com.jjh.Notice.model.vo.Notice;
 
+/**
+ * Servlet implementation class NoticeViewServlet
+ */
+@WebServlet("/notice/noticeListView.do")
+public class NoticeViewServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
     /**
-     * Default constructor. 
+     * @see HttpServlet#HttpServlet()
      */
-    public MemberLoginServlet() {
+    public NoticeViewServlet() {
+        super();
         // TODO Auto-generated constructor stub
     }
 
@@ -27,7 +33,23 @@ public class MemberLoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("/views/jjh_login/loginView.jsp").forward(request, response);
+		
+		
+		
+		int cPage;
+		try {
+			cPage=Integer.parseInt(request.getParameter("cPage"));
+		}catch(NumberFormatException e) {
+			cPage=1;
+		}
+		
+		
+		int numPerage=5;
+		List<Notice> n =new MemberNoticeService().searchNotice(cPage,numPerage);
+		
+//		int totlaData=new Admin
+		
+		request.getRequestDispatcher("/views/notice/noticeListView.jsp").forward(request, response);
 	}
 
 	/**
