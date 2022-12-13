@@ -8,4 +8,5 @@ import lombok.Data;
 public class Tag {
 	private int tagNo;
 	private String tagTitle;
+	private int boardNo;
 }

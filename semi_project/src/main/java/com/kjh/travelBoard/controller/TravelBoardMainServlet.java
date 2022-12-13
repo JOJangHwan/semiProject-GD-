@@ -43,7 +43,9 @@ public class TravelBoardMainServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		List<TravelBoard> boards=new TravelBoardService().searchTravelBoardList(cPage,numPerpage);
+		String userId=request.getParameter("userId");
+		userId="admin"; //임시
+		List<TravelBoard> boards=new TravelBoardService().searchTravelBoardList(cPage,numPerpage,userId);
 		
 		int totalData=new TravelBoardService().searchTravelBoardCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
@@ -79,23 +81,6 @@ public class TravelBoardMainServlet extends HttpServlet {
 		
 		List<Tag> tags=new TravelBoardService().searchTagList();
 		request.setAttribute("tags", tags);
-		
-		List<BoardTag> boardTags=new TravelBoardService().searchTravelBoardTag();
-		request.setAttribute("boardTags", boardTags);
-		
-		if(boardTags.isEmpty()) {
-			System.out.println("비어있음");
-		}else{
-			for(int i=0; i<boards.size(); i++){
-				System.out.println("바로직전");
-				for(int j=0; j<boardTags.size(); j++) {
-					System.out.println(tags.get(j).getTagTitle());
-					if(tags.get(j).getTagNo()==boardTags.get(j).getTagNo()){
-						System.out.println(tags.get(j).getTagTitle());
-					}
-				}
-			}
-		}
 		
 		request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardMainList.jsp").forward(request, response);
 	}
