@@ -27,10 +27,14 @@ public class TravelBoardService {
 		}
 		
 		for(TravelBoard tb:list) {
-			List<TravelPick> picks=dao.searchTravelBoardPick(conn, userId, tb.getBoardNo());
-			
+			int result=dao.searchTravelBoardPick(conn, userId, tb.getBoardNo());
+			System.out.println("result : "+result);
+			char pick=' ';
+			if(result!=0)pick='Y';
+			else pick='N';
+			tb.setTravelPick(pick);
+			System.out.println("pick : "+pick);
 		}
-		
 		
 		close(conn);
 		return list;

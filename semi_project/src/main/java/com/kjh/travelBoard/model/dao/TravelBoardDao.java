@@ -67,23 +67,22 @@ public class TravelBoardDao {
 		}return list;
 	}
 	
-	public List<TravelPick> searchTravelBoardPick(Connection conn, String userId, int boardNo){
+	public int searchTravelBoardPick(Connection conn, String userId, int boardNo){
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<TravelPick> list=new ArrayList();
+		int result=0;
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("searchTravelPick"));
 			pstmt.setInt(1, boardNo);
+			pstmt.setString(2, userId);
 			rs=pstmt.executeQuery();
-			while(rs.next()) {
-				list.add(getTravelPick(rs));
-			}
+			if(rs.next())result=rs.getInt("board_no");
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rs);
 			close(pstmt);
-		}return list;
+		}return result;
 	}
 	
 	public List<TravelBoard> searchTravelBoardList(Connection conn, int cPage, int numPerpage){ //전체 보드 리스트 가져오기

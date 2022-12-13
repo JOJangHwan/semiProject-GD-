@@ -63,7 +63,7 @@
 	height: 100%;
 }
 
-.kjh_boardPostTagConteiner{
+.kjh_boardPostTagContainer{
 	margin-top:170px;
 	margin-left:5px;
 	width:auto;
@@ -86,6 +86,32 @@
 	font-family:'IBM Plex Sans KR', sans-serif;
 }
 
+.kjh_boardPostPickContainer{
+	margin-top:5px;
+	margin-left:270px;
+	width:20px;
+	height:20px;
+	flex-direction:row;
+	display:flex;
+	position:absolute;
+	border:1px solid green;
+}
+
+.kjh_boardPostPick{
+	width:20px;
+	height:20px;
+	border-radius:15px;
+}
+
+.kjh_colorWhite{
+	border:1px solid white;
+	background-color:white;
+}
+
+.kjh_colorYellow{
+	border:1px solid yellow;
+	background-color:yellow;
+}
 .kjh_boardPostTitle{
 	width:300px;
 	height:70px;
@@ -103,7 +129,7 @@
 }
 
 
-#boardPagingConteiner{
+#boardPagingContainer{
 	text-align:center;
 	border:1px solid red;
 	height:50px;
