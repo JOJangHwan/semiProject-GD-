@@ -1,4 +1,4 @@
-package com.jjh.common;
+package com.kjh.common;
 
 import java.io.FileReader;
 import java.sql.Connection;
@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.Properties;
 
 public class JDBCTemplate {
-		
 	public static Connection getConnection() {
 		Connection conn=null;
 		Properties driver=new Properties();
@@ -64,5 +63,4 @@ public class JDBCTemplate {
 			e.printStackTrace();
 		}
 	}
-
 }

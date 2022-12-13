@@ -51,8 +51,21 @@ public class EnrollerMemberEndServlet extends HttpServlet {
 				.phone(phone)
 				.gender(gender.charAt(0))
 				.build();
+		
+		int result= new LoginMemberService().insertMember(m);
+		
+		String msg="", loc="";
+		if(result>0) {
+			msg="회원가입을 축하드립니다!";
+			loc="/";
+		}else {
+			msg="회원가입을 실패했습니다. 다시 시도해주세요";
+			loc="/member/enrollMember.do";
+			
+			request.getRequestDispatcher("views/commmon/msg.jsp").forward(request, response);
+		}
 	}
-	//int result= new LoginMemberService().insertMember(m);
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
