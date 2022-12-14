@@ -53,4 +53,11 @@ public class TravelBoardService {
 		close(conn);
 		return list;
 	}
+	
+	public int boardPickChange(String userId, int boardNo, char pick) {
+		Connection conn=getConnection();
+		int result=dao.boardPickChange(conn, userId, boardNo, pick);
+		close(conn);
+		return result;
+	}
 }

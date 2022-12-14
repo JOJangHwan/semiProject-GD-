@@ -67,24 +67,6 @@ public class TravelBoardDao {
 		}return list;
 	}
 	
-	public int searchTravelBoardPick(Connection conn, String userId, int boardNo){
-		PreparedStatement pstmt=null;
-		ResultSet rs=null;
-		int result=0;
-		try {
-			pstmt=conn.prepareStatement(sql.getProperty("searchTravelPick"));
-			pstmt.setInt(1, boardNo);
-			pstmt.setString(2, userId);
-			rs=pstmt.executeQuery();
-			if(rs.next())result=rs.getInt("board_no");
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}finally {
-			close(rs);
-			close(pstmt);
-		}return result;
-	}
-	
 	public List<TravelBoard> searchTravelBoardList(Connection conn, int cPage, int numPerpage){ //전체 보드 리스트 가져오기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -117,6 +99,45 @@ public class TravelBoardDao {
 			e.printStackTrace();
 		}finally {
 			close(rs);
+			close(pstmt);
+		}return result;
+	}
+	
+	public int searchTravelBoardPick(Connection conn, String userId, int boardNo){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTravelPick"));
+			pstmt.setInt(1, boardNo);
+			pstmt.setString(2, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next())result=rs.getInt("board_no");
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+	}
+	
+	public int boardPickChange(Connection conn, String userId, int boardNo, char pick) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			if(pick=='Y') {
+				pstmt=conn.prepareStatement(sql.getProperty("deleteTravelPick"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, userId);
+			}else if(pick=='N') {
+				pstmt=conn.prepareStatement(sql.getProperty("insertTravelPick"));
+				pstmt.setInt(1, boardNo);
+				pstmt.setString(2, userId);
+			}
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
 			close(pstmt);
 		}return result;
 	}
