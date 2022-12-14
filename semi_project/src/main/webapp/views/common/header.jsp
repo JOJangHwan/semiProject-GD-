@@ -11,13 +11,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Jua&family=Kirang+Haerang&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link
-          href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-          rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
    	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
+
 </head>
-	<body>
+   <body>
             <div id="header">
                 <nav>
                     <div class="sidebar">

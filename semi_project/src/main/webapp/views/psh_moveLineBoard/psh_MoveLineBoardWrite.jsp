@@ -30,6 +30,7 @@
         .category .ico_store {background-position:-10px -36px;}   
         .category .ico_carpark {background-position:-10px -72px;} 
 	</style>
+	
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
