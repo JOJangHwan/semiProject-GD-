@@ -23,7 +23,13 @@
 					    <textarea id="summernote" name="editordata"></textarea>
 				    </form>
 				    <div id="inputArea" style="width:100%; height:300px;">
+				    	<div id="tagInputArea">
 				    	
+				    	</div>
+				    	<div id="submitArea">
+				    		<div id="cancel">
+				    		</div>
+				    	</div>
 				    </div>
 				    <script>
 				       $(document).ready(function() {
@@ -33,7 +39,7 @@
 				       $('#summernote').summernote({
 				       	width: 1000,
 				       	//height: 300,// set editor height
-				       	minHeight:300,
+				       	minHeight:500,
 				       	maxHeight: null,
 				       	focus: true// set focus to editable area after initializing summernote
 				       	});
