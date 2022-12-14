@@ -1,4 +1,4 @@
-package com.psh.moveline.model.dao;
+package com.psh.marker.model.dao;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,12 +14,12 @@ import com.psh.marker.model.vo.Marker;
 import com.psh.moveline.model.vo.MoveLine;
 import static com.jjh.common.JDBCTemplate.*;
 
-public class MoveLineDao {
+public class MarkerDao {
 private Properties sql=new Properties();
 	
-	public MoveLineDao() {
+	public MarkerDao() {
 		try {
-			String path=MoveLineDao.class
+			String path=MarkerDao.class
 					.getResource("/sql/pshdev_moveline/moveline_sql.properties")
 					.getPath();
 			sql.load(new FileReader(path));
@@ -28,18 +28,17 @@ private Properties sql=new Properties();
 		}
 	}
 	
-	public List<MoveLine> searchMoveLine(Connection conn,int movelineNo) {
+	public List<Marker> searchMarker(Connection conn,int movelineNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<MoveLine> ml=new ArrayList();
-		
+		List<Marker> m=new ArrayList();
 		try {
-			
-			pstmt=conn.prepareStatement(sql.getProperty("searchMoveLine"));
+			pstmt=conn.prepareStatement(sql.getProperty("searchMarker"));
 			pstmt.setInt(1, movelineNo);
+			pstmt.setInt(2, movelineNo);
 			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				ml.add(getMoveLine(rs));
+			while(rs.next()) {
+				m.add(getMarker(rs));
 			}
 			
 		}catch(SQLException e) {
@@ -48,18 +47,23 @@ private Properties sql=new Properties();
 			close(pstmt);
 			close(rs);
 		}
-		return ml;
+		return m;
 	}
 	
-	private MoveLine getMoveLine(ResultSet rs)throws SQLException{
-		return MoveLine.builder()
+	
+	
+	private Marker getMarker(ResultSet rs) throws SQLException {
+		return Marker.builder()
+				.markerNo(rs.getInt("marker_No"))
 				.movelineNo(rs.getInt("moveline_No"))
-				.userNo(rs.getInt("user_No"))
-				.tripdateFinish(rs.getDate("tripdate_Finish"))
-				.tripdateStart(rs.getDate("tripdate_Start"))
-				.movelineName(rs.getString("moveline_Name"))
-				.openandclosed(rs.getString("open_And_Closed").charAt(0))
-				.movelineEnroll(rs.getDate("moveline_Enroll"))
-				.build();	
+				.longgitude(rs.getString("longgitude"))
+				.latitude(rs.getString("latitude"))
+				.address(rs.getString("address"))
+				.memo(rs.getString("memo"))
+				.movelineDay(rs.getString("moveline_Day"))
+				.placeName(rs.getString("place_Name"))
+				.price(rs.getInt("price"))
+				.markerTime(rs.getString("marker_Time"))
+				.build();
 	}
 }

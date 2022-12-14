@@ -1,6 +1,8 @@
 package com.psh.movelineboard.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.psh.moveline.model.servlce.MoveLineService;
 import com.psh.marker.model.service.MarkerService;
+import com.psh.marker.model.vo.*;
 import com.psh.marker.model.vo.Marker;
 import com.psh.moveline.model.vo.MoveLine;
 
@@ -34,12 +37,27 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int movelineNo=1;//아직 값을 받아 올 수 없으므로 임시 지정
 		
-		MoveLine ml=(MoveLine)new MoveLineService().searchMoveLine(movelineNo);
-//		Marker m=(Marker)new MarkerService().searchMarker(movelineNo);
-		request.setAttribute("moveline", ml);
-//		request.setAttribute("marker", m);
-//		System.out.println(m);
-		System.out.println(ml);
+//		List<MoveLine> ml=(List<MoveLine>)new MoveLineService().searchMoveLine(movelineNo);
+		List<Marker> mList=(List<Marker>)new MarkerService().searchMarker(movelineNo);
+//		request.setAttribute("moveline", ml);
+		request.setAttribute("marker", mList);
+		
+		String p;
+		List position=new ArrayList<>();
+		for(Marker m:mList) {
+			for(int i=0;i<mList.size();i++) {
+				if(m.getMovelineDay().equals("1")) {
+					p=m.getLonggitude()+", "+m.getLatitude();
+					position.add(p);
+			}
+				
+			}
+			
+			
+		}
+		request.setAttribute("position", position);
+		System.out.println(position);
+		
 		request.getRequestDispatcher("/views/psh_moveLineBoard/psh_MoveLineBoardWrite.jsp").forward(request, response);
 	}
 

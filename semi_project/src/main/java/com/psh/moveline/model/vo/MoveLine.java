@@ -1,6 +1,7 @@
 package com.psh.moveline.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.psh.marker.model.vo.Marker;
 
@@ -20,5 +21,5 @@ public class MoveLine {
 	private String movelineName;
 	private char openandclosed;
 	private Date movelineEnroll;
-	private Marker m;
+//	private List<Marker> mList;
 }

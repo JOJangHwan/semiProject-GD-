@@ -17,7 +17,7 @@ public class Marker {
 	private String latitude;
 	private String address;
 	private String memo;
-	private Date movelineDay;
+	private String movelineDay;
 	private String placeName;
 	private int price;
 	private String markerTime;
