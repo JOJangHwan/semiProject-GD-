@@ -5,7 +5,7 @@
 <%@ page import="java.util.Iterator,java.util.Arrays, java.util.ArrayList, java.util.List, java.util.Collections, com.kjh.admin.model.vo.Tag,com.kjh.travelBoard.model.vo.TravelBoard,com.kjh.admin.model.vo.BoardTag, com.jjh.member.model.vo.Member"%>
 <script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
 <%
-	String userId="dev123";
+	String userId="admin";
 	session.setAttribute("userId", userId);
 	userId=(String)session.getAttribute("userId");
 	/* 확인용 session 생성 */
@@ -24,6 +24,13 @@
 		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">
 		    				추천 여행지
 		    			</label>
+		    			<%if(userId.equals("admin")){ %>
+			    			<div id="adminWriteBtnArea">
+			    				<button name="adminWriteBtn" onclick="location.href='<%=request.getContextPath()%>/admin/travelboardwrite.do';">
+			    					게시글 작성
+			    				</button>
+			    			</div>
+		    			<%}%>
 		    		</div>
 	    			<div class="lineGray"></div>
 	    			

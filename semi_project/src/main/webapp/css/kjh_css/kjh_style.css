@@ -8,6 +8,12 @@
 #boardTitleArea{
 	margin:0px 10px 10px 10px;
 	padding-left:20px;
+	display:flex;
+	justify-content:space-between;
+}
+
+#boardTitleArea button{
+	margin:10px;
 }
 
 .lineGray{
