@@ -8,7 +8,7 @@
         
     
           	
-          		<form name="enrollerMemberFrm" action="<%=request.getContextPath() %>/login/enrollerMemberEnd.do">
+          		<form name="enrollerMemberFrm" action="<%=request.getContextPath() %>/login/enrollerMemberEnd.do" method="post">
           		<h3>회원가입</h3>
           			<table>
           				<tr>

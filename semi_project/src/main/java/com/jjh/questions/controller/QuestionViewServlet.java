@@ -1,4 +1,4 @@
-package com.jjh.traffic.controller;
+package com.jjh.questions.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,17 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jjh.questions.model.service.QuestionService;
+import com.jjh.questions.model.vo.Questions;
+
 /**
- * Servlet implementation class TrafficViewServlet
+ * Servlet implementation class QuestionViewServlet
  */
-@WebServlet("/traffic/trafficView/do")
-public class TrafficViewServlet extends HttpServlet {
+@WebServlet("/question/questionView.do")
+public class QuestionViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TrafficViewServlet() {
+    public QuestionViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,7 +31,13 @@ public class TrafficViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("/views/jjh_traffic/trafficView.jsp").forward(request, response);
+		int no=Integer.parseInt(request.getParameter("questionsNo"));
+		
+		//Questions q =new QuestionService().searchQuestionNo(no);
+		
+		//request.setAttribute("questions", q);
+		
+		request.getRequestDispatcher("/views/jjh_questions/noticeView.jsp").forward(request, response);
 	}
 
 	/**

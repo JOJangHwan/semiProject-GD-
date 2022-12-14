@@ -1,4 +1,4 @@
-package com.jjh.questions.controller;
+package com.jjh.Notice.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jjh.Notice.model.service.MemberNoticeService;
-import com.jjh.questions.model.service.QuestionService;
+import com.jjh.Notice.model.vo.Notice;
 import com.jjh.questions.model.vo.Questions;
 
 /**
- * Servlet implementation class QuestionsListViewServlet
+ * Servlet implementation class NoticeViewServlet
  */
-@WebServlet("/matter/matterListView.do")
-public class QuestionsListViewServlet extends HttpServlet {
+@WebServlet("/notice/noticeListView.do")
+public class NoticeListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionsListViewServlet() {
+    public NoticeListViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,6 +34,9 @@ public class QuestionsListViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
+		
 		int cPage;
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
@@ -43,9 +46,9 @@ public class QuestionsListViewServlet extends HttpServlet {
 		
 		
 		int numPerage=5;
-		List<Questions> q =new QuestionService().searchQuestion(cPage, numPerage);
+		List<Notice> n =new MemberNoticeService().searchNotice(cPage,numPerage);
 		
-		int totlaData=new QuestionService().searchQuestionCount();
+		int totlaData=new MemberNoticeService().searchNoticeCount();
 		
 		String pageBar="";
 		
@@ -79,8 +82,13 @@ public class QuestionsListViewServlet extends HttpServlet {
 		request.setAttribute("pageBar", pageBar);
 	
 		
-		request.setAttribute("questions", q);
-		request.getRequestDispatcher("/views/jjh_questions/questionsListView.jsp").forward(request, response);
+		request.setAttribute("notices", n);
+		
+		
+		//request.getRequestDispatcher("/views/common/notice.jsp").forward(request, response);
+		
+		
+		request.getRequestDispatcher("/views/jjh_notice/noticeListView.jsp").forward(request, response);
 	}
 
 	/**

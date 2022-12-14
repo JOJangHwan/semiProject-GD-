@@ -22,5 +22,20 @@ public class MemberNoticeService {
 		
 		
 	}
+	
+	public int searchNoticeCount() {
+		Connection conn=getConnection();
+		int result=mnDao.searchNoticeCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	public Notice searchNoticeNo(int No) {
+		Connection conn=getConnection();
+		Notice n=mnDao.searchNoticeNo(conn, No);
+		close(conn);
+		return n;
+		
+	}
 
 }

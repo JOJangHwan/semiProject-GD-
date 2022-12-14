@@ -1,8 +1,6 @@
 package com.jjh.Notice.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +13,7 @@ import com.jjh.Notice.model.vo.Notice;
 /**
  * Servlet implementation class NoticeViewServlet
  */
-@WebServlet("/notice/noticeListView.do")
+@WebServlet("/notice/noticeView.do")
 public class NoticeViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -33,23 +31,12 @@ public class NoticeViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int no=Integer.parseInt(request.getParameter("NoticeNo"));
 		
+		Notice n=new MemberNoticeService().searchNoticeNo(no);
+		request.setAttribute("Notice", n);
 		
-		
-		int cPage;
-		try {
-			cPage=Integer.parseInt(request.getParameter("cPage"));
-		}catch(NumberFormatException e) {
-			cPage=1;
-		}
-		
-		
-		int numPerage=5;
-		List<Notice> n =new MemberNoticeService().searchNotice(cPage,numPerage);
-		
-//		int totlaData=new Admin
-		
-		request.getRequestDispatcher("/views/notice/noticeListView.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/jjh_notice/noticeView.jsp").forward(request, response);
 	}
 
 	/**

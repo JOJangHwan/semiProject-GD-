@@ -25,5 +25,12 @@ public class LoginMemberService {
 		
 		
 	}
+	
+	public Member searchMember(String userId, String password) {
+		Connection conn=getConnection();
+		Member m=loginDao.searchMember(conn,userId,password);
+		close(conn);
+		return m;
+	}
 
 }

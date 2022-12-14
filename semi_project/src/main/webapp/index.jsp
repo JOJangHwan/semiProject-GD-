@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page import="com.jjh.member.model.vo.Member"%>
+<% Member loginMember=(Member)session.getAttribute("loginMember"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -81,7 +83,7 @@
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/logout.do" class="nav-link">
                                     <i class="bx bx-log-out icon"></i>
                                     <span class="link">로그아웃</span>
                                     </a>
@@ -101,7 +103,12 @@
             </div>
             <!-- <div id="blank"></div> -->
             <div id="logo"><a href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/images/mainlogo.gif" alt="로고" height="70px"></a></div>
+            <%if(loginMember==null) {%>
             <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <%}else{ %>
+            <div id="login"><a href="<%=request.getContextPath()%>/member/memberinfo.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <%} %>
+            
         </div>
     </header>
     <script>

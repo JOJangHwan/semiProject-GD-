@@ -2,12 +2,16 @@ package com.jjh.questions.model.vo;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-public class questions {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Questions {
 	private int questionsNo;
 	private String questionsWriter;
 	private String questionsTitle;
