@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page import="com.jjh.member.model.vo.Member"%>
+<% Member loginMember=(Member)session.getAttribute("loginMember"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,25 +26,25 @@
                     <div class="sidebar">
                         <div class="logo">
                             <i class="bx bx-menu menu-icon"></i>
-                            <span class="logo-name"><a href="">여행가자고</a></span>
+                            <span class="logo-name"><a href="<%=request.getContextPath()%>">여행가자고</a></span>
                         </div>
                                 
                         <div class="sidebar-content">
                             <ul class="lists">
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/matter/matterListView.do" class="nav-link">
                                         <i class="bx bx-home-alt icon"></i>
                                         <span class="link">문의사항</span>
                                         </a>
                                     </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/notice/noticeListView.do" class="nav-link">
                                         <i class="bx bx-bar-chart-alt-2 icon"></i>
                                         <span class="link">공지사항</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/traffic/trafficView/do" class="nav-link">
                                         <i class="bx bx-bell icon"></i>
                                         <span class="link">교통</span>
                                     </a>
@@ -81,7 +83,7 @@
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/logout.do" class="nav-link">
                                     <i class="bx bx-log-out icon"></i>
                                     <span class="link">로그아웃</span>
                                     </a>
@@ -100,28 +102,33 @@
                 <span class="logo-name"><a href="">여행가자고</a></span>
             </div>
             <!-- <div id="blank"></div> -->
-            <div id="logo"><a href=""><img src="<%=request.getContextPath()%>/images1/mainlogo.gif" alt="로고" height="70px"></a></div>
-            <div id="login"><a href=""><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <div id="logo"><a href="<%=request.getContextPath()%>"><img src="<%=request.getContextPath()%>/images/mainlogo.gif" alt="로고" height="70px"></a></div>
+            <%if(loginMember==null) {%>
+            <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <%}else{ %>
+            <div id="login"><a href="<%=request.getContextPath()%>/member/memberinfo.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <%} %>
+            
         </div>
     </header>
     <script>
           const navBar = document.querySelector("nav"),
-            	menuBtns = document.querySelectorAll(".menu-icon"),
+               menuBtns = document.querySelectorAll(".menu-icon"),
                 overlay = document.querySelector(".overlay");
                         
-	                menuBtns.forEach((menuBtn) => {
-	                	menuBtn.addEventListener("click", () => {
-	                		navBar.classList.toggle("open");
-	               		});
-	         		});
+                   menuBtns.forEach((menuBtn) => {
+                      menuBtn.addEventListener("click", () => {
+                         navBar.classList.toggle("open");
+                        });
+                  });
                         
                     overlay.addEventListener("click", () => {
-                    	navBar.classList.remove("open");
+                       navBar.classList.remove("open");
            });
-	</script>
-	<div class="blank2"></div>
+   </script>
+   <div class="blank2"></div>
 <section id="contentparent">
-	
+   
     <div id="content">
         <!-- 메인화면사진 -->
             <!-- https://cdn.pixabay.com/photo/2016/02/22/08/38/gyeongbok-palace-1214975_960_720.jpg -->
@@ -184,4 +191,4 @@
     </div>
 </section> 
 <div class="blank3"></div>
-<%@ include file="/views/common/footer.jsp" %>		
+<%@ include file="/views/common/footer.jsp" %>      

@@ -122,7 +122,7 @@
 						let place5 = document.getElementById("place5");
 						
 						let arr = [place1, place2, place3, place4, place5];
-						console.log(arr);
+						console.log("arr빈칸값 : "+arr[1].value);
 						
 						//정규표현 넣어?
 						// for(i = 0; i < arrTemp.length; i++)
@@ -140,7 +140,7 @@
 							if (arr[i].value != "") {
 								placeData.push(arr[i].value);
 								console.log(i+":"+arr[i].value);
-						}
+							}
 						}
 
 						if (placeData != null) {

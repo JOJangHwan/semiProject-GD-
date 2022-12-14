@@ -1,6 +1,6 @@
 src/main/webapp/WEB-INF/classes/
 src/main/resources/
-src/main/images/
+src/main/webapp/images/
 Scripts/
 .dbeaver/
 

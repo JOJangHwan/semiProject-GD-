@@ -34,7 +34,6 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
     <!-- 지도 -->
-    <!-- <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536&libraries=services"></script> -->
     <style>
         #mapwrap{position:relative;overflow:hidden;}
         .category, .category *{margin:0;padding:0;color:#000;}   
@@ -45,10 +44,10 @@
         .category .ico_coffee {background-position:-10px 0;}  
         .category .ico_store {background-position:-10px -36px;}   
         .category .ico_carpark {background-position:-10px -72px;} 
-	</style>
+   </style>
 
 </head>
-	<body>
+   <body>
             <div id="header">
                 <nav>
                     <div class="sidebar">
