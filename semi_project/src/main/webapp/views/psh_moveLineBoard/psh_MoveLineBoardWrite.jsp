@@ -116,7 +116,10 @@
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-        // 일차만큼 배열 생성하여 좌표저장(일차값 어떻게 가져오냐 하놔....)
+        // 일차만큼 배열 생성하여 좌표저장(일차값 queryString으로 전달받을 수 있으면 좋껬..)
+        mList.forEach((v)=>{
+            console.log(v)
+        }
         
 
         var markerImageSrc = '/images/mark.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다

@@ -45,13 +45,11 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 		String p;
 		List position=new ArrayList<>();
 		for(Marker m:mList) {
-			
 			for(int i=0;i<mList.size();i++) {
-				if(m.getMovelineDay().equals("1")) {
-					p=m.getLonggitude()+", "+m.getLatitude();
+				if(m.getMovelineDay()==i+1) {
+					p=m.getLonggitude()+","+m.getLatitude()+","+m.getMovelineDay();
 					position.add(p);
-			}
-				
+				}
 			}
 			
 			

@@ -60,7 +60,7 @@ private Properties sql=new Properties();
 				.latitude(rs.getString("latitude"))
 				.address(rs.getString("address"))
 				.memo(rs.getString("memo"))
-				.movelineDay(rs.getString("moveline_Day"))
+				.movelineDay(Integer.parseInt(rs.getString("moveline_Day")))
 				.placeName(rs.getString("place_Name"))
 				.price(rs.getInt("price"))
 				.markerTime(rs.getString("marker_Time"))
