@@ -100,7 +100,7 @@
                 <span class="logo-name"><a href="">여행가자고</a></span>
             </div>
             <!-- <div id="blank"></div> -->
-            <div id="logo"><a href=""><img src="<%=request.getContextPath()%>/images/mainlogo.gif" alt="로고" height="70px"></a></div>
+            <div id="logo"><a href=""><img src="<%=request.getContextPath()%>/images1/mainlogo.gif" alt="로고" height="70px"></a></div>
             <div id="login"><a href=""><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
         </div>
     </header>
