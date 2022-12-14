@@ -43,8 +43,8 @@ public class TravelBoardMainServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		String userId=request.getParameter("userId");
-		userId="admin"; //임시
+		String userId=(String) request.getSession().getAttribute("userId");
+		/* userId="admin"; */ //임시
 		List<TravelBoard> boards=new TravelBoardService().searchTravelBoardList(cPage,numPerpage,userId);
 		
 		int totalData=new TravelBoardService().searchTravelBoardCount();

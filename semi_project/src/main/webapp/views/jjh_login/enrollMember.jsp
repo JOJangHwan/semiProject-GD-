@@ -8,12 +8,12 @@
         
     
           	
-          		<form name="enrollerMemberFrm" action="<%=request.getContextPath() %>/login/enrollerMemberEnd.do">
+          		<form name="enrollerMemberFrm" action="<%=request.getContextPath() %>/login/enrollerMemberEnd.do" method="post">
           		<h3>회원가입</h3>
           			<table>
           				<tr>
           					<td>
-          						아이디 <input type="text" id="userId">
+          						아이디 <input type="text" name="userId">
           					</td>
           					
           					<td>
@@ -56,15 +56,15 @@
           				<tr>
           					<td>
           						성별
-          						남<input type="radio" name="gender" value="M">
-          						여<input type="radio" name="gender" value="F">
+          						남<input type="radio" name="gender" value="남">
+          						여<input type="radio" name="gender" value="여">
           					</td>
           					
           				</tr>
           				<tr>
           					<td>
-          						<button>가입하기</button>
-          						<button>취소하기</button>
+          						<input type="submit" value="로그인하기">
+          						<input type="reset" value="취소하기"> 
           					</td>
           					
           				</tr>

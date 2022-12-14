@@ -3,6 +3,17 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
 
+<%Cookie[] cookies=request.getCookies();
+	String saveId=null;
+	if(cookies!=null){
+		for(Cookie c:cookies){
+			if(c.getName().equals("saveId")){
+				saveId=c.getValue();
+				break;
+			}
+		}
+	} %>
+
 <!--카카오 로그인-->
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.0.1/kakao.min.js" 
 integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNWf/" crossorigin="anonymous"></script>
@@ -18,11 +29,11 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
     
         <section id="mainSection">
             <div>
-            	<form id="loginFrm" action="" method="post">
+            	<form id="loginFrm" action="<%=request.getContextPath()%>/login.do" method="post">
                     <table>
                         <tr>
                             <td>
-                                아이디 <input type="text" name="loginId">
+                                아이디 <input type="text" name="loginId" value="<%=saveId!=null?saveId:""%>">
                             </td>
                         </tr>
                         <tr>
@@ -30,7 +41,7 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
                                 비밀번호 <input type="password" name="password">
                             </td>
                             <td>
-                                <input type="button" value="로그인">
+                                <input type="submit" value="로그인">
                                <a id="kakao-login-btn" href="javascript:loginWithKakao()">
   								<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222"
     							alt="카카오 로그인 버튼" />
@@ -41,7 +52,11 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
                         </tr>
                         <tr>
                             <td>
-                                <input type="checkbox">아이디저장
+                            <input type="checkbox" name="saveId" id="saveId"
+								 <%=saveId!=null?"checked":"" %>>
+								<label for="saveId">아이디저장</label>
+                            
+                    
                             </td>
                             
                         </tr>

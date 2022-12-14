@@ -52,7 +52,7 @@ public class EnrollerMemberEndServlet extends HttpServlet {
 				.gender(gender.charAt(0))
 				.build();
 		
-		int result= new LoginMemberService().insertMember(m);
+		int result=new LoginMemberService().insertMember(m);
 		
 		String msg="", loc="";
 		if(result>0) {
@@ -62,9 +62,15 @@ public class EnrollerMemberEndServlet extends HttpServlet {
 			msg="회원가입을 실패했습니다. 다시 시도해주세요";
 			loc="/member/enrollMember.do";
 			
-			request.getRequestDispatcher("views/commmon/msg.jsp").forward(request, response);
+			
 		}
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
+	
 	
 
 	/**
