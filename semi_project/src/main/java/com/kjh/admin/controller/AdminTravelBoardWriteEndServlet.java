@@ -67,16 +67,16 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 			//파일을 저장하면서 재정의된 파일명을 저장해야한다.
 			String title=mr.getParameter("titleInput");
 			String content=mr.getParameter("editordata");
+			String tagStr=mr.getParameter("selectedTags");
 			System.out.println("제목 : "+title);
 			System.out.println("본문 : "+content);
+			System.out.println("태그들 : "+tagStr);
 			//파일이름 리네임된 파일이름!
 			String thumbFilename=mr.getFilesystemName("upFile");
-			String tagStr=mr.getParameter("tagsSelect");
-			System.out.println(tagStr);
 			List<Tag> tagList=new ArrayList();
 			
 			if(tagStr!=null) {
-				String[] strArr=tagStr.split(" ");
+				String[] strArr=tagStr.split(",");
 				List<String> tags = new ArrayList<>(Arrays.asList(strArr));
 				
 				for(String t:tags) {
@@ -96,11 +96,14 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 				tags(tagList).build();
 				
 			int result1=new TravelBoardService().insertTravelBoard(board);
-			/*
-			 * int result2=new TravelBoardService().insertTravelBoardTag(board);
-			 * if(result1==1&&result2==1) { System.out.println("등록 성공"); }else {
-			 * System.out.println("등록 실패"); }
-			 */
+			int result2=new TravelBoardService().insertTravelBoardTag(board);
+			
+			if(result1==1&&result2==1) {
+				System.out.println("등록 성공");
+			}else{
+				System.out.println("등록 실패"); 
+			}
+			
 			request.setAttribute("board", board);
 			
 			request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").

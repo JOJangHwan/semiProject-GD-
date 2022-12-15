@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
-  	
-  	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/summernote-lite.js"></script>
-	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
-
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/summernote/summernote-lite.css">
 	
 	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag"%>
-	
+	<script src="http://code.jquery.com/jquery-latest.js"></script> 
+  	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/summernote-lite.js"></script>
+	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
 	<%
 		List<Tag> tags=(List<Tag>)request.getAttribute("tags");
 	%>
+	
+	
 <style>
 	#inputArea{
 		width:100%;
@@ -37,14 +37,9 @@
 		margin-bottom:10px;
 	}
 	
-	#tagSelectContainer{
-	
+	#tagSelectContainer span{
+	 border:1px solid blue;
 	}
-	
-	#selectedTagsContainer{
-	
-	}
-	
 	
 	#mapContainer{
 		border:1px solid red;
@@ -64,6 +59,11 @@
 	#submitRight{
 		display:inline-block;
 		float:right;
+	}
+	
+	.tg{
+		border:1px solid blue;
+		margin-left:5px;
 	}
 </style>
 <%@ include file="/views/common/header.jsp" %>
@@ -92,7 +92,11 @@
 										</select>
 									</div>
 									<div id="selectedTagsContainer">
+										<input type="hidden" id="selectedTags" name="selectedTags">
 									</div>
+									<script>
+										
+									</script>
 					    		</div>
 					    		<div id="thumbContainer">
 					    			<input type="file" name="upFile">
@@ -117,7 +121,7 @@
 		    </div>
 	    <div id="rightMarginMain"></div>
     </section>
-    <script>
+    <script async="true">
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				  height: 250,              // 에디터 높이
@@ -129,15 +133,29 @@
 			});
 		});
 		
+		var tagArr=new Array();
 		
 		$("#tagsSelect").on("change", function(event) {
 			if($("#tagsSelect option:selected").val()==="none"){
 				//선택되지 않도록 제한함.
+			}else if(tagArr.includes($("#tagsSelect option:selected").val())){
+				
 			}else{
-				$("#selectedTagsContainer").append($("#tagsSelect option:selected").text());
+				var $span = $('<span class="tg">'+$("#tagsSelect option:selected").text()+'</span>');
+				$('#selectedTagsContainer').append($span);
+				tagArr.length=0;
+				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerText)});
+				console.dir(tagArr);
+				const tagStr = tagArr.join();
+				$('#selectedTags').val(tagStr);
+				console.dir($('#selectedTags').val());
 			}
 		});
 		
-    	
+		
+		$('span[class=tg]').on("click", function(event){
+			
+		});
     </script>
+    
 <%@ include file="/views/common/footer.jsp" %>
