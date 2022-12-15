@@ -135,21 +135,22 @@
 					let placeData=[]; //장소 저장
 					let markers=[]; //마커 저장
 					let customOverlays=[]; //마커 위 장소명을 띄울 오버레이
-
+					let linePath=[];
+					
+					console.log(linePath);
 					function fn_reflection() {
 						count=0; //플레이스를 누적할 카운트 변수
 						placeData=[]; //장소 저장
 						markers=[]; //마커 저장
 						customOverlays=[]; //마커 위 장소명을 띄울 오버레이
-
 						bounds = new kakao.maps.LatLngBounds();
 
-						for (var i = 0; i < markers.length; i++) {
+						for (let i=0; i<markers.length; i++) {
 							markers[i].setMap(null);
 							customOverlays[i].setMap(null);
 						}
-						markers = [];
-						customOverlays = [];
+						markers=[];
+						customOverlays=[];
 
 						let place1 = document.getElementById("place1");
 						let place2 = document.getElementById("place2");
@@ -170,17 +171,34 @@
 						// }
 
 	
-						for (i = 0; i < arr.length; i++) {
+						for (i=0; i<arr.length; i++) {
 							if (arr[i].value != "") {
 								placeData.push(arr[i].value);
-								console.log(i+":"+arr[i].value);
-								console.log(placeData);
 							}
 						}
 
-						if (placeData != null) {
+						if (placeData!=null) {
 							placeSearch(placeData[count]);
 						}
+						
+	//여기서부터 새로 시작
+						// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+						
+						var x = placesSearchCB().linePath[1];
+						console.log("check1:"+x);
+
+						// 지도에 표시할 선을 생성합니다
+						var polyline = new kakao.maps.Polyline({
+						    path: linePath, // 선을 구성하는 좌표배열 입니다
+						    strokeWeight: 5, // 선의 두께 입니다
+						    strokeColor: '#F1C40F', // 선의 색깔입니다
+						    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+						    strokeStyle: 'solid' // 선의 스타일입니다
+						});
+
+						// 지도에 선을 표시합니다 
+						polyline.setMap(map);
+	//여기까지 지워도 됨
 					}
 
 					function placeSearch(p) {
@@ -202,10 +220,6 @@
 								placeSearch(placeData[count])
 							} else if (count == placeData.length) {
 								setBounds();
-								
-							}
-						}
-
 					}
 
 					// 지도에 마커를 표시하는 함수입니다
