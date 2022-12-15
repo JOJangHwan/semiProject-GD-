@@ -12,7 +12,7 @@ import lombok.Data;
 @Builder
 public class TravelBoard {
 	private int boardNo;
-	private String userNo;
+	private String userId;
 	private String boardTitle;
 	private String boardContent;
 	private Date boardEnroll;

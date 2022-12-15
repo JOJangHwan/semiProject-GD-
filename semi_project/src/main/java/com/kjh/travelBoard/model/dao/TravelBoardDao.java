@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import com.kjh.admin.model.vo.BoardTag;
 import com.kjh.admin.model.vo.Tag;
 import com.kjh.admin.model.vo.TravelPick;
 import com.kjh.travelBoard.model.vo.TravelBoard;
@@ -142,6 +141,55 @@ public class TravelBoardDao {
 		}return result;
 	}
 	
+	public TravelBoard selectTravelBoard(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		TravelBoard board=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("selectBoard"));
+			pstmt.setInt(1, boardNo);
+			rs=pstmt.executeQuery();
+			if(rs.next()) board=getTravelBoard(rs);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return board;
+	}
+	
+	public int insertTravelBoard(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertBoard"));
+			pstmt.setString(1, board.getBoardTitle());
+			pstmt.setString(2, board.getBoardContent());
+			pstmt.setString(3, board.getThumbFilename());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int insertTravelBoardTag(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertBoardTag"));
+			pstmt.setString(1, board.getBoardTitle());
+			pstmt.setString(2, board.getBoardContent());
+			pstmt.setString(3, board.getThumbFilename());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
 	private Tag getTag(ResultSet rs) throws SQLException{ //태그 객체 빌더. board_no 포함 X
 		return Tag.builder().tagNo(rs.getInt("tag_no"))
 				.tagTitle(rs.getString("tag_title"))
@@ -158,7 +206,7 @@ public class TravelBoardDao {
 	private TravelBoard getTravelBoard(ResultSet rs) throws SQLException{ //보드 객체 빌더
 		return TravelBoard.builder().
 				boardNo(rs.getInt("board_no")).
-				userNo(rs.getString("user_no")).
+				userId(rs.getString("user_id")).
 				boardContent(rs.getString("board_content")).
 				boardEnroll(rs.getDate("board_enroll")).
 				tempYn(rs.getString("temp_yn").charAt(0)).
@@ -171,7 +219,7 @@ public class TravelBoardDao {
 	private TravelPick getTravelPick(ResultSet rs) throws SQLException{
 		return TravelPick.builder().
 				boardNo(rs.getInt("board_no")).
-				userNo(rs.getInt("board_no")).
+				userId(rs.getString("user_id")).
 				build();
 	}
 }

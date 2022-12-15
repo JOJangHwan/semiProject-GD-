@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class TravelPick {
-	private int userNo;
+	private String userId;
 	private int boardNo;
 }
