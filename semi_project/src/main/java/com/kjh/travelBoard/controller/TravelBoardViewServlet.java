@@ -1,7 +1,6 @@
-package com.kjh.admin.controller;
+package com.kjh.travelBoard.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,20 +8,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kjh.admin.model.vo.Tag;
 import com.kjh.travelBoard.model.service.TravelBoardService;
+import com.kjh.travelBoard.model.vo.TravelBoard;
 
 /**
- * Servlet implementation class AdminTravelBoardWriteServlet
+ * Servlet implementation class TravelBoardViewServlet
  */
-@WebServlet("/admin/travelboardwrite.do")
-public class AdminTravelBoardWriteServlet extends HttpServlet {
+@WebServlet("/travelboard/travelboardview.do")
+public class TravelBoardViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminTravelBoardWriteServlet() {
+    public TravelBoardViewServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,10 +30,11 @@ public class AdminTravelBoardWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Tag> tags=new TravelBoardService().searchTagList();
-		request.setAttribute("tags", tags);
+		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
+		TravelBoard board=new TravelBoardService().selectTravelBoard(boardNo);
 		
-		request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardWrite.jsp").forward(request, response);
+		request.setAttribute("board", board);
+		request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").forward(request, response);
 	}
 
 	/**

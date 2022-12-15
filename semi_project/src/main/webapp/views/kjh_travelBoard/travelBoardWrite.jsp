@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
-    
-	<!--<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-  	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-  	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script> -->
   	
   	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/summernote-lite.js"></script>
 	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
 
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/summernote/summernote-lite.css">
-
+	
+	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag"%>
+	
+	<%
+		List<Tag> tags=(List<Tag>)request.getAttribute("tags");
+	%>
 <style>
 	#inputArea{
 		width:100%;
@@ -28,6 +27,7 @@
 		border:1px solid black;
 		height:30px;
 		margin-top:10px;
+		display:flex;
 	}
 	
 	#thumbContainer{
@@ -36,6 +36,15 @@
 		margin-top:10px;
 		margin-bottom:10px;
 	}
+	
+	#tagSelectContainer{
+	
+	}
+	
+	#selectedTagsContainer{
+	
+	}
+	
 	
 	#mapContainer{
 		border:1px solid red;
@@ -63,7 +72,7 @@
 		    <div id="mainSectionContainer">
 		    	<div id="totalContainer">
 		    		<section id="mainSectionTotal">
-					<form method="post" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do">
+					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do">
 						<div id="titleInput">
 							<input type="text" name="titleInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
 						</div>
@@ -72,13 +81,24 @@
   						<div id="inputArea">
 					    	<div id="infoInputArea">
 					    		<div id="tagContainer">
-					    		
+					    			<div id="tagSelectContainer">
+						    			<select size="1" id="tagsSelect" name="tagsSelect">
+						    				<option value="none">태그 선택</option>
+						    				<%for(int i=0; i<tags.size(); i++){ %>
+												<option value="<%=tags.get(i).getTagTitle()%>">
+													<%=tags.get(i).getTagTitle()%>
+												</option>
+											<%} %>
+										</select>
+									</div>
+									<div id="selectedTagsContainer">
+									</div>
 					    		</div>
 					    		<div id="thumbContainer">
-					    		
+					    			<input type="file" name="upFile">
 					    		</div>
 					    		<div id="mapContainer">
-					    		
+					    			<input type="text">
 					    		</div>
 					    	</div>
 					    	<div id="submitArea">
@@ -108,5 +128,16 @@
 				  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
 			});
 		});
+		
+		
+		$("#tagsSelect").on("change", function(event) {
+			if($("#tagsSelect option:selected").val()==="none"){
+				//선택되지 않도록 제한함.
+			}else{
+				$("#selectedTagsContainer").append($("#tagsSelect option:selected").text());
+			}
+		});
+		
+    	
     </script>
 <%@ include file="/views/common/footer.jsp" %>

@@ -5,8 +5,8 @@
 <%@ page import="java.util.Iterator,java.util.Arrays, java.util.ArrayList, java.util.List, java.util.Collections, com.kjh.admin.model.vo.Tag,com.kjh.travelBoard.model.vo.TravelBoard,com.kjh.admin.model.vo.BoardTag, com.jjh.member.model.vo.Member"%>
 <script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
 <%
-	String userId="admin";
-	session.setAttribute("userId", userId);
+String userId="admin";
+	session.setAttribute("userId",userId);
 	userId=(String)session.getAttribute("userId");
 	/* 확인용 session 생성 */
 	
@@ -87,8 +87,8 @@
 								for(TravelBoard b:boards){%>
 								<div class="kjh_boardPostBasic">
 									<div class="kjh_boardPostImg">
-				    					<img src="<%=request.getContextPath()%>/images/kjh_images/travelBoard/<%=b.getThumbFilename()%>"
-				    						onclick="location.href='<%=request.getContextPath()%>/travelboard/boardView.do?boardNo=<%=b.getBoardNo()%>';"
+				    					<img src="<%=request.getContextPath()%>/upload/kjh_travelBoard/postThumbImages/<%=b.getThumbFilename()%>"
+				    						onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardview.do?boardNo=<%=b.getBoardNo()%>';"
 				    						style="cursor:pointer;">
 				    				<div class="kjh_boardPostTagContainer">
 				    					<div class="kjh_boardPostTag">
@@ -113,7 +113,7 @@
 				    				</div>
 				    				</div>
 				    				<div class="kjh_boardPostTitle">
-				    					<a href="<%=request.getContextPath()%>/travelboard/boardView.do?boardNo=<%=b.getBoardNo()%>">
+				    					<a href="<%=request.getContextPath()%>//travelboard/travelboardview.do?boardNo=<%=b.getBoardNo()%>">
 				    						<%=b.getBoardTitle()%>
 				    					</a>
 			    					</div>
