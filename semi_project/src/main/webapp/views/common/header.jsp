@@ -14,8 +14,8 @@
     <link
           href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
           rel="stylesheet">
-
-
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
 
 </head>
    <body>
