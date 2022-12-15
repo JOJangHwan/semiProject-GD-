@@ -113,22 +113,22 @@
     </header>
     <script>
           const navBar = document.querySelector("nav"),
-            	menuBtns = document.querySelectorAll(".menu-icon"),
+               menuBtns = document.querySelectorAll(".menu-icon"),
                 overlay = document.querySelector(".overlay");
                         
-	                menuBtns.forEach((menuBtn) => {
-	                	menuBtn.addEventListener("click", () => {
-	                		navBar.classList.toggle("open");
-	               		});
-	         		});
+                   menuBtns.forEach((menuBtn) => {
+                      menuBtn.addEventListener("click", () => {
+                         navBar.classList.toggle("open");
+                        });
+                  });
                         
                     overlay.addEventListener("click", () => {
-                    	navBar.classList.remove("open");
+                       navBar.classList.remove("open");
            });
-	</script>
-	<div class="blank2"></div>
+   </script>
+   <div class="blank2"></div>
 <section id="contentparent">
-	
+   
     <div id="content">
         <!-- 메인화면사진 -->
             <!-- https://cdn.pixabay.com/photo/2016/02/22/08/38/gyeongbok-palace-1214975_960_720.jpg -->
@@ -191,4 +191,4 @@
     </div>
 </section> 
 <div class="blank3"></div>
-<%@ include file="/views/common/footer.jsp" %>		
+<%@ include file="/views/common/footer.jsp" %>      
