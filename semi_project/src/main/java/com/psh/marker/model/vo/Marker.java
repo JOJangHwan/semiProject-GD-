@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 public class Marker {
 	private int markerNo;
 	private int movelineNo;
-	private String longgitude;
-	private String latitude;
+	private double longgitude;
+	private double latitude;
 	private String address;
 	private String memo;
-	private String movelineDay;
+	private int movelineDay;
 	private String placeName;
 	private int price;
 	private String markerTime;

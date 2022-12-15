@@ -1,28 +1,23 @@
-package com.kjh.admin.controller;
+package com.jjh.questions.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kjh.admin.model.vo.Tag;
-import com.kjh.travelBoard.model.service.TravelBoardService;
-
 /**
- * Servlet implementation class AdminTravelBoardWriteServlet
+ * Servlet implementation class QuestionsWriteServlet
  */
-@WebServlet("/admin/travelboardwrite.do")
-public class AdminTravelBoardWriteServlet extends HttpServlet {
+@WebServlet("/questions/questionsWrite.do")
+public class QuestionsWriteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminTravelBoardWriteServlet() {
+    public QuestionsWriteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,10 +26,9 @@ public class AdminTravelBoardWriteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Tag> tags=new TravelBoardService().searchTagList();
-		request.setAttribute("tags", tags);
-		
-		request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardWrite.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/views/jjh_questions/questionsWrite.jsp").forward(request, response);
 	}
 
 	/**

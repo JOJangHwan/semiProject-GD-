@@ -11,40 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+And+White+Picture&family=Jua&family=Kirang+Haerang&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <link
-          href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-          rel="stylesheet">
-
-    <!--캘린더  -->
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
-    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-
-    <!-- 에디터 -->
-    <!-- include libraries(jQuery, bootstrap) -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <!-- 에디터 css/js -->
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
-    <!-- 지도 -->
-    <style>
-        #mapwrap{position:relative;overflow:hidden;}
-        .category, .category *{margin:0;padding:0;color:#000;}   
-        .category {position:absolute;overflow:hidden;top:10px;left:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
-        .category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
-        .category li{list-style:none;float:left;width:50px;height:45px;padding-top:5px;cursor:pointer;} 
-        .category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png') no-repeat;} 
-        .category .ico_coffee {background-position:-10px 0;}  
-        .category .ico_store {background-position:-10px -36px;}   
-        .category .ico_carpark {background-position:-10px -72px;} 
-   </style>
+    <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet">
+   	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
 
 </head>
    <body>
