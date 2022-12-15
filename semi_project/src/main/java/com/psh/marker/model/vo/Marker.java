@@ -1,0 +1,24 @@
+package com.psh.marker.model.vo;
+
+import java.sql.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class Marker {
+	private int markerNo;
+	private int movelineNo;
+	private double longgitude;
+	private double latitude;
+	private String address;
+	private String memo;
+	private int movelineDay;
+	private String placeName;
+	private int price;
+	private String markerTime;
+}

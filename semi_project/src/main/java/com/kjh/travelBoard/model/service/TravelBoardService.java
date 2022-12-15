@@ -40,6 +40,41 @@ public class TravelBoardService {
 		return list;
 	}
 	
+	public TravelBoard selectTravelBoard(int boardNo) {
+		Connection conn=getConnection();
+		TravelBoard board=dao.selectTravelBoard(conn, boardNo);
+		
+		List<Tag> tags=dao.searchTagBoardList(conn, board.getBoardNo());
+		board.setTags(tags);
+		System.out.println(tags);
+		
+		int result=dao.searchTravelBoardPick(conn, board.getUserId(), board.getBoardNo());
+		System.out.println("result : "+result);
+		char pick=' ';
+		if(result!=0)pick='Y';
+		else pick='N';
+		board.setTravelPick(pick);
+		System.out.println("pick : "+pick);
+		
+		close(conn);
+		return board;
+	}
+	
+	public int insertTravelBoard(TravelBoard board) {
+		Connection conn=getConnection();
+		int result=dao.insertTravelBoard(conn,board);
+		close(conn);
+		return result;
+	}
+	
+	public int insertTravelBoardTag(TravelBoard board) {
+		Connection conn=getConnection();
+		int result=dao.insertTravelBoardTag(conn,board);
+		close(conn);
+		return result;
+	}
+	
+	
 	public int searchTravelBoardCount() {
 		Connection conn=getConnection();
 		int result=dao.searchTravelBoardCount(conn);
