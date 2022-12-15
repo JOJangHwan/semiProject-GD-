@@ -1,4 +1,4 @@
-package com.jjh.Notice.controller;
+package com.jjh.questions.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class NoticeWriteServlet
+ * Servlet implementation class QuestionDeleteServlet
  */
-@WebServlet("/notice/noticewrite.do")
-public class NoticeWriteServlet extends HttpServlet {
+@WebServlet("/questions/questionsDelete.do")
+public class QuestionDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteServlet() {
+    public QuestionDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,9 +28,6 @@ public class NoticeWriteServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("/views/jjh_notice/noticeWrite.jsp").forward(request, response);
-		
-	
 		
 	}
 

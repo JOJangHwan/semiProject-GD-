@@ -50,9 +50,16 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		if(m!=null) {
-			HttpSession session=request.getSession();
-			session.setAttribute("loginMember", m);
-			response.sendRedirect(request.getContextPath());
+			if(!m.getUserId().equals("admin")) {
+				HttpSession session=request.getSession();
+				session.setAttribute("loginMember", m);
+				response.sendRedirect(request.getContextPath());
+			}else {
+				HttpSession session=request.getSession();
+				session.setAttribute("loginMember", m);
+				response.sendRedirect(request.getContextPath()+"/views/jjh_adminPage/adminPage.jsp");
+			}
+			
 		}else {
 			request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다.");
 			request.setAttribute("loc", "/login/loginView.do");

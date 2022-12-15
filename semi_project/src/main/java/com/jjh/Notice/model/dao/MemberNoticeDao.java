@@ -15,6 +15,7 @@ import java.util.Properties;
 import org.apache.tomcat.dbcp.dbcp2.PStmtKey;
 
 import com.jjh.Notice.model.vo.Notice;
+import com.jjh.questions.model.vo.Questions;
 
 public class MemberNoticeDao {
 	private Properties sql=new Properties();
@@ -87,6 +88,45 @@ public class MemberNoticeDao {
 		}return n;
 		
 		}
+	
+	public int insertNotice(Connection conn,Notice n) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertNotice"));
+			pstmt.setString(1, n.getNoticeWriter());
+			pstmt.setString(2, n.getNoticeTitle());
+			pstmt.setString(3, n.getNoticeContent());
+			
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int selectNoticeDelete(Connection conn,String[] open) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		for(int i=0; i<open.length;i++) {
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectNoticeDelete"));
+				pstmt.setString(1, open[i]);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			
+		}
+		return result;
+	}
+	
+	
 	
 	
 	

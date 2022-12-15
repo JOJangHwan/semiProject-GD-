@@ -26,7 +26,7 @@
         
         <tr>
             <th colspan="2">
-                <input type="button" value="수정하기" onclick="location.assign('<%=request.getContextPath()%>/member/enrollUpdata.do');">
+                <input type="button" value="수정하기" onclick="location.assign('<%=request.getContextPath()%>/notice/noticeUpdate.do?NoticeNo=<%=notices.getNoticeNo()%>');">
                 <input type="button" value="삭제하기" onclick="fn_deleteNotice('<%=notices.getNoticeNo()%>','<%=notices.getNoticeContent()%>');">
             </th>
         </tr>
