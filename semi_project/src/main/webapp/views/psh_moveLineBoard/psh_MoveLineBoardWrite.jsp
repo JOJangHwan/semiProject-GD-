@@ -5,35 +5,32 @@
     pageEncoding="UTF-8"%>
    <%
         List<MoveLine> mlList=(List<MoveLine>)request.getAttribute("moveline");
-        List<Marker> mList=(List<Marker>)request.getAttribute("marker");    
+        List<Marker> mList=(List<Marker>)request.getAttribute("marker");
+        int d=3;
    %>
-<%@ include file="/views/common/header.jsp" %>
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
-     <!-- 에디터 -->
+    <!-- 에디터 -->
 	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	
-	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
    
     <!-- 지도 -->
     <style>
-	#mapwrap{position:relative;overflow:hidden;}
-	.category, .category *{margin:0;padding:0;color:#000;}   
-	.category {position:absolute;overflow:hidden;top:10px;left:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
-	.category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
-	.category li{list-style:none;float:left;width:50px;height:45px;padding-top:5px;cursor:pointer;} 
-	.category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png') no-repeat;} 
-	.category .ico_coffee {background-position:-10px 0;}  
-	.category .ico_store {background-position:-10px -36px;}   
-	.category .ico_carpark {background-position:-10px -72px;} 
+		#mapwrap{position:relative;overflow:hidden;}
+		.category, .category *{margin:0;padding:0;color:#000;}   
+		.category {position:absolute;overflow:hidden;top:10px;left:10px;width:150px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
+		.category .menu_selected {background:#FF5F4A;color:#fff;border-left:1px solid #915B2F;border-right:1px solid #915B2F;margin:0 -1px;} 
+		.category li{list-style:none;float:left;width:50px;height:45px;padding-top:5px;cursor:pointer;} 
+		.category .ico_comm {display:block;margin:0 auto 2px;width:22px;height:26px;background:url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/category.png') no-repeat;} 
+		.category .ico_coffee {background-position:-10px 0;}  
+		.category .ico_store {background-position:-10px -36px;}   
+		.category .ico_carpark {background-position:-10px -72px;}
 	</style>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
+<%@ include file="/views/common/header.jsp"%>
+    
 	
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
@@ -50,6 +47,7 @@
 					   <!-- 지도가 표시될 div -->
 					   <div id="map" style="width:100%;height:350px;"></div>
 					   <!-- 지도 위에 표시될 마커 카테고리 -->
+                       <!-- 스크립트로 포문 돌려서 출력 최대 일차까지 -->
 					   <div class="category">
 						   <ul>
 							   <li id="coffeeMenu" onclick="changeMarker('coffee')">
@@ -66,68 +64,139 @@
 							   </li>
 						   </ul>
 					   </div>
-                       
 				   </div>
-                   <div>
-                        <table>
-                            <tr>
-                                <th>시간</th>
-                                <th>장소</th>
-                                <th>주소</th>
-                                <th>상세내용</th>
-                            </tr>
-                            <%for(Marker m:mList){%>
-                                <tr>
-                                    <td><%=m.getMarkerTime()%></td>
-                                    <td><%=m.getPlaceName()%></td>
-                                    <td><%=m.getAddress()%></td>
-                                    <td><%=m.getMemo()%></td>
-                                </tr>
-                            <%}%>
-                        </table>
 
-                   </div>
-				   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
-				   <!-- 지도 끝 -->
-	   
-				   <!-- 에디터 -->
-				   <div id="summernote"><p>Hello Summernote</p></div>
+				     <div>
+					   	<table>
+					   		<tr>
+					   			<th>시간</th>
+					   			<th>장소</th>
+					   			<th>주소</th>
+					   			<th>상세내용</th>
+					   		</tr>
+					   		<%if(mList.isEmpty()){ %>
+					   			<tr>
+					   				<td><h3>오류</h3></td>
+					   			</tr>
+					   		<%}else{%>
+					   			<%for(Marker m:mList){%>
+	                                <tr>
+	                                    <td><%=m.getMarkerTime()%></td>
+	                                    <td><%=m.getPlaceName()%></td>
+	                                    <td><%=m.getAddress()%></td>
+	                                    <td><%=m.getMemo()%></td>
+	                                </tr>
+	                            <%}
+					   			}%>
+					   	</table>
+				   </div>
 				   
-				   <!-- 등록 버튼 -->
-				   <div id="btnwrr">
-					   <input type="submit" value="등록">
-				   </div>
-			   </form>
-
-		    </div>
+				    <div id="summernote"></div>
+				    
+				    <script>
+					    $(document).ready(function() {
+	                        $('#summernote').summernote({
+	                           height: 500
+	                        });
+	                    });
+				    </script>
+				    
+                   <button type="button" onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do')">등록</button>
+                	</form>
+                </div>
 	    <div id="rightMarginMain"></div>
     </section>
+    
 	<script>
-        
-        // 에디터
-
-        $(document).ready(function() {
-            $('#summernote').summernote(); 
-        });
-
-        
+		
         // 지도
-        
+
         var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
         mapOption = { 
-            center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765), // 지도의 중심좌표 
+            center: new kakao.maps.LatLng(37.498004414546934, 127.02770621963765), // 지도의 중심좌표 (일차별 첫번째 장소로 지정)
             level: 3 // 지도의 확대 레벨 
         }; 
 
         var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-        // 일차만큼 배열 생성하여 좌표저장(일차값 queryString으로 전달받을 수 있으면 좋껬..)
-        mList.forEach((v)=>{
-            console.log(v)
-        }
-        
+        //좌표배열도 포문 돌려서 일차별로 집어 넣기/ 동선 저장할때 좌표 저장 형식(배열/객체배열/객체) 확인해봐야 진행 가능
 
-        var markerImageSrc = '/images/mark.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+        // 커피숍 마커가 표시될 좌표 배열입니다
+        
+          
+        var movelineDay=new Array();
+    	var mlday=[];
+    	//좌표값 배열 생성
+        <%for(Marker m:mList){%>
+			movelineDay.push(<%=m.getLonggitude()%>+","+<%=m.getLatitude()%>+","+<%=m.getMovelineDay()%>);
+			console.log(<%=m.getLonggitude()%>);
+		<%}%>
+		
+		
+		//위도,경도,일차 인덱스로 쪼개서 배열에 넣음
+		for(let i=0;i<<%=mList.size()%>;i++){		
+			mlday.push(movelineDay[i].split(","));
+		}
+		console.log(mlday)
+		
+		//숫자형변환
+		/* for(let i=0;i<mlday.length;i++){
+			for(let j=0;j<mlday[i].length;j++){
+				Number(mlday[i][j]);
+				
+			}
+			
+		}
+		console.log(typeof mlday[1][1]) */
+		//일차별로 배열인덱스에 넣음
+		let data={};
+		let mySet=new Set();
+		for(let i=0;i<mlday.length;i++){
+			mySet.add(mlday[i][2]);
+			//console.log(typeof mlday[i][j])
+		}
+		//key값으로 배열생성
+		for(let key of mySet){
+			data[key]=[];
+		}
+				
+		for(let i=0;i<mlday.length;i++){
+			//console.log(typeof mlday[i][2],mlday[i][0],mlday[i][1]);
+ 			data[mlday[i][2]].push([mlday[i][0],mlday[i][1]]);
+ 			
+		}
+		
+		//일차별로 마커가 표시될 좌표배열
+		for(let i=1;i<<%=d%>+1;i++){
+			for(let j=0;j<data[i].length;j++){
+				console.log(typeof data[i][j][0]);
+			}
+			
+		}
+		
+        // 편의점 마커가 표시될 좌표 배열입니다
+        var storePositions = [
+            new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
+            new kakao.maps.LatLng(37.49671536281186, 127.03020491448352),
+            new kakao.maps.LatLng(37.496201943633714, 127.02959405469642),
+            new kakao.maps.LatLng(37.49640072567703, 127.02726459882308),
+            new kakao.maps.LatLng(37.49640098874988, 127.02609983175294),
+            new kakao.maps.LatLng(37.49932849491523, 127.02935780247945),
+            new kakao.maps.LatLng(37.49996818951873, 127.02943721562295)
+        ];
+
+        // 주차장 마커가 표시될 좌표 배열입니다
+        var carparkPositions = [
+            new kakao.maps.LatLng(37.49966168796031, 127.03007039430118),
+            new kakao.maps.LatLng(37.499463762912974, 127.0288828824399),
+            new kakao.maps.LatLng(37.49896834100913, 127.02833986892401),
+            new kakao.maps.LatLng(37.49893267508434, 127.02673400572665),
+            new kakao.maps.LatLng(37.49872543597439, 127.02676785815386),
+            new kakao.maps.LatLng(37.49813096097184, 127.02591949495914),
+            new kakao.maps.LatLng(37.497680616783086, 127.02518427952202)                       
+        ];    
+
+        var markerImageSrc = '<%=request.getContextPath()%>/images/mark.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
             coffeeMarkers = [], // 커피숍 마커 객체를 가지고 있을 배열입니다
             storeMarkers = [], // 편의점 마커 객체를 가지고 있을 배열입니다
             carparkMarkers = []; // 주차장 마커 객체를 가지고 있을 배열입니다
@@ -137,7 +206,7 @@
             createStoreMarkers(); // 편의점 마커를 생성하고 편의점 마커 배열에 추가합니다
             createCarparkMarkers(); // 주차장 마커를 생성하고 주차장 마커 배열에 추가합니다
 
-            //changeMarker(''); // 지도에 커피숍 마커가 보이도록 설정합니다    
+            changeMarker(); // 지도에 커피숍 마커가 보이도록 설정합니다    
 
 
         // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
@@ -161,10 +230,10 @@
             
             for (var i = 0; i < coffeePositions.length; i++) {  
                 
-                var imageSize = new kakao.maps.Size(22, 26),
+                var imageSize = new kakao.maps.Size(35, 50),
                     imageOptions = {  
                         spriteOrigin: new kakao.maps.Point(10, 0),    
-                        spriteSize: new kakao.maps.Size(36, 98)  
+                        spriteSize: new kakao.maps.Size(55, 50)  
                     };     
                 
                 // 마커이미지와 마커를 생성합니다

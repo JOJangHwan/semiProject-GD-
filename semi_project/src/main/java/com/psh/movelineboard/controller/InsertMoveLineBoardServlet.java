@@ -42,21 +42,6 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 //		request.setAttribute("moveline", ml);
 		request.setAttribute("marker", mList);
 		
-		String p;
-		List position=new ArrayList<>();
-		for(Marker m:mList) {
-			for(int i=0;i<mList.size();i++) {
-				if(m.getMovelineDay()==i+1) {
-					p=m.getLonggitude()+","+m.getLatitude()+","+m.getMovelineDay();
-					position.add(p);
-				}
-			}
-			
-			
-		}
-		request.setAttribute("position", position);
-		System.out.println(position);
-		
 		request.getRequestDispatcher("/views/psh_moveLineBoard/psh_MoveLineBoardWrite.jsp").forward(request, response);
 	}
 
