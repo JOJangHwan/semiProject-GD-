@@ -82,6 +82,8 @@ public class NoticeListViewServlet extends HttpServlet {
 		request.setAttribute("pageBar", pageBar);
 	
 		
+		System.out.println(n);
+		
 		request.setAttribute("notices", n);
 		
 		

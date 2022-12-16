@@ -7,17 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jjh.Notice.model.service.MemberNoticeService;
+
 /**
- * Servlet implementation class NoticeWriteServlet
+ * Servlet implementation class NoticeListDeleteServlet
  */
-@WebServlet("/notice/noticewrite.do")
-public class NoticeWriteServlet extends HttpServlet {
+@WebServlet("/notice/noticeListDelete.do")
+public class NoticeListDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeWriteServlet() {
+    public NoticeListDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,11 +29,29 @@ public class NoticeWriteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		request.getRequestDispatcher("/views/jjh_notice/noticeWrite.jsp").forward(request, response);
+		String[] open=(String[])request.getParameterValues("open");
+//		for(int i=0;i<open.length;i++) 
+//		{
+//			System.out.println(open[i].toString());
+//		}
+//		open.toString();
+		int result=new MemberNoticeService().selectNoticeDelete(open);
 		
-	
+		String msg="", loc="";
+		if(result>0) {
+			msg="삭제가 되었습니다.";
+			loc="/notice/noticeListView.do";
+		}else {
+			msg="삭제가 실패되셨습니다.";
+			loc="/notice/noticeListView.do";
+			
+			
+		}
 		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

@@ -1,13 +1,17 @@
 package com.jjh.Notice.model.service;
 
 import static com.jjh.common.JDBCTemplate.close;
+import static com.jjh.common.JDBCTemplate.commit;
 import static com.jjh.common.JDBCTemplate.getConnection;
+import static com.jjh.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
 
 import com.jjh.Notice.model.dao.MemberNoticeDao;
 import com.jjh.Notice.model.vo.Notice;
+import com.jjh.questions.model.dao.QuestionDao;
+import com.jjh.questions.model.vo.Questions;
 
 public class MemberNoticeService {
 	
@@ -36,6 +40,26 @@ public class MemberNoticeService {
 		close(conn);
 		return n;
 		
+	}
+	
+	public int insertNotice(Notice n) {
+		Connection conn=getConnection();
+		int result=new MemberNoticeDao().insertNotice(conn, n);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+		
+	}
+	
+	public int selectNoticeDelete(String[] open) {
+		Connection conn=getConnection();
+		int result=new MemberNoticeDao().selectNoticeDelete(conn, open);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	}
 
 }

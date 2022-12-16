@@ -10,6 +10,7 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
 <%@ include file="/views/common/header.jsp" %>
 <section id="notice-container">
         <h2>문의사항</h2>
+        <input id="btn-add" type="button" value="글쓰기" onclick="location.assign('<%=request.getContextPath()%>/questions/questionsWrite.do');">
         <table id="tbl-notice">
             <tr>
             
@@ -17,6 +18,7 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
                 <th>제목</th>
                 <th>작성자</th>
                 <th>작성일</th>
+                <th>삭제</th>
             </tr>
 	
         <%if(questions.isEmpty()){ %>
@@ -38,6 +40,7 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
 						  <%} %>          		
         			</td> --%>
             		<td><%=questions.get(i).getQuestionsEnroll()%></td>
+            		<td><a href="<%=request.getContextPath()%>/questions/questionsDelete.do?QuestionNo=<%=questions.get(i).getQuestionsNo()%>"></a></td>
             		
             	</tr>
             <%}%>
@@ -57,3 +60,8 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
     table#tbl-notice{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse;}
     table#tbl-notice th, table#tbl-notice td {border:1px solid; padding: 5px 0; text-align:center;} 
     </style>
+    
+    
+    <script>
+    
+    </script>

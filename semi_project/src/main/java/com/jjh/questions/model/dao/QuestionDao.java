@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.jjh.member.model.vo.Member;
 import com.jjh.questions.model.vo.Questions;
 
 public class QuestionDao {
@@ -64,6 +65,23 @@ public class QuestionDao {
 			close(rs);
 			close(pstmt);
 		}return count;
+	}
+	
+	public int insertQuestion(Connection conn,Questions q) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertQuestions"));
+			pstmt.setString(1, q.getQuestionsWriter());
+			pstmt.setString(2, q.getQuestionsTitle());
+			pstmt.setString(3, q.getQuestionsContent());
+			pstmt.setString(4, String.valueOf(q.getOpenAndclose()));
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
 	}
 	
 	public static Questions getquestions(ResultSet rs) throws SQLException{
