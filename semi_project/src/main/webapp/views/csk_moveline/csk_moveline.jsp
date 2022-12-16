@@ -2,12 +2,17 @@
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/moveline.css">
 <%@ include file="/views/common/header.jsp" %>
+<!--캘린더  -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 		    <input type="text" id="headline" name="headline" placeholder="여행제목을 입력해주세요">
 			<br><br><br>
-                <!-- 캘린더 -->
+               <!-- 캘린더 -->
                 <div id="psh_calBox">
                     <form id="psh_calForm">
                         <input class="input-box" type="text" name="daterange"/>
@@ -38,7 +43,7 @@
                     });  
                 </script>
  			
- 			<!--지도 공통 코드-->
+ 				<!--지도 공통 코드-->
 				<div id="map" style="width:100%;height:350px;"></div>
 
 				<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b39ac3f3968d9d1ab2abc39538c8b218&libraries=services"></script>
@@ -137,20 +142,21 @@
 					let customOverlays=[]; //마커 위 장소명을 띄울 오버레이
 					let linePath=[];
 					
-					console.log(linePath);
 					function fn_reflection() {
 						count=0; //플레이스를 누적할 카운트 변수
 						placeData=[]; //장소 저장
 						markers=[]; //마커 저장
 						customOverlays=[]; //마커 위 장소명을 띄울 오버레이
 						bounds = new kakao.maps.LatLngBounds();
-
+						
 						for (let i=0; i<markers.length; i++) {
+							console.log(markers.length);
 							markers[i].setMap(null);
 							customOverlays[i].setMap(null);
+
 						}
-						markers=[];
-						customOverlays=[];
+						// markers=[];
+						// customOverlays=[];
 
 						let place1 = document.getElementById("place1");
 						let place2 = document.getElementById("place2");
@@ -183,18 +189,20 @@
 						
 	//여기서부터 새로 시작
 						// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
-						
-						var x = placesSearchCB().linePath[1];
-						console.log("check1:"+x);
-
+						// let line =[];
+						// for(i=0; i<)
+						// console.log(line[0]);
 						// 지도에 표시할 선을 생성합니다
-						var polyline = new kakao.maps.Polyline({
-						    path: linePath, // 선을 구성하는 좌표배열 입니다
-						    strokeWeight: 5, // 선의 두께 입니다
-						    strokeColor: '#F1C40F', // 선의 색깔입니다
-						    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-						    strokeStyle: 'solid' // 선의 스타일입니다
-						});
+						// var markerPosition  = new kakao.maps.LatLng(placeData[0].y, placeDate[0].x);
+						// console.log("위도경도테스트"+markerPosition);
+						
+						// var polyline = new kakao.maps.Polyline({
+						//     path: linePath, // 선을 구성하는 좌표배열 입니다
+						//     strokeWeight: 5, // 선의 두께 입니다
+						//     strokeColor: '#F1C40F', // 선의 색깔입니다
+						//     strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+						//     strokeStyle: 'solid' // 선의 스타일입니다
+						// });
 
 						// 지도에 선을 표시합니다 
 						polyline.setMap(map);
@@ -220,9 +228,29 @@
 								placeSearch(placeData[count])
 							} else if (count == placeData.length) {
 								setBounds();
+							}
+						}
 					}
+					
 
 					// 지도에 마커를 표시하는 함수입니다
+// 여기서부터지우기
+					// 마커가 표시될 위치입니다 
+					var markerPosition  = new kakao.maps.LatLng(placeData.y, placeDate.x);
+					console.log("위도경도테스트"+markerPosition); 
+
+					// //마커 이미지 설정
+					// var imageSrc = "<%=request.getContextPath()%>/images/basicmarker.png";
+					// var imageSize = new kakao.maps.Size(70,70);
+					// var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+					
+					// // 마커를 생성합니다
+					// var marker = new kakao.maps.Marker({
+					// 	position: markerPosition,
+					// 	image: markerImage
+					// });
+//여기까지지우기
+
 					function displayMarker(place) {
 
 						// 마커를 생성하고 지도에 표시합니다
