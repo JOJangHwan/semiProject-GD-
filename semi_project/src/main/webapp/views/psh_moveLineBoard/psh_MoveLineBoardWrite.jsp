@@ -4,9 +4,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%
-        List<MoveLine> mlList=(List<MoveLine>)request.getAttribute("moveline");
+        MoveLine ml=(MoveLine)request.getAttribute("moveline");
         List<Marker> mList=(List<Marker>)request.getAttribute("marker");
-        int d=3;
+      
+        int d=3;//일차값 이ㅏㅁ의로
    %>
     <!-- 에디터 -->
 	<!-- include libraries(jQuery, bootstrap) -->
@@ -40,11 +41,12 @@
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 
-				<form>
+				<form action="<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do">
 					<!-- 제목 -->
 				   <div >
 					   <input id="mlbTitle" type="text" placeholder="제목을 입력하세요">
 				   </div>
+				   <p>작성자 </p><p><%=ml.getUserId()%></p>
 				   <hr>
 				   <!-- 지도 시작 -->
 				   <div id="mapwrap"> 
@@ -96,59 +98,13 @@
 	                    });
 				    </script>
 				    
-                   <button type="button" onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do')">등록</button>
+                   <input type="submit" value="등록">
                 	</form>
                 </div>
 	    <div id="rightMarginMain"></div>
     </section>
     
 	<script>
-		//저장된 내 동선 정보 일차별 출ㄹ력
-		<%-- <%if(mList.isEmpty()){ %>
-					   		alert("저장된 동선정보가 없습니다");
-						<%}else{%>
-					   		<%for(Marker m:mList){%>
-	                                <tr>
-	                                    <td><%=m.getMarkerTime()%></td>
-	                                    <td><%=m.getPlaceName()%></td>
-	                                    <td><%=m.getAddress()%></td>
-	                                    <td><%=m.getMemo()%></td>
-	                                </tr>
-	                          <%}
-					   		}%> --%>
-		
-			
-			<%-- <%if(mList.isEmpty()){ %>
-	   			alert("저장된 동선정보가 없습니다");
-			<%}else{%>
-				for(let i=0;i<<%=d%>;i++){
-					var str="";
-					str+="<div>";
-					str+="<table style=border : 1px>";
-					str+="<tr>";
-					str+="<th> </th>";
-					str+="<th>장소</th>";
-					str+="<th>주소</th>";
-					str+="<th>메모</th>";
-					str+="<th>거리</th>";
-					str+="</tr>";
-	   			<%for(Marker m:mList){
-	   				for(int i=0;i<d;i++){
-	   					if(m.getMovelineDay().equals(i)){%>
-			                    str+="<tr>";
-			                    str+="<td>"+<%=m.getPlaceName()%>+"</td>";
-			                    str+="<td>"+<%=m.getAddress()%>+"</td>";
-			                    str+="<td>"+<%=m.getMemo()%>+"</td>";
-			                    str+="<td></td>";
-			                    str+="</tr>";
-              			<%}
-	   				}
-	   			}%>
-	   			str+="</table>";
-	   			str+="</div>";
-	   			$("#infoBox").html(str);
-	   			}
-	   		<%}%> --%>
 		
  		//카테고리
  		for(let i=0;i<<%=d%>;i++){
