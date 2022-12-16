@@ -37,9 +37,10 @@ public class Open_And_ClosedServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int movelineNo=1;//아직 값을 받아 올 수 없으므로 임시 지정
 		
-//		List<MoveLine> ml=(List<MoveLine>)new MoveLineService().searchMoveLine(movelineNo);
+		MoveLine ml=(MoveLine)new MoveLineService().searchMoveLine(movelineNo);
+		System.out.println(ml);
 		List<Marker> mList=(List<Marker>)new MarkerService().searchMarker(movelineNo);
-//		request.setAttribute("moveline", ml);
+		request.setAttribute("moveline", ml);
 		request.setAttribute("marker", mList);
 		
 		request.getRequestDispatcher("/views/psh_moveLineBoard/psh_MoveLineBoardWrite.jsp").forward(request, response);

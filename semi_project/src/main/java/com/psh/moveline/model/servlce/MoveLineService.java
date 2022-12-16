@@ -11,9 +11,9 @@ import com.psh.moveline.model.vo.MoveLine;
 public class MoveLineService {
 	private MoveLineDao dao=new MoveLineDao();
 	
-	public List<MoveLine> searchMoveLine(int movelineNo) {
+	public MoveLine searchMoveLine(int movelineNo) {
 		Connection conn=getConnection();
-		List<MoveLine> ml=dao.searchMoveLine(conn,movelineNo);
+		MoveLine ml=dao.searchMoveLine(conn,movelineNo);
 		close(conn);
 		return ml;
 	}
