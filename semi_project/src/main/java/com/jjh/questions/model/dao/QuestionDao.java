@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.jjh.Notice.model.vo.Notice;
 import com.jjh.member.model.vo.Member;
 import com.jjh.questions.model.vo.Questions;
 
@@ -66,6 +67,26 @@ public class QuestionDao {
 			close(pstmt);
 		}return count;
 	}
+	public Questions searchQuestionNo(Connection conn,int no) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Questions q=null;
+		try {
+			pstmt=conn.prepareCall(sql.getProperty("searchQuestionsNo"));
+			pstmt.setInt(1, no);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				q=getquestions(rs);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return q;
+		
+	}
 	
 	public int insertQuestion(Connection conn,Questions q) {
 		PreparedStatement pstmt=null;
@@ -83,6 +104,25 @@ public class QuestionDao {
 			close(pstmt);
 		}return result;
 	}
+	
+	public int selectQuestionDelete(Connection conn, String[] open) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		for(int i=0; i<open.length;i++) {
+			try {
+				pstmt=conn.prepareStatement(sql.getProperty("selectQuestionDelete"));
+				pstmt.setString(1, open[i]);
+				result=pstmt.executeUpdate();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}finally {
+				close(pstmt);
+			}
+			
+		}
+		return result;
+	}
+	
 	
 	public static Questions getquestions(ResultSet rs) throws SQLException{
 		return Questions.builder()

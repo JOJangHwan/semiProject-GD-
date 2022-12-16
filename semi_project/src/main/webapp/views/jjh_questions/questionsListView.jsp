@@ -1,5 +1,7 @@
+<%@page import="oracle.net.aso.q"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
     <%@ page import="java.util.List,com.jjh.questions.model.vo.Questions,com.jjh.member.model.vo.Member" %>
 <%
 	List<Questions> questions=(List<Questions>)request.getAttribute("questions");
@@ -8,27 +10,41 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
     
     
 <%@ include file="/views/common/header.jsp" %>
-<section id="notice-container">
-        <h2>문의사항</h2>
-        <input id="btn-add" type="button" value="글쓰기" onclick="location.assign('<%=request.getContextPath()%>/questions/questionsWrite.do');">
-        <table id="tbl-notice">
-            <tr>
-            
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성자</th>
-                <th>작성일</th>
-                <th>삭제</th>
-            </tr>
-	
-        <%if(questions.isEmpty()){ %>
+    <section id="notice-container">
+         <h2 class="ui teal image header">
+                문의사항
+            </h2>
+
+        <div class="ui large form">
+                <div class="ui stacked segment">
+                <%if(loginMember1!=null) { %>
+                    <a href="<%=request.getContextPath()%>/questions/questionsDelete.do"><button class="ui fluid large teal submit button">문의사항 작성하기</button></a>
+                    <%}%>
+                    <form action="<%=request.getContextPath()%>/questions/questionsListDelete.do" method="get">
+                    <table class="ui celled table">
+                        <thead>
+                            <tr>
+                            	<th>선택</th>
+                                <th>번호</th>
+                				<th>제목</th>
+                				<th>작성자</th>
+                				<th>작성일</th>
+                				<th>공개여부</th>
+                            </tr>
+                            <%if(questions.isEmpty()){ %>
             	<tr>
-            		<td><h3>조회된 공지사항글이 없습니다.</h3></td>
+            		<td><h3>조회된 문의사항 글이 없습니다.</h3></td>
             	</tr>
             	<%}else{ 
             		for(int i=0; i<questions.size();i++){
             	%>
             	<tr>
+            	<td>
+            	
+            		<input type="checkbox" name="open" value="<%=questions.get(i).getOpenAndclose()%>">
+        
+            		<input type="hidden"name="openNo" value="<%=questions.get(i).getOpenAndclose()%>">
+            	</td>
             		<td><%=questions.get(i).getQuestionsNo() %></td>
             		<td><a href="<%=request.getContextPath()%>/question/questionView.do?questionsNo=<%=questions.get(i).getQuestionsNo() %>"><%=questions.get(i).getQuestionsTitle()%></a></td>
             		<td><%=questions.get(i).getQuestionsWriter() %></td>
@@ -39,17 +55,34 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
 						첨부파일 없음
 						  <%} %>          		
         			</td> --%>
-            		<td><%=questions.get(i).getQuestionsEnroll()%></td>
-            		<td><a href="<%=request.getContextPath()%>/questions/questionsDelete.do?QuestionNo=<%=questions.get(i).getQuestionsNo()%>"></a></td>
+            		<td><%=questions.get(i).getQuestionsEnroll() %></td>
+            		<td><%=questions.get(i).getOpenAndclose() %></td>
+            		
+            	
+            		
+            		
+            	
+            		
             		
             	</tr>
             <%}%>
             	<%}%>
-
-        </table>
-        <div id="pagebat">
+                        </thead>
+                        <tbody id="list">
+                        </tbody>
+                    </table>
+                    <input type="submit" class="ui fluid large teal submit button" value="삭제하기">
+                    </form>
+                       
+                        <div id="pagebat">
         	<%=request.getAttribute("pageBar") %>
         </div>
+                </div>
+
+                <div class="ui error message"></div>
+
+            </div>
+        
     </section>
 
 <%@ include file="/views/common/footer.jsp" %>	

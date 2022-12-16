@@ -18,9 +18,9 @@
 
         <div class="ui large form">
                 <div class="ui stacked segment">
-                <%if(loginMember1!=null && loginMember1.getUserId().equals("admin")) { %>
-                    <a href="<%=request.getContextPath()%>/notice/noticewrite.do"><button class="ui fluid large teal submit button">게시글 작성하기</button></a>
-                    <%}%>
+<%if(loginMember1!=null && loginMember1.getUserId().equals("admin")) { %>
+                    <a href="<%=request.getContextPath()%>/notice/noticewrite.do"><button class="ui fluid large teal submit button">공지사항 작성하기</button></a>
+                  <%}%>
                     <form action="<%=request.getContextPath()%>/notice/noticeListDelete.do" method="get">
                     <table class="ui celled table">
                         <thead>
@@ -46,7 +46,7 @@
             		<input type="hidden"name="openNo" value="<%=notices.get(i).getNoticeNo()%>">
             	</td>
             		<td><%=notices.get(i).getNoticeNo() %></td>
-            		<td><a href="<%=request.getContextPath()%>/notice/noticeView.do?NoticeNo=<%=notices.get(i).getNoticeNo() %>"><%=notices.get(i).getNoticeTitle()%></a></td>
+            		<td><a href="<%=request.getContextPath()%>/notice/noticeView.do?noticeNo=<%=notices.get(i).getNoticeNo() %>"><%=notices.get(i).getNoticeTitle()%></a></td>
             		<td><%=notices.get(i).getNoticeWriter() %></td>
             		<%-- <td>
 						<%if(notices.get(i).getFilepath()!=null) {%>
@@ -69,7 +69,7 @@
                         <tbody id="list">
                         </tbody>
                     </table>
-                    <input type="submit" value="삭제하기">
+                    <input type="submit" class="ui fluid large teal submit button" value="삭제하기">
                     </form>
                        
                         <div id="pagebat">

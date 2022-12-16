@@ -8,6 +8,7 @@ import static com.jjh.common.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import com.jjh.Notice.model.dao.MemberNoticeDao;
 import com.jjh.Notice.model.vo.Notice;
 import com.jjh.member.model.vo.Member;
 import com.jjh.questions.model.dao.QuestionDao;
@@ -31,6 +32,13 @@ public class QuestionService {
 		close(conn);
 		return result;
 	}
+	public Questions searchQuestionNo(int no) {
+		Connection conn=getConnection();
+		Questions q=new QuestionDao().searchQuestionNo(conn,no);
+		close(conn);
+		return q;
+	}
+	
 	
 	public int insertQuestion(Questions q) {
 		Connection conn=getConnection();
@@ -41,6 +49,14 @@ public class QuestionService {
 		return result;
 		
 		
+	}
+	public int selectQuestionDelete(String[] open) {
+		Connection conn=getConnection();
+		int result=new QuestionDao().selectQuestionDelete(conn, open);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
 	}
 
 }

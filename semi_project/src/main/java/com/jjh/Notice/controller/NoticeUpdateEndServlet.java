@@ -7,20 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jjh.Notice.model.dao.MemberNoticeDao;
 import com.jjh.Notice.model.service.MemberNoticeService;
 import com.jjh.Notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeViewServlet
+ * Servlet implementation class NoticeUpdateEndServlet
  */
-@WebServlet("/notice/noticeView.do")
-public class NoticeViewServlet extends HttpServlet {
+@WebServlet("/notice/updateNoticeEnd.do")
+public class NoticeUpdateEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeViewServlet() {
+    public NoticeUpdateEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,12 +32,37 @@ public class NoticeViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		
 		int no=Integer.parseInt(request.getParameter("noticeNo"));
+		String title=(String)request.getParameter("title");
+		String writer=(String)request.getParameter("writer");
+		String content=(String)request.getParameter("content");
 		
-		Notice n=new MemberNoticeService().searchNoticeNo(no);
-		request.setAttribute("Notice", n);
+		Notice n =Notice.builder()
+				.noticeNo(no)
+				.noticeTitle(title)
+				.noticeWriter(writer)
+				.noticeContent(content)
+				.build();
 		
-		request.getRequestDispatcher("/views/jjh_notice/noticeView.jsp").forward(request, response);
+		int result=new MemberNoticeService().updateNotice(n);
+		
+		String msg="", loc="";
+		if(result>0) {
+			msg="수정이 되었습니다.";
+			loc="/notice/noticeListView.do";
+		}else {
+			msg="삭제가 실패되셨습니다.";
+			loc="/notice/updateNotice.do";
+			
+			
+		}
+		
+		request.setAttribute("msg", msg);
+		request.setAttribute("loc", loc);
+		
+		request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 	}
 
 	/**

@@ -11,16 +11,16 @@ import com.jjh.questions.model.service.QuestionService;
 import com.jjh.questions.model.vo.Questions;
 
 /**
- * Servlet implementation class QuestionViewServlet
+ * Servlet implementation class QuestionsUpdateServlet
  */
-@WebServlet("/question/questionView.do")
-public class QuestionViewServlet extends HttpServlet {
+@WebServlet("/questions/updateQuestions.do")
+public class QuestionsUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionViewServlet() {
+    public QuestionsUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,11 +33,11 @@ public class QuestionViewServlet extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		int no=Integer.parseInt(request.getParameter("questionsNo"));
 		
-		Questions q =new QuestionService().searchQuestionNo(no);
+		Questions q=new QuestionService().searchQuestionNo(no);
+		request.setAttribute("Question", q);
 		
-		request.setAttribute("questions", q);
+		request.getRequestDispatcher("/views/jjh_questions/questionsUpdateView.jsp").forward(request, response);
 		
-		request.getRequestDispatcher("/views/jjh_questions/questionsView.jsp").forward(request, response);
 	}
 
 	/**
