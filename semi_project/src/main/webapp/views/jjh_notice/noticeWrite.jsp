@@ -2,14 +2,13 @@
     pageEncoding="UTF-8"%>
      <%@page import="com.jjh.member.model.vo.Member"%>
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
-<% Member loginMember=(Member)session.getAttribute("loginMember"); %>
    <%@ include file="/views/common/header.jsp" %>
 
 <div id='board-container'>
 		<div class="ui middle aligned center aligned grid">
         <div class="column">
             <h2 class="ui teal image header">
-                게시글 작성하기
+                문의사항 작성하기
             </h2>
             <form class="ui large form" action='<%=request.getContextPath()%>/notice/noticeWriteEnd.do' method="post">
                 <div class="ui stacked segment"  >

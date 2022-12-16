@@ -1,56 +1,68 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  
-      <%@ page import="java.util.List,com.jjh.Notice.model.vo.Notice,com.jjh.member.model.vo.Member" %>
+          <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
+    <%@ page import="java.util.List,com.jjh.Notice.model.vo.Notice,com.jjh.member.model.vo.Member" %>
        <%
 	Notice notices=(Notice)request.getAttribute("Notice");
    
    Member loginMember1=(Member)session.getAttribute("loginMember");
 %> 
-<%@ include file="/views/common/header.jsp" %>    
-<section id="notice">
- <div id="notice-container">
-    <form action="<%=request.getContextPath()%>/notice/noticewriteEnd.do" method="post" enctype="multipart/form-data">
-        <table id="tbl-notice">
-        <tr>
-            <th>제 목</th>
-            <td>
-            	<input type="text" placeholder="작성 필수!" name="title" required>
-            	
-            </td>
-        </tr>
-        <tr>
-            <th>작성자</th>
-            <td>
-            	<%=loginMember1.getUserId()%>
-            	<input type="hidden" value="<%=loginMember1.getUserId() %>" name="writer">
-            	<!--input 태그에 readonly를 써서 할수 도 있음-->
-           </td>
-        </tr>
-        <tr>
-            <th>첨부파일</th>
-            <td><input type="file" name="file"></td>
-        </tr>
-        <tr>
-            <th>내 용</th>
-            <td><textarea rows="10" cols="100" placeholder="내용을 입력하세요" name="content"></textarea></td>
-        </tr>
-        <tr>
-            <th colspan="2">
-                <input type="submit" value="등록하기" onclick="location.assign('<%=request.getContextPath()%>/notice/noticewriteEnd.do');">
-            </th>
-        </tr>
-    </table>
-    </form>
- 
+<%@ include file="/views/common/header.jsp" %>
+<section id="notice-container">
+     <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                공지사항 보기
+            </h2>
+            <form class="ui large form" action="<%=request.getContextPath()%>/notice/updateNoticeEnd.do" method="post">
+                <div class="ui stacked segment">
+                    <div class="field">
+                    	<input name="noticeNo" type="hidden" value="<%=notices.getNoticeNo()%>">
+                    	
+                        <input name="title" type="text" id="b_title" placeholder="게시글 제목" autocomplete="off" autofocus="autofocus" value="<%=notices.getNoticeTitle()%>">
+                        <br>
+                        <input name="writer" type="text" id="b_title" placeholder="작성자" autocomplete="off" autofocus="autofocus"value="작성자 <%=notices.getNoticeWriter()%>" readonly>
+                        
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                  
+                            <textarea name="content" style="resize: vertical;" id="b_title" placeholder="게시글 내용" rows="8"  ><%=notices.getNoticeContent()%></textarea>
+                        </div>
+                    </div>
+                   
+                   
+                    <br>
+                    <input type="submit"  class="ui fluid large teal submit button" value="수정하기">
+
+            </form>
+            
+           <%--  <a href="<%=request.getContextPath()%>/notice/updateNotice.do?noticeNo=<%=notices.getNoticeNo()%>"><button class="ui fluid large teal submit button">수정하기</button></a>
+			<br> --%>
+			<br>
+            <a href="<%=request.getContextPath()%>/notice/noticeView.do?noticeNo=<%=notices.getNoticeNo()%>"><button class="ui fluid large teal submit button">뒤로가기</button></a>
+            <br>
+        </div>
     </div>
-      </section>
-      <%@ include file="/views/common/footer.jsp" %>
-      
-           <style>
+    </section>
+    
+    
+	
+    
+    
+    
+    
+ 
+    
+    
+    
+     <style>
     section#notice-container{width:600px; margin:0 auto; text-align:center;}
     section#notice-container h2{margin:10px 0;}
     table#tbl-notice{width:500px; margin:0 auto; border:1px solid black; border-collapse:collapse; clear:both; }
     table#tbl-notice th {width: 125px; border:1px solid; padding: 5px 0; text-align:center;} 
     table#tbl-notice td {border:1px solid; padding: 5px 0 5px 10px; text-align:left;}
-    </style>
+    </style>	
+
+
+<%@ include file="/views/common/footer.jsp" %>	

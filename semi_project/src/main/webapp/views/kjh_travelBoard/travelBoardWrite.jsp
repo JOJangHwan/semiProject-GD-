@@ -4,12 +4,10 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/summernote/summernote-lite.css">
 	
 	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag"%>
-	<script src="http://code.jquery.com/jquery-latest.js"></script> 
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
   	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/summernote-lite.js"></script>
 	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
-	<%
-		List<Tag> tags=(List<Tag>)request.getAttribute("tags");
-	%>
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	
 	
 <style>
@@ -67,6 +65,13 @@
 	}
 </style>
 <%@ include file="/views/common/header.jsp" %>
+<%
+	String userId="";
+	if(loginMember!=null){
+		userId=loginMember.getUserId();
+	}
+	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
+%>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
@@ -82,6 +87,7 @@
 					    	<div id="infoInputArea">
 					    		<div id="tagContainer">
 					    			<div id="tagSelectContainer">
+					    				<label>태그 설정</label>
 						    			<select size="1" id="tagsSelect" name="tagsSelect">
 						    				<option value="none">태그 선택</option>
 						    				<%for(int i=0; i<tags.size(); i++){ %>
@@ -94,24 +100,23 @@
 									<div id="selectedTagsContainer">
 										<input type="hidden" id="selectedTags" name="selectedTags">
 									</div>
-									<script>
-										
-									</script>
 					    		</div>
 					    		<div id="thumbContainer">
+					    			<label>섬네일 설정</label>
 					    			<input type="file" name="upFile">
 					    		</div>
 					    		<div id="mapContainer">
-					    			<input type="text">
+					    			<label>지도 삽입하기</label>
+					    			<input type="button" value="지도 추가">
 					    		</div>
 					    	</div>
 					    	<div id="submitArea">
 					    		<div id="submitLeft">
-					    			<input type="reset" value="취소">	
+					    			<input type="button" value="취소" onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">
 					    		</div>
 					    		<div id="submitRight">
-									<button onclick="">임시저장</button>
-									<input type="submit" value="게시" >
+									<input type="button" value="임시저장" onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">
+									<input type="submit" value="게시">
 								</div>
 					    	</div>
 				    	</div>
@@ -139,23 +144,17 @@
 			if($("#tagsSelect option:selected").val()==="none"){
 				//선택되지 않도록 제한함.
 			}else if(tagArr.includes($("#tagsSelect option:selected").val())){
-				
+				//중복되지 않도록 제한함.
 			}else{
 				var $span = $('<span class="tg">'+$("#tagsSelect option:selected").text()+'</span>');
 				$('#selectedTagsContainer').append($span);
 				tagArr.length=0;
 				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerText)});
 				console.dir(tagArr);
-				const tagStr = tagArr.join();
+				const tagStr = tagArr.join(',');
 				$('#selectedTags').val(tagStr);
 				console.dir($('#selectedTags').val());
 			}
 		});
-		
-		
-		$('span[class=tg]').on("click", function(event){
-			
-		});
     </script>
-    
 <%@ include file="/views/common/footer.jsp" %>

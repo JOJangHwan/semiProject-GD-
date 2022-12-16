@@ -1,7 +1,31 @@
+<%@page import="org.jsoup.select.Elements"%>
+<%@page import="org.jsoup.Jsoup"%>
+<%@page import="org.jsoup.nodes.Document"%>
+<%@page import="org.jsoup.nodes.Element"%>
+<%@page import="org.jsoup.nodes.Document"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/views/common/header.jsp" %>
-<body>
+<body>+	
+	
+	
+<%
+	
+	Document doc =Jsoup.connect("https://www.letskorail.com/ebizprd/EbizPrdTicketPr21111_i1.do").get();
+	Elements elements=doc.select("li");
+	out.println(elements.size()+"개 가져엄<br>");
+	for(Element e : elements){
+		out.println(e.text()+"<br>");
+	}
+
+%>
+	
+
+
+
+
+
+
 
 <div class="map_wrap">
     <div id="map" style="width:50%;height:100%;position:relative;overflow:hidden;"></div>

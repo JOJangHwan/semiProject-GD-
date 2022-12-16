@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
 
@@ -27,66 +28,63 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
 
 <%@ include file="/views/common/header.jsp" %>
     
+        
         <section id="mainSection">
-            <div>
-            	<form id="loginFrm" action="<%=request.getContextPath()%>/login.do" method="post">
-                    <table>
-                        <tr>
-                            <td>
-                                아이디 <input type="text" name="loginId" value="<%=saveId!=null?saveId:""%>">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                비밀번호 <input type="password" name="password">
-                            </td>
-                            <td>
-                                <input type="submit" value="로그인">
+        <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+ 				로그인 페이지
+            </h2>
+            <form class="ui large form" form id="loginFrm" action="<%=request.getContextPath()%>/login.do" method="post">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="text" id="u_id" placeholder="아이디" name="loginId" value="<%=saveId!=null?saveId:""%>">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="password" id="u_pw" placeholder="비밀번호" name="password">
+                        </div>
+                     <div class="field">
+                     <input type="checkbox" name="saveId" id="saveId"<%=saveId!=null?"checked":"" %>>
+						<label for="saveId">아이디저장</label>
+                     </div>
+                    </div>
+                    <input type="submit" value="로그인" class="ui fluid large teal submit button" id = "login_btn">
+                     <br>
                                <a id="kakao-login-btn" href="javascript:loginWithKakao()">
   								<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222"
     							alt="카카오 로그인 버튼" />
 								</a>
 								<p id="token-result"></p>
 								<button class="api-btn" onclick="requestUserInfo()" style="visibility:hidden">사용자 정보 가져오기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                            <input type="checkbox" name="saveId" id="saveId"
-								 <%=saveId!=null?"checked":"" %>>
-								<label for="saveId">아이디저장</label>
-                            
-                    
-                            </td>
-                            
-                        </tr>
+								<input type="button" value="아이디찾기" class="ui fluid large teal submit button" id = "login_btn">
+								<br>
+                        		<input type="button" value="비밀번호찾기" class="ui fluid large teal submit button" id = "login_btn">
+                        		
+                   
+                </div>
 
-                    </table>
-                    <div>
-                        <input type="button" value="아이디찾기">
-                        <input type="button" value="비밀번호찾기">
-                         <input type="button" value="회원가입" onclick="location.assign('<%=request.getContextPath()%>/member/enrollMember.do');">
-                      
-                       
+                <div class="ui error message"></div>
 
-                    </div>
-            	
-            	</form>
-                
-                
+            </form>
 
-                
-
-
+            <div class="ui message">
+                로그인 할 계정이 없다면 <a href="<%=request.getContextPath()%>/member/enrollMember.do">여기</a>를 눌러주세요.
             </div>
-            
-        </section>
+        </div>
+    </div>
+    </section>
     
         <%@ include file="/views/common/footer.jsp" %>
         
         
         
-      
+      <style>
+  section#mainSection{width:300px; margin:0 auto; text-align:center;}
+    section#mainSection h2{margin:10px 0;}
+</style>
 
 
 
