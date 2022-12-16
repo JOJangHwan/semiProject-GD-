@@ -3,13 +3,15 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/summernote/summernote-lite.css">
 	
-	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag"%>
+	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag, com.jjh.member.model.vo.Member"%>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
   	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/summernote-lite.js"></script>
 	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	
 	<%
+		Member loginMember=(Member)session.getAttribute("loginMember");
+		String userId=loginMember.getUserId();
 		List<Tag> tags=(List<Tag>)request.getAttribute("tags");
 	%>
 	
