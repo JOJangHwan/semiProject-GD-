@@ -1,42 +1,46 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
 <%@page import="com.jjh.member.model.vo.Member"%>
 <% Member loginMember=(Member)session.getAttribute("loginMember"); %>
    <%@ include file="/views/common/header.jsp" %>
      
 
 <div id='board-container'>
-		<h2>문의사항</h2>
-		<form action='<%=request.getContextPath()%>/questions/questionsWriteEnd.do' method="post">
-			<table id='tbl-board'>
-				<tr>
-					<th>제목</th>
-					<td><input type="text" placeholder="제목을 입력하세요" name="title"></td>
-				</tr>
-				<tr>
-					<th>작성자</th>
-					<td><%=loginMember.getUserId() %></td>
-					<td><input type="hidden" value="<%=loginMember.getUserId()%>" name="userId"></td>
-				</tr>
-				<tr><th>공개여부</th>
-					<td><input type="checkbox"  name="open"></td>
-				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td><input type="file" name="fileName"></td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td><textarea rows="10" cols="100" placeholder="내용을 입력하세요" name="content"></textarea></td>
-				</tr>
-				<tr>
-					<th colspan="2">
-					<input type="submit" value="등록하기">
-						
-					</th>
-				</tr>
-			</table>
-		</form>
+		<div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                문의사항 작성하기
+            </h2>
+            <form class="ui large form" action='<%=request.getContextPath()%>/questions/questionsWriteEnd.do' method="post">
+                <div class="ui stacked segment"  >
+                    <div class="field">
+                        <input type="text" id="b_title" name="title" placeholder="게시글 제목" autocomplete="off" autofocus="autofocus">
+                        
+                        <input type="text" id="b_title" placeholder="유저아이디" autocomplete="off" autofocus="autofocus" value="<%=loginMember.getUserId() %>" readonly>
+                        <input type="hidden" name="userId" value=<%=loginMember.getUserId()%>>
+                        <input type="file" name="file" id="b_title" placeholder="파일등록" autocomplete="off" autofocus="autofocus">
+                        <input type="checkbox" name="open" id="b_title" placeholder="공개여부" autocomplete="off" autofocus="autofocus">
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <textarea style="resize: vertical;" id="b_content" placeholder="게시글 내용" rows="8" name="content"></textarea>
+                        </div>
+                    </div>
+                    <input type="submit" class="ui fluid large teal submit button" value="게시하기">
+                    
+                    <!-- <div class="ui fluid large teal submit button" id="write_bbs">게시글 작성하기</div> -->
+                    
+                
+                </div>
+
+                <div class="ui error message"></div>
+
+            </form>
+
+            <a href="<%=request.getContextPath()%>/matter/matterListView.do"><button class="ui fluid large teal submit button">뒤로가기</button></a>
+        </div>
+    </div>
 	</div>
 	
 	<style>

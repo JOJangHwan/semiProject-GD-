@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
           <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
-    <%@ page import="java.util.List,com.jjh.Notice.model.vo.Notice,com.jjh.member.model.vo.Member" %>
+    <%@ page import="java.util.List,com.jjh.questions.model.vo.Questions,com.jjh.member.model.vo.Member" %>
        <%
-	Notice notices=(Notice)request.getAttribute("Notice");
+       Questions questions=(Questions)request.getAttribute("Question");
    
    Member loginMember1=(Member)session.getAttribute("loginMember");
 %> 
@@ -12,22 +12,23 @@
      <div class="ui middle aligned center aligned grid">
         <div class="column">
             <h2 class="ui teal image header">
-                공지사항 보기
+                문의사항 보기
             </h2>
             <form class="ui large form" action="<%=request.getContextPath()%>/notice/updateNoticeEnd.do" method="post">
                 <div class="ui stacked segment">
                     <div class="field">
-                    	<input name="noticeNo" type="hidden" value="<%=notices.getNoticeNo()%>">
+                    	<input name="noticeNo" type="hidden" value="<%=questions.getQuestionsNo()%>">
                     	
-                        <input name="title" type="text" id="b_title" placeholder="게시글 제목" autocomplete="off" autofocus="autofocus" value="<%=notices.getNoticeTitle()%>">
+                        <input name="title" type="text" id="b_title" placeholder="게시글 제목" autocomplete="off" autofocus="autofocus" value="<%=questions.getQuestionsTitle()%>">
                         <br>
-                        <input name="writer" type="text" id="b_title" placeholder="작성자" autocomplete="off" autofocus="autofocus"value="작성자 <%=notices.getNoticeWriter()%>" readonly>
-                        
+                        <input name="writer" type="text" id="b_title" placeholder="작성자" autocomplete="off" autofocus="autofocus"value="작성자 <%=questions.getQuestionsWriter()%>" readonly>
+                        <br>
+                        공개여부<input name="writer" type="checkbox" id="b_title" placeholder="작성자" autocomplete="off" autofocus="autofocus"value="작성자 <%=questions.getQuestionsWriter()%>" readonly>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
                   
-                            <textarea name="content" style="resize: vertical;" id="b_title" placeholder="게시글 내용" rows="8"  ><%=notices.getNoticeContent()%></textarea>
+                            <textarea name="content" style="resize: vertical;" id="b_title" placeholder="게시글 내용" rows="8"  ><%=questions.getQuestionsContent()%></textarea>
                         </div>
                     </div>
                    
@@ -40,7 +41,7 @@
            <%--  <a href="<%=request.getContextPath()%>/notice/updateNotice.do?noticeNo=<%=notices.getNoticeNo()%>"><button class="ui fluid large teal submit button">수정하기</button></a>
 			<br> --%>
 			<br>
-            <a href="<%=request.getContextPath()%>/notice/noticeView.do?noticeNo=<%=notices.getNoticeNo()%>"><button class="ui fluid large teal submit button">뒤로가기</button></a>
+            <a href="<%=request.getContextPath()%>/question/questionView.do?questionsNo=<%=questions.getQuestionsNo()%>"><button class="ui fluid large teal submit button">뒤로가기</button></a>
             <br>
         </div>
     </div>

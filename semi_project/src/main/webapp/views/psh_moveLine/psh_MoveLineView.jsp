@@ -47,7 +47,7 @@
 				   </div>
 				   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
 				   <!-- 지도 끝 -->
-                   <button type="button" onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do')">공유</button>
+                   <button type="button" onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do')">공유</button>
                 </div>
             </div>
 	    <div id="rightMarginMain"></div>

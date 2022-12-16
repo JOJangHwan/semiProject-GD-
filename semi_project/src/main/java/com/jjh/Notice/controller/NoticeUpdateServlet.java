@@ -1,4 +1,4 @@
-package com.jjh.questions.controller;
+package com.jjh.Notice.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,20 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.jjh.questions.model.service.QuestionService;
-import com.jjh.questions.model.vo.Questions;
+import com.jjh.Notice.model.service.MemberNoticeService;
+import com.jjh.Notice.model.vo.Notice;
 
 /**
- * Servlet implementation class QuestionViewServlet
+ * Servlet implementation class NoticeUpdateServlet
  */
-@WebServlet("/question/questionView.do")
-public class QuestionViewServlet extends HttpServlet {
+@WebServlet("/notice/updateNotice.do")
+public class NoticeUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public QuestionViewServlet() {
+    public NoticeUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +31,14 @@ public class QuestionViewServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		int no=Integer.parseInt(request.getParameter("questionsNo"));
+		int no=Integer.parseInt(request.getParameter("noticeNo"));
 		
-		Questions q =new QuestionService().searchQuestionNo(no);
+		Notice n=new MemberNoticeService().searchNoticeNo(no);
+		request.setAttribute("Notice", n);
 		
-		request.setAttribute("questions", q);
 		
-		request.getRequestDispatcher("/views/jjh_questions/questionsView.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/jjh_notice/noticeUpdateView.jsp").forward(request, response);
+		
 	}
 
 	/**
