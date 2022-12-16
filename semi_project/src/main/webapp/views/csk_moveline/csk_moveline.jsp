@@ -5,6 +5,39 @@
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
+		    <input type="text" id="headline" name="headline" placeholder="여행제목을 입력해주세요">
+			<br><br><br>
+                <!-- 캘린더 -->
+                <div id="psh_calBox">
+                    <form id="psh_calForm">
+                        <input class="input-box" type="text" name="daterange"/>
+                        <input type="reset" value="취소">
+                    </form>
+                </div>
+
+                <script>
+                    $(function() {
+                        $('input[name="daterange"]').daterangepicker({
+                            opens: 'left'
+                            }, function(start, end, label) {
+                                //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+                            });
+                    });
+                    $(".input-box").change(e=>{
+                        const duration=$(".input-box").val().split("-");
+                    
+                        const durDate=duration[0].trim().split("/");
+                        const durDate2=duration[1].trim().split("/");
+                        
+                        const strDate=new Date(durDate[2], durDate[0], durDate[1]);
+                        const endDate=new Date(durDate2[2], durDate2[0], durDate2[1])
+
+                        const minous = endDate.getTime() - strDate.getTime();
+                        const total = minous / (1000*60*60*24) ;//일차
+                        console.log(total);
+                    });  
+                </script>
+ 			
  			<!--지도 공통 코드-->
 				<div id="map" style="width:100%;height:350px;"></div>
 
@@ -42,38 +75,38 @@
 						</tr>
 						<tr>
 							<td>1</td>
-							<td><input type="time" name="time" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🚩<input type="text" name="place1" id="place1" placeholder="주소 또는 키워드를 입력해주세요" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🌞<input type="text" name="content" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>💲<input type="text" name="cost" style="border-right:0px; border-top:0px; border-left:0px;"></td>
+							<td><input type="time" name="time"></td>
+							<td>🚩<input type="text" name="place1" id="place1" placeholder="주소 또는 키워드를 입력해주세요"></td>
+							<td>🌞<input type="text" name="content"></td>
+							<td>💲<input type="text" name="cost"></td>
 						</tr>
 						<tr>
 							<td>2</td>
-							<td><input type="time" name="time" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🚩<input type="text" name="place2" id="place2" placeholder="주소 또는 키워드를 입력해주세요" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🌞<input type="text" name="content" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>💲<input type="text" name="cost" style="border-right:0px; border-top:0px; border-left:0px;"></td>
+							<td><input type="time" name="time"></td>
+							<td>🚩<input type="text" name="place2" id="place2" placeholder="주소 또는 키워드를 입력해주세요"></td>
+							<td>🌞<input type="text" name="content"></td>
+							<td>💲<input type="text" name="cost"></td>
 						</tr>
 						<tr>
 							<td>3</td>
-							<td><input type="time" name="time" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🚩<input type="text" name="place3" id="place3" placeholder="주소 또는 키워드를 입력해주세요" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🌞<input type="text" name="content" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>💲<input type="text" name="cost" style="border-right:0px; border-top:0px; border-left:0px;"></td>
+							<td><input type="time" name="time"></td>
+							<td>🚩<input type="text" name="place3" id="place3" placeholder="주소 또는 키워드를 입력해주세요"></td>
+							<td>🌞<input type="text" name="content"></td>
+							<td>💲<input type="text" name="cost"></td>
 						</tr>
 						<tr>
 							<td>4</td>
-							<td><input type="time" name="time" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🚩<input type="text" name="place4" id="place4" placeholder="주소 또는 키워드를 입력해주세요" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🌞<input type="text" name="content" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>💲<input type="text" name="cost" style="border-right:0px; border-top:0px; border-left:0px;"></td>
+							<td><input type="time" name="time"></td>
+							<td>🚩<input type="text" name="place4" id="place4" placeholder="주소 또는 키워드를 입력해주세요"></td>
+							<td>🌞<input type="text" name="content"></td>
+							<td>💲<input type="text" name="cost"></td>
 						</tr>
 						<tr>
 							<td>5</td>
-							<td><input type="time" name="time" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🚩<input type="text" name="place5" id="place5" placeholder="주소 또는 키워드를 입력해주세요" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>🌞<input type="text" name="content" style="border-right:0px; border-top:0px; border-left:0px;"></td>
-							<td>💲<input type="text" name="cost" style="border-right:0px; border-top:0px; border-left:0px;"></td>
+							<td><input type="time" name="time"></td>
+							<td>🚩<input type="text" name="place5" id="place5" placeholder="주소 또는 키워드를 입력해주세요"></td>
+							<td>🌞<input type="text" name="content"></td>
+							<td>💲<input type="text" name="cost"></td>
 						</tr>
 					</table>
 				</div>
@@ -84,6 +117,9 @@
 					var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 					// 장소 검색 객체를 생성합니다
 					var ps = new kakao.maps.services.Places();
+					
+					// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        			// LatLngBounds 객체에 좌표를 추가합니다
 					var bounds = new kakao.maps.LatLngBounds();
 					// 키워드로 장소를 검색합니다 				
 					
@@ -99,30 +135,29 @@
 					let placeData=[]; //장소 저장
 					let markers=[]; //마커 저장
 					let customOverlays=[]; //마커 위 장소명을 띄울 오버레이
-
+					let linePath=[];
+					
+					console.log(linePath);
 					function fn_reflection() {
 						count=0; //플레이스를 누적할 카운트 변수
 						placeData=[]; //장소 저장
 						markers=[]; //마커 저장
 						customOverlays=[]; //마커 위 장소명을 띄울 오버레이
-
 						bounds = new kakao.maps.LatLngBounds();
 
-						for (var i = 0; i < markers.length; i++) {
+						for (let i=0; i<markers.length; i++) {
 							markers[i].setMap(null);
 							customOverlays[i].setMap(null);
 						}
-						markers = [];
-						customOverlays = [];
+						markers=[];
+						customOverlays=[];
 
 						let place1 = document.getElementById("place1");
 						let place2 = document.getElementById("place2");
 						let place3 = document.getElementById("place3");
 						let place4 = document.getElementById("place4");
 						let place5 = document.getElementById("place5");
-						
 						let arr = [place1, place2, place3, place4, place5];
-						console.log("arr빈칸값 : "+arr[1].value);
 						
 						//정규표현 넣어?
 						// for(i = 0; i < arrTemp.length; i++)
@@ -136,16 +171,34 @@
 						// }
 
 	
-						for (i = 0; i < arr.length; i++) {
+						for (i=0; i<arr.length; i++) {
 							if (arr[i].value != "") {
 								placeData.push(arr[i].value);
-								console.log(i+":"+arr[i].value);
 							}
 						}
 
-						if (placeData != null) {
+						if (placeData!=null) {
 							placeSearch(placeData[count]);
 						}
+						
+	//여기서부터 새로 시작
+						// 선을 구성하는 좌표 배열입니다. 이 좌표들을 이어서 선을 표시합니다
+						
+						var x = placesSearchCB().linePath[1];
+						console.log("check1:"+x);
+
+						// 지도에 표시할 선을 생성합니다
+						var polyline = new kakao.maps.Polyline({
+						    path: linePath, // 선을 구성하는 좌표배열 입니다
+						    strokeWeight: 5, // 선의 두께 입니다
+						    strokeColor: '#F1C40F', // 선의 색깔입니다
+						    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+						    strokeStyle: 'solid' // 선의 스타일입니다
+						});
+
+						// 지도에 선을 표시합니다 
+						polyline.setMap(map);
+	//여기까지 지워도 됨
 					}
 
 					function placeSearch(p) {
@@ -167,10 +220,6 @@
 								placeSearch(placeData[count])
 							} else if (count == placeData.length) {
 								setBounds();
-								
-							}
-						}
-
 					}
 
 					// 지도에 마커를 표시하는 함수입니다
@@ -188,7 +237,8 @@
 						kakao.maps.event.addListener(marker, 'click', function () {
 							var position = this.getPosition();
 							var url = 'https://map.kakao.com/link/map/' + place.id;
-							window.open(url, '_blank');
+							// open(url, '_blank');
+							infowindow.open(map, marker);
 						});
 
 						var content =

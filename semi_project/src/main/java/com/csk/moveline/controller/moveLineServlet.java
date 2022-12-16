@@ -1,4 +1,4 @@
-package com.psh.movelineboard.controller;
+package com.csk.moveline.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Open_And_ClosedServlet
+ * Servlet implementation class moveLineServlet
  */
-@WebServlet("/moveLineBoard/insertMoveLineBoard.do")
-public class InsertMoveLineBoardServlet extends HttpServlet {
+@WebServlet("/moveline/checkmoveline.do")
+public class moveLineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertMoveLineBoardServlet() {
+    public moveLineServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -26,9 +26,8 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("mlbTitle"));
-		System.out.println(request.getParameter("summernote"));
-		
+		// TODO Auto-generated method stub
+		request.getRequestDispatcher("/views/csk_moveline/csk_moveline.jsp").forward(request, response);
 	}
 
 	/**
