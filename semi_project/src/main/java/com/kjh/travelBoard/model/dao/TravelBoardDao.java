@@ -16,6 +16,8 @@ import com.kjh.admin.model.vo.Tag;
 import com.kjh.admin.model.vo.TravelPick;
 import com.kjh.travelBoard.model.vo.TravelBoard;
 
+import oracle.jdbc.internal.OraclePreparedStatement;
+
 public class TravelBoardDao {
 	private Properties sql=new Properties();
 	
@@ -179,16 +181,18 @@ public class TravelBoardDao {
 	
 	public int insertTravelBoard(Connection conn, TravelBoard board) { // 새로운 TravelBoard 게시글 삽입하기.
 		PreparedStatement pstmt=null;
+		OraclePreparedStatement opstmt = null;    
 		int result=0;
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("insertBoard"));
-			pstmt.setString(1, board.getBoardTitle());
-			pstmt.setString(2, board.getThumbFilename());
-			pstmt.setString(3, board.getBoardContent());
-			result=pstmt.executeUpdate();
+			opstmt=(OraclePreparedStatement)conn.prepareStatement(sql.getProperty("insertBoard"));
+			opstmt.setString(1, board.getBoardTitle());
+			opstmt.setString(2, board.getThumbFilename());
+			opstmt.setStringForClob(3, board.getBoardContent());
+			result=opstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}finally {
+			close(opstmt);
 			close(pstmt);
 		}return result;
 	}

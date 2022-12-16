@@ -4,11 +4,18 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
 <%@ page import="java.util.Iterator,java.util.Arrays, java.util.ArrayList, java.util.List, java.util.Collections, com.kjh.admin.model.vo.Tag,com.kjh.travelBoard.model.vo.TravelBoard,com.kjh.admin.model.vo.BoardTag, com.jjh.member.model.vo.Member"%>
 <script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
-<%
-String userId="admin";
-	session.setAttribute("userId",userId);
-	userId=(String)session.getAttribute("userId");
-	/* 확인용 session 생성 */
+<%	
+	Member loginMember=(Member)session.getAttribute("loginMember");
+	Cookie[] cookies=request.getCookies();
+	String saveId=null;
+	if(cookies!=null){
+		for(Cookie c:cookies){
+			if(c.getName().equals("saveId")){
+				saveId=c.getValue();
+				break;
+			}
+		}
+	}
 	
 	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
 
@@ -24,7 +31,7 @@ String userId="admin";
 		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">
 		    				추천 여행지
 		    			</label>
-		    			<%if(userId!=null&&userId.equals("admin")){ %>
+		    			<%if(saveId!=null&&saveId.equals("admin")){ %>
 			    			<div id="adminWriteBtnArea">
 			    				<button name="adminWriteBtn" onclick="location.href='<%=request.getContextPath()%>/admin/travelboardwrite.do';">
 			    					게시글 작성
@@ -130,6 +137,6 @@ String userId="admin";
 		    </div>
 	    <div id="rightMarginMain"></div>
     </section>
-    <
+    
     
 <%@ include file="/views/common/footer.jsp" %>

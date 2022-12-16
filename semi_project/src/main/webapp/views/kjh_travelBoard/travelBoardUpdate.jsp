@@ -85,14 +85,14 @@
 					    		<div id="tagContainer">
 					    			<div id="tagSelectContainer">
 					    				<label>태그 설정</label>
-						    			<select size="1" id="tagsSelect" name="tagsSelect">
+						    			<%-- <select size="1" id="tagsSelect" name="tagsSelect">
 						    				<option value="none">태그 선택</option>
 						    				<%for(int i=0; i<tags.size(); i++){ %>
 												<option value="<%=tags.get(i).getTagTitle()%>">
 													<%=tags.get(i).getTagTitle()%>
 												</option>
 											<%} %>
-										</select>
+										</select> --%>
 									</div>
 									<div id="selectedTagsContainer">
 										<input type="hidden" id="selectedTags" name="selectedTags">
@@ -133,6 +133,7 @@
 				  lang: "ko-KR",			// 한글 설정
 				  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
 			});
+			console.dir($('#summernote').summernote);
 		});
 		
 		var tagArr=new Array();
