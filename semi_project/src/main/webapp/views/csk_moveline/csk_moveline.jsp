@@ -67,7 +67,7 @@
 				<div>
 					<h2><b>1일차</b></h2>
 					
-					<p>*경로는 최대 7개 설정 가능합니다.</p>
+					<p>*경로는 최대 5개 설정 가능합니다.</p>
 					<button onclick="fn_reflection();">경로 반영 및 임시저장</button>
 					<!-- <p>버튼을 눌러 경로를 확인하세요.</p> -->
 					<table>
@@ -141,20 +141,20 @@
 					let markers=[]; //마커 저장
 					let customOverlays=[]; //마커 위 장소명을 띄울 오버레이
 					let linePath=[];
+					let markerPosition=[];
 					
 					function fn_reflection() {
 						count=0; //플레이스를 누적할 카운트 변수
 						placeData=[]; //장소 저장
 						markers=[]; //마커 저장
-						customOverlays=[]; //마커 위 장소명을 띄울 오버레이
-						bounds = new kakao.maps.LatLngBounds();
+						customOverlays=[]; //마커 위 장소명을 띄울 오버레이							
+						bounds = new kakao.maps.LatLngBounds();//비동기
 						
 						for (let i=0; i<markers.length; i++) {
-							console.log(markers.length);
-							markers[i].setMap(null);
+							markers[i].setMap(null);		
 							customOverlays[i].setMap(null);
-
 						}
+						
 						// markers=[];
 						// customOverlays=[];
 
@@ -205,7 +205,7 @@
 						// });
 
 						// 지도에 선을 표시합니다 
-						polyline.setMap(map);
+						//polyline.setMap(map);
 	//여기까지 지워도 됨
 					}
 
@@ -234,23 +234,6 @@
 					
 
 					// 지도에 마커를 표시하는 함수입니다
-// 여기서부터지우기
-					// 마커가 표시될 위치입니다 
-					var markerPosition  = new kakao.maps.LatLng(placeData.y, placeDate.x);
-					console.log("위도경도테스트"+markerPosition); 
-
-					// //마커 이미지 설정
-					// var imageSrc = "<%=request.getContextPath()%>/images/basicmarker.png";
-					// var imageSize = new kakao.maps.Size(70,70);
-					// var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-					
-					// // 마커를 생성합니다
-					// var marker = new kakao.maps.Marker({
-					// 	position: markerPosition,
-					// 	image: markerImage
-					// });
-//여기까지지우기
-
 					function displayMarker(place) {
 
 						// 마커를 생성하고 지도에 표시합니다
@@ -259,14 +242,15 @@
 							position: new kakao.maps.LatLng(place.y, place.x),
 							image: markerImage
 						});
-
-						markers.push(marker);
-
+//이거?
+						// markerPosition.push(marker.getPosition());
+						
 						kakao.maps.event.addListener(marker, 'click', function () {
 							var position = this.getPosition();
 							var url = 'https://map.kakao.com/link/map/' + place.id;
 							// open(url, '_blank');
 							infowindow.open(map, marker);
+							
 						});
 
 						var content =
@@ -285,6 +269,12 @@
 							position: new kakao.maps.LatLng(place.y, place.x)
 						});
 						customOverlays.push(customOverlay);
+						//비동기 끝나고 실행되어야 하므로 위도경도가지고 오는 메소드는 여기에 추가
+						markers.push(marker);
+						markerPosition.push(marker.getPosition());
+						for (let i=0; i<markerPosition.length; i++) {
+							console.log("마커포지션테스트"+ i +": "+markerPosition[i]);
+						}
 					}
 
 					function setBounds() {
