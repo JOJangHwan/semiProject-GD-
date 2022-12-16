@@ -103,6 +103,7 @@
 				    						<%} %>
 				    					</div>
 				    				</div>
+				    				<%if(loginMember!=null){ %>
 				    				<div class="kjh_boardPostPickContainer"
 				    					onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardpickcontroll.do?boardNo=<%=b.getBoardNo()%>&pick=<%=b.getTravelPick()%>';"
 				    						style="cursor:pointer;">
@@ -112,9 +113,27 @@
 				    						<div class="kjh_boardPostPick kjh_colorYellow"></div>
 				    					<%} %>
 				    				</div>
+				    				<%}else{ %>
+				    				<div class="kjh_boardPostPickContainer"
+				    					onclick="loginAlert()";
+				    						style="cursor:pointer;">
+				    					<%if(b.getTravelPick()=='N'){ %>
+				    						<div class="kjh_boardPostPick kjh_colorWhite"></div>
+				    					<%}else if(b.getTravelPick()=='Y'){ %>
+				    						<div class="kjh_boardPostPick kjh_colorYellow"></div>
+				    					<%} %>
+				    				</div>
+				    				<%} %>
+				    				
+				    				<script>
+				    					function loginAlert() {
+				    						alert("로그인 후 사용하십시오.");
+				    					}
+				    				</script>
+				    				
 				    				</div>
 				    				<div class="kjh_boardPostTitle">
-				    					<a href="<%=request.getContextPath()%>//travelboard/travelboardview.do?boardNo=<%=b.getBoardNo()%>">
+				    					<a href="<%=request.getContextPath()%>/travelboard/travelboardview.do?boardNo=<%=b.getBoardNo()%>">
 				    						<%=b.getBoardTitle()%>
 				    					</a>
 			    					</div>
