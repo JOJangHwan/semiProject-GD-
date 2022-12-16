@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
 <%@page import="com.jjh.member.model.vo.Member"%>
-<% Member loginMember=(Member)session.getAttribute("loginMember"); %>
+
    <%@ include file="/views/common/header.jsp" %>
      
 

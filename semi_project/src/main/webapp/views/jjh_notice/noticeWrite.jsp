@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
      <%@page import="com.jjh.member.model.vo.Member"%>
       <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
-<% Member loginMember=(Member)session.getAttribute("loginMember"); %>
    <%@ include file="/views/common/header.jsp" %>
 
 <div id='board-container'>
