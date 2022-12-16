@@ -4,16 +4,19 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
 <%@ page import="java.util.Iterator,java.util.Arrays, java.util.ArrayList, java.util.List, java.util.Collections, com.kjh.admin.model.vo.Tag,com.kjh.travelBoard.model.vo.TravelBoard,com.kjh.admin.model.vo.BoardTag, com.jjh.member.model.vo.Member"%>
 <script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
+
+<%@ include file="/views/common/header.jsp" %>
 <%	
-	Member loginMember=(Member)session.getAttribute("loginMember");
-	String userId=loginMember.getUserId();
+	String userId="";
+	if(loginMember!=null){
+		userId=loginMember.getUserId();
+	}
 	
 	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
 
 	List<TravelBoard> boards=(List<TravelBoard>)request.getAttribute("boards");
 	List<BoardTag> boardTags=(List<BoardTag>)request.getAttribute("boardTags");
 %>
-<%@ include file="/views/common/header.jsp" %>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">

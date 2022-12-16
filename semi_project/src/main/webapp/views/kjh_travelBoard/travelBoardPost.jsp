@@ -5,15 +5,16 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	<script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
-<%
 
-	Member loginMember=(Member)session.getAttribute("loginMember");
-	String userId=loginMember.getUserId();
-	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
-
-%>
 <%@ page import="com.kjh.travelBoard.model.vo.TravelBoard" %>
 <%@ include file="/views/common/header.jsp" %>
+<%	
+	String userId="";
+	if(loginMember!=null){
+		userId=loginMember.getUserId();
+	}
+	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
+%>
 	<style>
 		img{
 			max-width:100%;

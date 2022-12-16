@@ -9,13 +9,6 @@
 	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 	
-	<%
-		Member loginMember=(Member)session.getAttribute("loginMember");
-		String userId=loginMember.getUserId();
-		List<Tag> tags=(List<Tag>)request.getAttribute("tags");
-	%>
-	
-	
 <style>
 	#inputArea{
 		width:100%;
@@ -71,6 +64,13 @@
 	}
 </style>
 <%@ include file="/views/common/header.jsp" %>
+<%
+	String userId="";
+	if(loginMember!=null){
+		userId=loginMember.getUserId();
+	}
+	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
+%>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
