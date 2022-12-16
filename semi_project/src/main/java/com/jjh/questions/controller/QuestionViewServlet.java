@@ -33,11 +33,11 @@ public class QuestionViewServlet extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		int no=Integer.parseInt(request.getParameter("questionsNo"));
 		
-		//Questions q =new QuestionService().searchQuestionNo(no);
+		Questions q =new QuestionService().searchQuestionNo(no);
 		
-		//request.setAttribute("questions", q);
+		request.setAttribute("questions", q);
 		
-		request.getRequestDispatcher("/views/jjh_questions/noticeView.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/jjh_questions/questionsView.jsp").forward(request, response);
 	}
 
 	/**

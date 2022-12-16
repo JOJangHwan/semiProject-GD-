@@ -49,21 +49,32 @@ public class LoginServlet extends HttpServlet {
 			response.addCookie(c);
 		}
 		
+		/*
+		 * if(m!=null) { if(!m.getUserId().equals("admin")) { HttpSession
+		 * session=request.getSession(); session.setAttribute("loginMember", m);
+		 * response.sendRedirect(request.getContextPath()); }else { HttpSession
+		 * session=request.getSession(); session.setAttribute("loginMember", m);
+		 * response.sendRedirect(request.getContextPath()+
+		 * "/views/jjh_adminPage/adminPage.jsp"); }
+		 * 
+		 * }else { request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다.");
+		 * request.setAttribute("loc", "/login/loginView.do");
+		 * request.getRequestDispatcher("/views/common/msg.jsp").forward(request,
+		 * response); }
+		 */
+		
 		if(m!=null) {
-			if(!m.getUserId().equals("admin")) {
-				HttpSession session=request.getSession();
-				session.setAttribute("loginMember", m);
-				response.sendRedirect(request.getContextPath());
-			}else {
-				HttpSession session=request.getSession();
-				session.setAttribute("loginMember", m);
-				response.sendRedirect(request.getContextPath()+"/views/jjh_adminPage/adminPage.jsp");
-			}
-			
+			//로그인 성공
+			HttpSession session=request.getSession();
+			session.setAttribute("loginMember", m);
+			//응답할 페이지를 구성 -> jsp
+			response.sendRedirect(request.getContextPath());
 		}else {
-			request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다.");
-			request.setAttribute("loc", "/login/loginView.do");
-			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+			//로그인 실패
+			request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다");
+			request.setAttribute("loc","/");
+			request.getRequestDispatcher("/views/common/msg.jsp")
+			.forward(request, response);
 		}
 		
 	}
