@@ -44,9 +44,11 @@
 				<form action="<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do">
 					<!-- 제목 -->
 				   <div >
-					   <input id="mlbTitle" type="text" placeholder="제목을 입력하세요">
+					   <input name="mlbTitle" type="text" placeholder="제목을 입력하세요">
 				   </div>
-				   <p>작성자 </p><p><%=ml.getUserId()%></p>
+				   <p>작성자 <%=ml.getUserId()%></p>  
+				   <input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
+				   <input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
 				   <hr>
 				   <!-- 지도 시작 -->
 				   <div id="mapwrap"> 
@@ -88,7 +90,7 @@
 						}%>
 				   </div>
 
-				    <div id="summernote"></div>
+				    <div name="mlbContent" id="summernote"></div>
 				    
 				    <script>
 					    $(document).ready(function() {
@@ -98,18 +100,21 @@
 	                    });
 				    </script>
 				    
-                   <input type="submit" value="등록">
-                	</form>
-                </div>
+                   <input type="submit" value="등록" onclick="sbm();">
+                </form>
+             </div>
 	    <div id="rightMarginMain"></div>
     </section>
     
 	<script>
+		//에디터 함수
+		function sbm(){
+			$('#summernote').summernote('code').submit();
+		}
 		
  		//카테고리
  		for(let i=0;i<<%=d%>;i++){
 			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
-			$()
  		}
  		
         var movelineDay=new Array();
