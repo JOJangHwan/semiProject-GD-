@@ -120,7 +120,7 @@ public class TravelBoardDao {
 		}return result;
 	}
 	
-	public int boardPickChange(Connection conn, String userId, int boardNo, char pick) {
+	public int boardPickChange(Connection conn, String userId, int boardNo, char pick) { //찜 여부 변경하기
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
@@ -141,7 +141,7 @@ public class TravelBoardDao {
 		}return result;
 	}
 	
-	public TravelBoard selectTravelBoard(Connection conn, int boardNo) {
+	public TravelBoard selectTravelBoard(Connection conn, int boardNo) { //boardNo로 하나 보드만 가져오기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		TravelBoard board=null;
@@ -158,14 +158,33 @@ public class TravelBoardDao {
 		}return board;
 	}
 	
-	public int insertTravelBoard(Connection conn, TravelBoard board) {
+	public List<TravelBoard> selectTravelBoard(Connection conn, String boardTitle) { //보드 타이틀로 보드 리스트 가져오기
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TravelBoard> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchBoardTitleList"));
+			pstmt.setString(1, boardTitle);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getTravelBoard(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+	
+	public int insertTravelBoard(Connection conn, TravelBoard board) { // 새로운 TravelBoard 게시글 삽입하기.
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("insertBoard"));
 			pstmt.setString(1, board.getBoardTitle());
-			pstmt.setString(2, board.getBoardContent());
-			pstmt.setString(3, board.getThumbFilename());
+			pstmt.setString(2, board.getThumbFilename());
+			pstmt.setString(3, board.getBoardContent());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -174,14 +193,30 @@ public class TravelBoardDao {
 		}return result;
 	}
 	
-	public int insertTravelBoardTag(Connection conn, TravelBoard board) {
+	public int insertTravelBoardTag(Connection conn, Tag tag) { //새로운 게시글에 포함된 tag들로 BoardTag 삽입하기.
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("insertBoardTag"));
+			pstmt.setInt(1, tag.getBoardNo());
+			pstmt.setInt(2, tag.getTagNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int updateTravelBoard(Connection conn, TravelBoard board) { //보드 정보 업데이트.
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("updateBoard"));
 			pstmt.setString(1, board.getBoardTitle());
-			pstmt.setString(2, board.getBoardContent());
-			pstmt.setString(3, board.getThumbFilename());
+			pstmt.setString(2, board.getThumbFilename());
+			pstmt.setString(3, board.getBoardContent());
+			pstmt.setInt(4, board.getBoardNo());
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -207,12 +242,12 @@ public class TravelBoardDao {
 		return TravelBoard.builder().
 				boardNo(rs.getInt("board_no")).
 				userId(rs.getString("user_id")).
-				boardContent(rs.getString("board_content")).
+				boardTitle(rs.getString("board_title")).
 				boardEnroll(rs.getDate("board_enroll")).
+				thumbFilename(rs.getString("thumb_filename")).
 				tempYn(rs.getString("temp_yn").charAt(0)).
 				openYn(rs.getString("open_yn").charAt(0)).
-				boardTitle(rs.getString("board_title")).
-				thumbFilename(rs.getString("thumb_filename")).
+				boardContent(rs.getString("board_content")).
 				build();
 	}
 	

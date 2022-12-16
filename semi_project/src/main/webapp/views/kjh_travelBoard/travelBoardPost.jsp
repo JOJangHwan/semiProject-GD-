@@ -8,7 +8,7 @@
 <%@ include file="/views/common/header.jsp" %>
 	<style>
 		img{
-			width:100%;
+			width:auto;
 		}
 	
 		#titleArea{
