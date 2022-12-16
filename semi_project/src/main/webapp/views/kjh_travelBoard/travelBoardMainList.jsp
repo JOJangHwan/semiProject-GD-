@@ -5,17 +5,9 @@
 <%@ page import="java.util.Iterator,java.util.Arrays, java.util.ArrayList, java.util.List, java.util.Collections, com.kjh.admin.model.vo.Tag,com.kjh.travelBoard.model.vo.TravelBoard,com.kjh.admin.model.vo.BoardTag, com.jjh.member.model.vo.Member"%>
 <script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
 <%	
+	
 	Member loginMember=(Member)session.getAttribute("loginMember");
-	Cookie[] cookies=request.getCookies();
-	String saveId=null;
-	if(cookies!=null){
-		for(Cookie c:cookies){
-			if(c.getName().equals("saveId")){
-				saveId=c.getValue();
-				break;
-			}
-		}
-	}
+	String userId=loginMember.getUserId();
 	
 	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
 
@@ -31,7 +23,7 @@
 		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">
 		    				추천 여행지
 		    			</label>
-		    			<%if(saveId!=null&&saveId.equals("admin")){ %>
+		    			<%if(userId!=null&&userId.equals("admin")){ %>
 			    			<div id="adminWriteBtnArea">
 			    				<button name="adminWriteBtn" onclick="location.href='<%=request.getContextPath()%>/admin/travelboardwrite.do';">
 			    					게시글 작성
