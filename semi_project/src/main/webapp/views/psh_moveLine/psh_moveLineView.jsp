@@ -5,18 +5,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%
-   MoveLineBoard mlb=(MoveLineBoard)request.getAttribute("moveLineBoard");
+   MoveLineBoard ml=(MoveLineBoard)request.getAttribute("moveLine");
    List<Marker> mList=(List<Marker>)request.getAttribute("mList");
- 	System.out.println(mlb);
+ 	System.out.println(ml);
    int d=3;//일차값 이ㅏㅁ의로    
    %>
-   <!-- 에디터 -->
-	<!-- include libraries(jQuery, bootstrap)-->
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
     <!-- 지도 -->
     <style>
 		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;}
@@ -40,10 +33,10 @@
 		    <div id="mainSectionContainer">
 					<!-- 제목 -->
 				   <div >
-					   <h1><%=mlb.getBoardTitle()%></h1>
+					   <h1><%=ml.getBoardTitle()%></h1>
 				   </div>
 				   <!-- 작성자 -->
-				   <p>작성자 <%=mlb.getUserId()%></p>  
+				   <p>작성자 <%=ml.getUserId()%></p>  
 				   
 				   <hr>
 				   
@@ -83,20 +76,12 @@
 							}%>
 					   </div>
 					</div>
-					
-					<!-- 게시글 내용 -->   
-				   <div id="boardContainer"></div>
-				   
-				   <!-- 댓글 -->   
-				   <div id="comentBox">
-                   	
-                   </div>
-				   
 				   <!-- 수정 삭제 버튼 -->
 				   <%-- <%if(loginMember!=null&&(loginMember.getUserId().equals(mlb.getUserId()))){%> --%>
 						<div id="mlbBtns">
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/updateMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>&&moveLineNo=<%=mlb.getMovelineNo()%>')">수 정</button>
-							<button onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/deleteMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>')">삭 제</button>
+				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/updateMoveLine.do?moveLineNo=<%=ml.getMovelineNo()%>')">수 정</button>
+				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do?moveLineNo=<%=ml.getMovelineNo()%>')">공 유</button>
+							<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/deleteMoveLine.do?moveLineNo=<%=ml.getMovelineNo()%>')">삭 제</button>
 				   		</div>	  
 					<%-- <%} %>	 --%>
 				   
@@ -109,9 +94,7 @@
  		for(let i=0;i<<%=d%>;i++){
  			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
  	 	}
- 		
- 		$("#boardContainer").html('<%=mlb.getBoardContent()%>');
- 		
+ 
         var movelineDay=new Array();
     	var mlday=[];
     	//좌표값 배열 생성

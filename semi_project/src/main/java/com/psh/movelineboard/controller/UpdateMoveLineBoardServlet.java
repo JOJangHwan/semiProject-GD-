@@ -1,7 +1,6 @@
-package com.psh.moveline.controller;
+package com.psh.movelineboard.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -10,23 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.psh.moveline.model.servlce.MoveLineService;
 import com.psh.marker.model.service.MarkerService;
-import com.psh.marker.model.vo.*;
 import com.psh.marker.model.vo.Marker;
-import com.psh.moveline.model.vo.MoveLine;
+import com.psh.movelineboard.model.servlce.MoveLineBoardService;
+import com.psh.movelineboard.model.vo.MoveLineBoard;
 
 /**
- * Servlet implementation class InsertMoveLineBoardServlet
+ * Servlet implementation class UpdateMoveLineBoardServlet
  */
-@WebServlet("/moveLine/open/and/closed.do")
-public class Open_And_ClosedServlet extends HttpServlet {
+@WebServlet("/moveLineBoard/updateMoveLineBoard.do")
+public class UpdateMoveLineBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Open_And_ClosedServlet() {
+    public UpdateMoveLineBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,15 +33,15 @@ public class Open_And_ClosedServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int movelineNo=Integer.parseInt(request.getParameter("mlDay"));//아직 값을 받아 올 수 없으므로 임시 지정
-		System.out.println(movelineNo);
-		MoveLine ml=(MoveLine)new MoveLineService().searchMoveLine(movelineNo);
-		System.out.println(ml);
-		List<Marker> mList=(List<Marker>)new MarkerService().searchMoveLineMarker(movelineNo);
-		request.setAttribute("moveline", ml);
+		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
+		int moveLineNo=Integer.parseInt(request.getParameter("moveLineNo"));
+		MoveLineBoard mlb=new MoveLineBoardService().searchMoveLineBoard(boardNo);
+		List<Marker> mList=new MarkerService().searchMoveLineBoardMarker(boardNo,moveLineNo);
+		
 		request.setAttribute("marker", mList);
-		System.out.println(mList);
-		request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardWrite.jsp").forward(request, response);
+		request.setAttribute("movelineBoard", mlb);
+		System.out.println(mlb);
+		request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardUpdate.jsp").forward(request, response);
 	}
 
 	/**

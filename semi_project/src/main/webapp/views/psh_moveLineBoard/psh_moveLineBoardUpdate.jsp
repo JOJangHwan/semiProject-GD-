@@ -5,18 +5,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%
-   MoveLineBoard mlb=(MoveLineBoard)request.getAttribute("moveLineBoard");
-   List<Marker> mList=(List<Marker>)request.getAttribute("mList");
- 	System.out.println(mlb);
-   int d=3;//일차값 이ㅏㅁ의로    
+        MoveLineBoard mlb=(MoveLineBoard)request.getAttribute("movelineBoard");
+        List<Marker> mList=(List<Marker>)request.getAttribute("marker");
+        System.out.println(mlb);
+        System.out.println(mList);
+        int d=3;//일차값 이ㅏㅁ의로
    %>
-   <!-- 에디터 -->
+    <!-- 에디터 -->
 	<!-- include libraries(jQuery, bootstrap)-->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+   
     <!-- 지도 -->
     <style>
 		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;}
@@ -34,16 +36,20 @@
 	</style>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
 <%@ include file="/views/common/header.jsp"%>
-
+    
+	
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
+				<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/moveLineBoard/updateEndMoveLineBoard.do" >
 					<!-- 제목 -->
-				   <div >
-					   <h1><%=mlb.getBoardTitle()%></h1>
-				   </div>
-				   <!-- 작성자 -->
-				   <p>작성자 <%=mlb.getUserId()%></p>  
+				    <div >
+					   <input name="mlbTitle" type="text" placeholder="<%=mlb.getBoardTitle()%>">
+				    </div>
+				    <p>작성자 <%=mlb.getUserId()%></p>  
+					<input type="hidden" name="mlbWriter" value="<%=mlb.getUserId()%>" readonly>
+					<input type="hidden" name="boardNo" value="<%=mlb.getBoardNo()%>" readonly>
+					<input type="hidden" name="movelineNo" value="<%=mlb.getMovelineNo()%>" readonly>
 				   
 				   <hr>
 				   
@@ -82,35 +88,29 @@
 							      }
 							}%>
 					   </div>
-					</div>
-					
-					<!-- 게시글 내용 -->   
-				   <div id="boardContainer"></div>
-				   
-				   <!-- 댓글 -->   
-				   <div id="comentBox">
-                   	
-                   </div>
-				   
-				   <!-- 수정 삭제 버튼 -->
-				   <%-- <%if(loginMember!=null&&(loginMember.getUserId().equals(mlb.getUserId()))){%> --%>
-						<div id="mlbBtns">
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/updateMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>&&moveLineNo=<%=mlb.getMovelineNo()%>')">수 정</button>
-							<button onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/deleteMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>')">삭 제</button>
-				   		</div>	  
-					<%-- <%} %>	 --%>
-				   
+					</div>   
+				    <textarea name="mlbContent" id="summernote"></textarea>
+				    
+				    <input type="submit" value="등록">
+                </form>
              </div>
 	    <div id="rightMarginMain"></div>
     </section>
     
 	<script>
+		//에디터 함수
+		$(document).ready(function() {
+			$('#summernote').summernote({
+					height: 500
+					
+	        });
+	    });
+		
  		//카테고리
  		for(let i=0;i<<%=d%>;i++){
- 			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
- 	 	}
- 		
- 		$("#boardContainer").html('<%=mlb.getBoardContent()%>');
+			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
+ 		}
+ 		$("#summernote").html('<%=mlb.getBoardContent()%>');
  		
         var movelineDay=new Array();
     	var mlday=[];
@@ -258,7 +258,9 @@
 			 }
         } 
         
-	
+		
+        
+		
         // 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
         function changeMarker(value){
         	for (var i = 0; i < <%=d%>; i++) {  
