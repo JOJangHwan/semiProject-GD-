@@ -8,28 +8,31 @@
 	
 	#infoInputArea{
 		height:120px;
+		margin-left:10px;
+		padding-top:1px;
+		margin-bottom:10px;
 	}
 	
 	#tagContainer{
-		border:1px solid black;
+		/* border:1px solid black; */
 		height:30px;
 		margin-top:10px;
 		display:flex;
 	}
 	
 	#thumbContainer{
-		border:1px solid blue;
+		/* border:1px solid blue; */
 		height:30px;
 		margin-top:10px;
 		margin-bottom:10px;
 	}
 	
 	#tagSelectContainer span{
-	 border:1px solid blue;
+	 	border:1px solid blue;
 	}
 	
 	#mapContainer{
-		border:1px solid red;
+		/* border:1px solid red; */
 		height:30px;
 	}
 	
@@ -49,8 +52,17 @@
 	}
 	
 	.tg{
-		border:1px solid blue;
+		border:1px solid #F1C40F;
+		border-radius:5px;
+		background-color:yellow;
 		margin-left:5px;
+		padding-left:3px;
+		padding-right:3px;
+	}
+	
+	.tgDelBtn{
+		width:10px;
+		height:10px;
 	}
 	
 	.inputFileBtn{

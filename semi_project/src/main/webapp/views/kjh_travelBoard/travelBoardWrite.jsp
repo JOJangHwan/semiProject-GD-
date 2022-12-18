@@ -25,7 +25,7 @@
 		    		<section id="mainSectionTotal">
 					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do">
 						<div id="titleInput">
-							<input type="text" name="titleInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
+							<input type="text" name="titleInput" id="titieInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
 						</div>
   						<textarea id="summernote" name="editordata"></textarea>
   						
@@ -98,7 +98,9 @@
 				//중복되지 않도록 제한함.
 			}else{
 				var $span = $('<span class="tg">'+$("#tagsSelect option:selected").text()+'</span>');
+				var $span2 =$('<span class="tgDelBtn">X</span>');
 				$('#selectedTagsContainer').append($span);
+				$('#selectedTagsContainer').append($span2);
 				tagArr.length=0;
 				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerText)});
 				console.dir(tagArr);
@@ -117,6 +119,24 @@
 				var $span = $('<span class="thumbS">'+fileName+'</span>');
 				$('#upFileTitleLabel').html($span);
 			}
+		});
+		
+		var delay = 300;
+		var timer = null;
+		
+	    $(window).on('resize', function(){
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				console.log('resize event!');
+				console.log(window.innerWidth);
+		        if (window.innerWidth >= 1900) {
+		      		$("#titieInput").css("width","1400px");
+		    	}else if(window.innerWidth >= 1200){
+		    		$("#titieInput").css("width","1000px");
+		    	}else if(window.innerWidth >= 900){
+		    		$("#titieInput").css("width","500px");
+		    	}
+			}, delay);
 		});
     </script>
 <%@ include file="/views/common/footer.jsp" %>

@@ -64,6 +64,7 @@
 					    			<label class="viewFileBtn">지도 설정</label>
 					    			<label class="inputFileBtn" for="mapFile">추가</label>
 					    			<input type="button" id="mapFile" name="mapFile" style="display:none;">
+					    			<label id="mapFileTitleLabel"></label>
 					    		</div>
 					    	</div>
 					    	<div id="submitArea">
@@ -104,7 +105,9 @@
 				//중복되지 않도록 제한함.
 			}else{
 				var $span = $('<span class="tg">'+$("#tagsSelect option:selected").text()+'</span>');
+				var $span2 =$('<span class="tgDelBtn">X</span>');
 				$('#selectedTagsContainer').append($span);
+				$('#selectedTagsContainer').append($span2);
 				tagArr.length=0;
 				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerText)});
 				console.dir(tagArr);
@@ -132,7 +135,9 @@
 		<%if(!board.getTags().isEmpty()){%>
 			<%for(int i=0; i<board.getTags().size();i++){%>
 				var $span = $('<span class="tg">'+'<%=board.getTags().get(i).getTagTitle()%>'+'</span>');
+				var $span2 =$('<span class="tgDelBtn">X</span>');
 				$('#selectedTagsContainer').append($span);
+				$('#selectedTagsContainer').append($span2);
 			<%}%>
 		<%}%>
 		

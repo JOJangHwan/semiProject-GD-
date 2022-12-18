@@ -37,11 +37,19 @@
 	margin-bottom:5px;
 }
 
+#boardPostAreaContainer{
+	border:1px solid red;
+	display:flex;
+	justify-content:center;
+	
+}
+
 #boardPostArea{
 	position:relative;
 	margin:10px;
 	border:1px solid blue;
 	height:600px;
+	width:975px;
 	justify-content:space-between;
 }
 
