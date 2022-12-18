@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kjh.admin.model.vo.BoardTag;
+import com.jjh.member.model.vo.Member;
 import com.kjh.admin.model.vo.Tag;
-import com.kjh.admin.model.vo.TravelPick;
 import com.kjh.travelBoard.model.service.TravelBoardService;
 import com.kjh.travelBoard.model.vo.TravelBoard;
 
@@ -43,7 +42,11 @@ public class TravelBoardMainServlet extends HttpServlet {
 			cPage=1;
 		}
 		
-		String userId=(String) request.getSession().getAttribute("userId");
+		Member m=(Member)request.getSession().getAttribute("loginMember");
+		String userId="";
+		if(m!=null) {
+			userId=m.getUserId();
+		}
 		List<TravelBoard> boards=new TravelBoardService().searchTravelBoardList(cPage,numPerpage,userId);
 		
 		int totalData=new TravelBoardService().searchTravelBoardCount();

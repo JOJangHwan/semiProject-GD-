@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jjh.member.model.vo.Member;
 import com.kjh.travelBoard.model.service.TravelBoardService;
 
 /**
@@ -29,7 +30,11 @@ public class TravelBoardPickControllerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId=(String) request.getSession().getAttribute("userId");
+		Member m=(Member)request.getSession().getAttribute("loginMember");
+		String userId="";
+		if(m!=null) {
+			userId=m.getUserId();
+		}
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
 		char pick=((String)request.getParameter("pick")).charAt(0);
 		System.out.println("userId : "+userId+" boardNo : "+boardNo+" pick : "+pick);

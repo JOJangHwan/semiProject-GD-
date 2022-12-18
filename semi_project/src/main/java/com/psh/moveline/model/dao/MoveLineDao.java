@@ -28,10 +28,10 @@ private Properties sql=new Properties();
 		}
 	}
 	
-	public List<MoveLine> searchMoveLine(Connection conn,int movelineNo) {
+	public MoveLine searchMoveLine(Connection conn,int movelineNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		List<MoveLine> ml=new ArrayList();
+		MoveLine ml=new MoveLine();
 		
 		try {
 			
@@ -39,7 +39,8 @@ private Properties sql=new Properties();
 			pstmt.setInt(1, movelineNo);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
-				ml.add(getMoveLine(rs));
+				ml=getMoveLine(rs);
+				System.out.println(ml);
 			}
 			
 		}catch(SQLException e) {
@@ -54,7 +55,7 @@ private Properties sql=new Properties();
 	private MoveLine getMoveLine(ResultSet rs)throws SQLException{
 		return MoveLine.builder()
 				.movelineNo(rs.getInt("moveline_No"))
-				.userNo(rs.getInt("user_No"))
+				.userId(rs.getString("user_Id"))
 				.tripdateFinish(rs.getDate("tripdate_Finish"))
 				.tripdateStart(rs.getDate("tripdate_Start"))
 				.movelineName(rs.getString("moveline_Name"))
