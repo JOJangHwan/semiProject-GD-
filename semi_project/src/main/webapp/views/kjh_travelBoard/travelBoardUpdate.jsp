@@ -19,19 +19,24 @@
 	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
 	
 	TravelBoard board=(TravelBoard)request.getAttribute("board");
+	int boardNo=Integer.parseInt(request.getParameter("boardNo"));
 %>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 		    	<div id="totalContainer">
 		    		<section id="mainSectionTotal">
-					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do">
+					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardupdateend.do">
 						<div id="titleInput">
 							<input type="text" id="titleInputV" name="titleInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
 						</div>
   						<textarea id="summernote" name="editordata"></textarea>
   						
   						<div id="inputArea">
+  							<div id="boardNoContainer">
+					    		<input type="hidden" id="boardNoTarget" name="boardNoTarget"
+					    			value="<%=boardNo%>">
+					    	</div>
 					    	<div id="infoInputArea">
 					    		<div id="tagContainer">
 					    			<div id="tagSelectContainer">
@@ -72,7 +77,7 @@
 					    			<input type="button" value="취소" onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">
 					    		</div>
 					    		<div id="submitRight">
-									<input type="button" value="임시저장" onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">
+									<input type="button" value="임시저장" onclick="openTempSave();">
 									<input type="submit" value="게시">
 								</div>
 					    	</div>
@@ -99,18 +104,20 @@
 		var tagArr=new Array();
 		
 		$("#tagsSelect").on("change", function(event) {
-			if($("#tagsSelect option:selected").val()==="none"){
+			let s=($("#tagsSelect option:selected").val());
+			let str=s.replace(/ /g, "");
+			
+			if(str==="none"){
 				//선택되지 않도록 제한함.
-			}else if(tagArr.includes($("#tagsSelect option:selected").val())){
+			}else if(tagArr.includes(str)){
 				//중복되지 않도록 제한함.
+			}else if(tagArr.includes(str+'✕')){
+				
 			}else{
-				var $span = $('<span class="tg">'+$("#tagsSelect option:selected").text()+'</span>');
-				var $span2 =$('<span class="tgDelBtn">X</span>');
+				var $span = $('<span class="tg">'+str+'✕</span>');
 				$('#selectedTagsContainer').append($span);
-				$('#selectedTagsContainer').append($span2);
 				tagArr.length=0;
-				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerText)});
-				console.dir(tagArr);
+				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerHTML)});
 				const tagStr = tagArr.join(',');
 				$('#selectedTags').val(tagStr);
 				console.dir($('#selectedTags').val());
@@ -119,6 +126,7 @@
 		
 		$("#upFile").on("change", function(event) {
 			if($("#upFile").val()==null){
+				
 			}else{
 				let str=$("#upFile").val();
 				console.dir(str);
@@ -134,12 +142,24 @@
 		
 		<%if(!board.getTags().isEmpty()){%>
 			<%for(int i=0; i<board.getTags().size();i++){%>
-				var $span = $('<span class="tg">'+'<%=board.getTags().get(i).getTagTitle()%>'+'</span>');
-				var $span2 =$('<span class="tgDelBtn">X</span>');
+				var $span = $('<span class="tg">'+'<%=board.getTags().get(i).getTagTitle()%>'+'✕</span>');
 				$('#selectedTagsContainer').append($span);
-				$('#selectedTagsContainer').append($span2);
 			<%}%>
 		<%}%>
+		
+		$(document).on("click", ".tg", function() {
+			$(this).remove();
+			let tx=$('#selectedTagsContainer').text();
+			tx=tx.trim();
+			let tx2=tx.split('✕');
+			let tx3=tx2.join(',');
+			console.dir(tx3);
+			$('#selectedTags').val(tx3);
+		});
+		
+		const openTempSave=()=>{
+			window.open("<%=request.getContextPath()%>/admin/travelboardtemp.do","_blank","width=600,height=400");
+		}
 		
     </script>
 <%@ include file="/views/common/footer.jsp"%>

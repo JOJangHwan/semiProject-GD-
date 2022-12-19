@@ -38,7 +38,7 @@
 }
 
 #boardPostAreaContainer{
-	border:1px solid red;
+	/* border:1px solid red; */
 	display:flex;
 	justify-content:center;
 	
@@ -47,7 +47,7 @@
 #boardPostArea{
 	position:relative;
 	margin:10px;
-	border:1px solid blue;
+	/* border:1px solid blue; */
 	height:600px;
 	width:975px;
 	justify-content:space-between;
@@ -56,7 +56,7 @@
 .kjh_boardPostBasic{
 	/* position:absolute; */
 	display:inline-block;
-	border:1px solid gray;
+	/* border:1px solid gray; */
 	width:300px;
 	height:280px;
 	margin:10px 10px 10px 10px;
@@ -65,7 +65,7 @@
 .kjh_boardPostImg{
 	width:300px;
 	height:200px;
-	border:1px solid red;
+	/* border:1px solid red; */
 	position:relative;
 }
 
@@ -108,7 +108,7 @@
 	flex-direction:row;
 	display:flex;
 	position:absolute;
-	border:1px solid green;
+	/* border:1px solid green; */
 }
 
 .kjh_boardPostPick{
@@ -129,7 +129,7 @@
 .kjh_boardPostTitle{
 	width:300px;
 	height:70px;
-	border:1px solid blue;
+	/* border:1px solid blue; */
 	margin-top:10px;
 	position:relative;
 }
@@ -145,7 +145,7 @@
 
 #boardPagingContainer{
 	text-align:center;
-	border:1px solid red;
+	/* border:1px solid red; */
 	height:50px;
 	margin:10px;
 }
@@ -154,7 +154,7 @@
 	display:inline-block;
 	width:500px;
 	height:50px;
-	border:1px solid blue;
+	/* border:1px solid blue; */
 }
 
 .map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}

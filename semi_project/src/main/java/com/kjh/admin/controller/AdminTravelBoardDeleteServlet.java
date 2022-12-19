@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kjh.travelBoard.model.service.TravelBoardService;
+import com.kjh.travelBoard.model.vo.TravelBoard;
+
 /**
  * Servlet implementation class AdminTravelBoardDeleteServlet
  */
@@ -26,8 +29,15 @@ public class AdminTravelBoardDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
+		int result=new TravelBoardService().deleteTravelBoard(boardNo);
+		if(result==1) {
+			System.out.println("삭제 성공");
+		}else {
+			System.out.println("삭제 실패");
+		}
+		
+		request.getRequestDispatcher("/travelboard/travelboardmain.do").forward(request, response);
 	}
 
 	/**

@@ -78,14 +78,14 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 			if(tagStr!=null) {
 				String[] strArr=tagStr.split(",");
 				List<String> tags = new ArrayList<>(Arrays.asList(strArr));
-				
 				for(String t:tags) {
-					Tag tg=Tag.builder().tagTitle(t.trim()).build();
+					String t2=t.replace('✕', ' ');
+					Tag tg=Tag.builder().tagTitle(t2.trim()).build();
 					tagList.add(tg);
 				}
 			}else {
 				System.out.println("tag가 null입니다.");
-			}
+			} 
 			
 			TravelBoard board=
 				TravelBoard.builder().
@@ -93,7 +93,6 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 				boardContent(content).
 				thumbFilename(thumbFilename).
 				build();
-				
 			
 			int result=new TravelBoardService().insertTravelBoard(board, tagList);
 			

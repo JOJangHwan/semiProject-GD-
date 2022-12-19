@@ -28,7 +28,7 @@
 	}
 	
 	#tagSelectContainer span{
-	 	border:1px solid blue;
+	 	/* border:1px solid blue; */
 	}
 	
 	#mapContainer{
@@ -60,9 +60,8 @@
 		padding-right:3px;
 	}
 	
-	.tgDelBtn{
-		width:10px;
-		height:10px;
+	.tg:hover{
+		cursor:pointer;
 	}
 	
 	.inputFileBtn{

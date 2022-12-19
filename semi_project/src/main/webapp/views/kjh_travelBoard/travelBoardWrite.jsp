@@ -34,14 +34,17 @@
 					    		<div id="tagContainer">
 					    			<div id="tagSelectContainer">
 					    				<label class="viewFileBtn">태그 설정</label>
-						    			<select size="1" id="tagsSelect" name="tagsSelect">
-						    				<option value="none">태그 선택</option>
-						    				<%for(int i=0; i<tags.size(); i++){ %>
-												<option value="<%=tags.get(i).getTagTitle()%>">
-													<%=tags.get(i).getTagTitle()%>
-												</option>
-											<%} %>
-										</select>
+						    				<%if(tags==null){ 
+						    				}else{%>
+							    				<select size="1" id="tagsSelect" name="tagsSelect">
+							    				<option value="none">태그 선택</option>
+							    				<%for(int i=0; i<tags.size(); i++){ %>
+													<option value="<%=tags.get(i).getTagTitle()%>">
+														<%=tags.get(i).getTagTitle()%>
+													</option>
+												<%}%>
+							    				</select>
+											<%}%>
 									</div>
 									<div id="selectedTagsContainer">
 										<input type="hidden" id="selectedTags" name="selectedTags">
@@ -66,7 +69,7 @@
 					    			<input type="button" value="취소" onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">
 					    		</div>
 					    		<div id="submitRight">
-									<input type="button" value="임시저장" onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">
+									<input type="button" value="임시저장" onclick="openTempSave();">
 									<input type="submit" value="게시">
 								</div>
 					    	</div>
@@ -92,18 +95,20 @@
 		var tagArr=new Array();
 		
 		$("#tagsSelect").on("change", function(event) {
-			if($("#tagsSelect option:selected").val()==="none"){
+			let s=($("#tagsSelect option:selected").val());
+			let str=s.replace(/ /g, "");
+			
+			if(str==="none"){
 				//선택되지 않도록 제한함.
-			}else if(tagArr.includes($("#tagsSelect option:selected").val())){
+			}else if(tagArr.includes(str)){
 				//중복되지 않도록 제한함.
+			}else if(tagArr.includes(str+'✕')){
+				
 			}else{
-				var $span = $('<span class="tg">'+$("#tagsSelect option:selected").text()+'</span>');
-				var $span2 =$('<span class="tgDelBtn">X</span>');
+				var $span = $('<span class="tg">'+str+'✕</span>');
 				$('#selectedTagsContainer').append($span);
-				$('#selectedTagsContainer').append($span2);
 				tagArr.length=0;
-				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerText)});
-				console.dir(tagArr);
+				$('span[class=tg]').each((i,v)=>{tagArr.push(v.innerHTML)});
 				const tagStr = tagArr.join(',');
 				$('#selectedTags').val(tagStr);
 				console.dir($('#selectedTags').val());
@@ -121,22 +126,13 @@
 			}
 		});
 		
-		var delay = 300;
-		var timer = null;
-		
-	    $(window).on('resize', function(){
-			clearTimeout(timer);
-			timer = setTimeout(function(){
-				console.log('resize event!');
-				console.log(window.innerWidth);
-		        if (window.innerWidth >= 1900) {
-		      		$("#titieInput").css("width","1400px");
-		    	}else if(window.innerWidth >= 1200){
-		    		$("#titieInput").css("width","1000px");
-		    	}else if(window.innerWidth >= 900){
-		    		$("#titieInput").css("width","500px");
-		    	}
-			}, delay);
+		$(document).on("click", ".tg", function() {
+			$(this).remove();
 		});
+		
+		const openTempSave=()=>{
+			window.open("<%=request.getContextPath()%>/admin/travelboardtemp.do","_blank","width=600,height=400");
+		}
+		
     </script>
 <%@ include file="/views/common/footer.jsp" %>
