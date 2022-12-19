@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MoveLine {
 	private int movelineNo;
-	private int userNo;
+	private String userId;
 	private Date tripdateStart;
 	private Date tripdateFinish;
 	private String movelineName;

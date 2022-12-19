@@ -80,9 +80,8 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 				List<String> tags = new ArrayList<>(Arrays.asList(strArr));
 				
 				for(String t:tags) {
-					Tag tg=Tag.builder().tagTitle(t).build();
+					Tag tg=Tag.builder().tagTitle(t.trim()).build();
 					tagList.add(tg);
-					System.out.println(tg);
 				}
 			}else {
 				System.out.println("tag가 null입니다.");
@@ -93,21 +92,21 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 				boardTitle(title).
 				boardContent(content).
 				thumbFilename(thumbFilename).
-				tags(tagList).build();
+				build();
 				
-			int result1=new TravelBoardService().insertTravelBoard(board);
-			int result2=new TravelBoardService().insertTravelBoardTag(board);
 			
-			if(result1==1&&result2==1) {
+			int result=new TravelBoardService().insertTravelBoard(board, tagList);
+			
+			if(result==1) {
 				System.out.println("등록 성공");
 			}else{
 				System.out.println("등록 실패"); 
 			}
 			
-			request.setAttribute("board", board);
+			TravelBoard targetTb=new TravelBoardService().selectTravelBoard(board);
 			
-			request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").
-				forward(request, response);
+			request.setAttribute("board", targetTb);
+			request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").forward(request, response);
 		}
 	}
 

@@ -3,12 +3,11 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/summernote/summernote-lite.css">
 	
-	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag"%>
+	<%@ page import="java.util.ArrayList, java.util.List, com.kjh.admin.model.vo.Tag, com.kjh.travelBoard.model.vo.TravelBoard, com.jjh.member.model.vo.Member"%>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
   	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/summernote-lite.js"></script>
 	<script src="<%=request.getContextPath()%>/js/kjh_js/summernote/lang/summernote-ko-KR.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	
 	
 <style>
 	#inputArea{
@@ -63,6 +62,22 @@
 		border:1px solid blue;
 		margin-left:5px;
 	}
+	
+	.inputFileBtn{
+	  padding: 1px 10px;
+	  background-color:#F1C40F;
+	  border-radius: 4px;
+	  color: white;
+	  cursor: pointer;
+	}
+	
+	.viewFileBtn{
+	  padding: 1px 10px;
+	  background-color:#F1C40F;
+	  border-radius: 4px;
+	  color: white;
+	}
+	
 </style>
 <%@ include file="/views/common/header.jsp" %>
 <%
@@ -71,6 +86,8 @@
 		userId=loginMember.getUserId();
 	}
 	List<Tag> tags=(List<Tag>)request.getAttribute("tags");
+	
+	TravelBoard board=(TravelBoard)request.getAttribute("board");
 %>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
@@ -79,7 +96,7 @@
 		    		<section id="mainSectionTotal">
 					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do">
 						<div id="titleInput">
-							<input type="text" name="titleInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
+							<input type="text" id="titleInputV" name="titleInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
 						</div>
   						<textarea id="summernote" name="editordata"></textarea>
   						
@@ -87,27 +104,30 @@
 					    	<div id="infoInputArea">
 					    		<div id="tagContainer">
 					    			<div id="tagSelectContainer">
-					    				<label>태그 설정</label>
-						    			<select size="1" id="tagsSelect" name="tagsSelect">
+					    				<label class="viewFileBtn">태그 설정</label>
+						    			<%-- <select size="1" id="tagsSelect" name="tagsSelect">
 						    				<option value="none">태그 선택</option>
 						    				<%for(int i=0; i<tags.size(); i++){ %>
 												<option value="<%=tags.get(i).getTagTitle()%>">
 													<%=tags.get(i).getTagTitle()%>
 												</option>
 											<%} %>
-										</select>
+										</select> --%>
 									</div>
 									<div id="selectedTagsContainer">
 										<input type="hidden" id="selectedTags" name="selectedTags">
 									</div>
 					    		</div>
 					    		<div id="thumbContainer">
-					    			<label>섬네일 설정</label>
-					    			<input type="file" name="upFile">
+						    		<label class="inputFileBtn" for="upFile">
+										섬네일 추가
+									</label>
+									<input type="file" id="upFile" name="upFile" style="display:none;">
+									<div id="upFileTitleDiv"></div>
 					    		</div>
 					    		<div id="mapContainer">
-					    			<label>지도 삽입하기</label>
-					    			<input type="button" value="지도 추가">
+					    			<label class="inputFileBtn" for="mapFile">지도 추가</label>
+					    			<input type="button" id="mapFile" name="mapFile" style="display:none;">
 					    		</div>
 					    	</div>
 					    	<div id="submitArea">
@@ -126,7 +146,7 @@
 		    </div>
 	    <div id="rightMarginMain"></div>
     </section>
-    <script async="true">
+    <script>
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				  height: 250,              // 에디터 높이
@@ -136,6 +156,7 @@
 				  lang: "ko-KR",			// 한글 설정
 				  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
 			});
+			console.dir($('#summernote').summernote);
 		});
 		
 		var tagArr=new Array();
@@ -156,5 +177,23 @@
 				console.dir($('#selectedTags').val());
 			}
 		});
+		
+		$("#upFile").on("change", function(event) {
+			
+			$("#upFileTitleDiv").val('');
+		});
+		
+		$("#titleInputV").val('<%=board.getBoardTitle()%>');
+		$("#summernote").val('<%=board.getBoardContent()%>');
+		
+		<%if(!board.getTags().isEmpty()){%>
+			<%for(int i=0; i<board.getTags().size();i++){%>
+				var $span = $('<span class="tg">'+'<%=board.getTags().get(i).getTagTitle()%>'+'</span>');
+				$('#selectedTagsContainer').append($span);
+			<%}%>
+		<%}%>
+		
+		$("#upFileTitleDiv").val('');
+		
     </script>
-<%@ include file="/views/common/footer.jsp" %>
+<%@ include file="/views/common/footer.jsp"%>

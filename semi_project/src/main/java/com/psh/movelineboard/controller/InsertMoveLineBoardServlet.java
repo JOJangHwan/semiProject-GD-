@@ -27,7 +27,10 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(request.getParameter("mlbTitle"));
-		System.out.println(request.getParameter("summernote"));
+		System.out.println(request.getParameter("files"));
+		System.out.println(request.getParameter("mlbWriter"));
+		System.out.println(request.getParameter("mlbContent"));
+		System.out.println(request.getParameter("mlNo"));
 		
 	}
 
