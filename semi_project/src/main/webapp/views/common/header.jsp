@@ -112,7 +112,7 @@
         <div id="subHeaderDiv">
             <div id="subHeaderFrm">
                 <div id="sub_menu1"><a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do">여행지</a></div>
-                <div id="sub_menu2"><a href="">내동선</a></div>
+                <div id="sub_menu2"><a href="<%=request.getContextPath()%>/moveline/checkmoveline.do">내동선</a></div>
                 <div id="sub_menu3"><a href="">추천동선</a></div>
                 <div id="sub_menu4"><a href="">찜페이지</a></div>
             </div>

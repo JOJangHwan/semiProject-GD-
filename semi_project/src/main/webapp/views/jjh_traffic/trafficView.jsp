@@ -11,8 +11,8 @@
 	
 <%
 	
-	Document doc =Jsoup.connect("https://www.letskorail.com/ebizprd/EbizPrdTicketPr21111_i1.do").get();
-	Elements elements=doc.select("li");
+	Document doc =Jsoup.connect("https://news.naver.com/").get();
+	Elements elements=doc.select("p.cjs_d");
 	out.println(elements.size()+"개 가져엄<br>");
 	for(Element e : elements){
 		out.println(e.text()+"<br>");

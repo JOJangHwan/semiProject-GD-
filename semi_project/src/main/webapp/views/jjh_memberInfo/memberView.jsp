@@ -1,105 +1,85 @@
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="com.jjh.loginMember.model.service.LoginMemberService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-          <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/css/jjh_css/semantic.min.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/main.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/subMain.css">
+
   <%@ include file="/views/common/header.jsp" %>
     
         <section id="mainSection">
         
     
           	
-          		<form name="enrollerMemberFrm" action="<%=request.getContextPath() %>/login/enrollerMemberEnd.do" method="post" onsubmit="return fn_invalidate">
+          		
           		
           			<div class="ui middle aligned center aligned grid">
         <div class="column">
         <br>
             <h2 class="ui teal image header">
-                회원가입 페이지
+                회원정보
             </h2>
             <div class="ui large form">
                 <div class="ui stacked segment">
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="text" id="u_id" placeholder="아이디" autofocus autocomplete="off" name="userId">
-                            <input type="button" class="ui fluid large teal submit button" onclick="fn_idduplicate();" value="아이디중복체크">
+                        	<input type="button" class="ui fluid large teal submit button" value="아이디">&nbsp;
+                            <input type="text" id="u_id" placeholder="아이디" autofocus autocomplete="off" name="userId" value="<%=loginMember.getUserId()%>" readonly="readonly">
+                            
                         </div>
-                        <script>
-                        const fn_idduplicate=()=>{
-    						const userId=$("#userId_").val();
-    						if(userId.trim().length<4){
-    							alert('아이디는 4글자 이상입력해야 합니다!');
-    							$("#userId_").val('');
-    							$("#userId_").focus();
-    						}else{
-    							<%-- open("<%=request.getContextPath()%>/member/idDuplicate.do?userId="+userId,
-    									"_blank","width=300,height=300"); --%>
-    							const title="idDuplicateFrm";
-    							open("",title,"width=300,height=300");
-    							console.log(duplicateIdFrm);
-    							duplicateIdFrm.userId.value=userId;
-    							duplicateIdFrm.method="post";
-    							duplicateIdFrm.action="<%=request.getContextPath()%>/member/idDuplicate.do";
-    							duplicateIdFrm.target=title;
-    							duplicateIdFrm.submit();
-    						}
-    					} 
-                        </script>
-                        
-                        
-                        
+    
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="text" id="u_id" placeholder="닉네임" autofocus autocomplete="off" name="nickName">
+                        <input type="button" class="ui fluid large teal submit button" value="닉네임">&nbsp;
+                            <input type="text" id="u_id" placeholder="닉네임" autofocus autocomplete="off" name="nickName" value="<%=loginMember.getNickName()%>"readonly="readonly">
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="password" id="password" placeholder="비밀번호" name="password">
+                        <input type="button" class="ui fluid large teal submit button" value="비밃번호">&nbsp;
+                            <input type="password" id="password" placeholder="비밀번호" name="password" value="<%=loginMember.getPassword()%>" readonly="readonly">
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                            <input type="password" id="passwordch" placeholder="비밀번호 확인" name="chpassword">
-                        </div>
-                    </div>
-                    <span id="pwresult"></span>
+                   
                    
                     
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="number" id="u_pw2" placeholder="나이" name="age">
+                         <input type="button" class="ui fluid large teal submit button" value="나이">&nbsp;
+                            <input type="number" id="u_pw2" placeholder="나이" name="age" value="<%=loginMember.getAge()%>" readonly="readonly">
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="text" id="u_pw2" placeholder="주소" name="address">
+                         <input type="button" class="ui fluid large teal submit button" value="주소">&nbsp;
+                            <input type="text" id="u_pw2" placeholder="주소" name="address" value="<%=loginMember.getAddress()%>" readonly="readonly">
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="email" id="u_pw2" placeholder="이메일" name="email">
+                         <input type="button" class="ui fluid large teal submit button" value="이메일">&nbsp;
+                            <input type="email" id="u_pw2" placeholder="이메일" name="email" value="<%=loginMember.getEmail() %>" readonly="readonly">
                         </div>
                         
                         
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
-                            <input type="tel" id="u_pw2" placeholder="전화번호" name="phone">
+                         <input type="button" class="ui fluid large teal submit button" value="전화번호">&nbsp;
+                            <input type="tel" id="u_pw2" placeholder="전화번호" name="phone" value="<%=loginMember.getPhone()%>" readonly="readonly">
                         </div>
                     </div>
                     <div class="field">
                         <div class="ui left icon input">
                            
-                            성별
-          						남<input type="radio" name="gender" value="남" id="u_pw2">
-          						여<input type="radio" name="gender" value="여" id="u_pw2">
+                             <input type="button" class="ui fluid large teal submit button" value="성별"> &nbsp;&nbsp;&nbsp;
+          						남<input type="radio" name="gender" value="남" id="u_pw2" value="남" <%=loginMember.getGender()=='남'?"checked":"" %> onclick="return false">
+          						여<input type="radio" name="gender" value="여" id="u_pw2" value="여" id="u_pw2" value="여" <%=loginMember.getGender()=='여'?"checked":"" %> onclick="return false">
                         </div>
                     </div>
-                    <input class="ui fluid large teal submit button" id="register_btn" type="submit" value="회원가입">
+                    <a href="<%=request.getContextPath()%>/member/memeberUpdate.do"><button class="ui fluid large teal submit button">수정하기</button></a>
                 </div>
 
                 <div class="ui error message"></div>
@@ -107,13 +87,13 @@
             </div>
 
             <div class="ui message">
-                로그인 할 계정이 있다면 <a href="<%=request.getContextPath()%>/login/loginView.do">여기</a>를 눌러주세요.
+                뒤로 가고 싶으면 <a href="<%=request.getContextPath()%>/member/memberinfoview.do">여기</a>를 눌러주세요.
             </div>
         </div>
     </div>
           			
           			 
-          		</form>
+          		
           		<form name="duplicateIdFrm">
 			<input type="hidden" name="userId">
 		</form>

@@ -106,7 +106,7 @@
             <%if(loginMember==null) {%>
             <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
             <%}else{ %>
-            <div id="login"><a href="<%=request.getContextPath()%>/member/memberinfo.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <div id="login"><a href="<%=request.getContextPath()%>/member/memberinfoview.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
             <%} %>
             
         </div>
