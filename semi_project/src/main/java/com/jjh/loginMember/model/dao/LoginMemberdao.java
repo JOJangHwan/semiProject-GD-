@@ -1,14 +1,15 @@
 package com.jjh.loginMember.model.dao;
 
+import static com.jjh.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.PseudoColumnUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import static com.jjh.common.JDBCTemplate.close;
 
 import com.jjh.member.model.vo.Member;
 
@@ -68,6 +69,67 @@ public class LoginMemberdao {
 			close(rs);
 			close(pstmt);
 		}return m;
+	}
+	
+	public Member searchMemberId(Connection conn, String userId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		Member m=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchMemberId"));
+			pstmt.setString(1, userId);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=getMember(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return m;
+			
+		
+	}
+	
+	public Member searchpassword(Connection conn, Member m) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchpassword"));
+			pstmt.setNString(1, m.getUserId());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=getMember(rs);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return m;
+	}
+	
+	public int passWordUpdate(Connection conn, String password, String userId) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("passWordUpdate"));
+			pstmt.setNString(1, password);
+			pstmt.setString(2,userId);
+			rs=pstmt.executeQuery();
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
 	}
 	
 	

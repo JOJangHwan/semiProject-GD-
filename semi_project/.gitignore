@@ -3,4 +3,4 @@ src/main/resources/
 src/main/webapp/images/
 Scripts/
 .dbeaver/
-
+src/main/webapp/WEB-INF/lib

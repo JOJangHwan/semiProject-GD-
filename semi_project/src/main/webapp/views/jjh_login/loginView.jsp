@@ -53,7 +53,9 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
                     </div>
                     <input type="submit" value="로그인" class="ui fluid large teal submit button" id = "login_btn">
                      <br>
-                               <a id="kakao-login-btn" href="javascript:loginWithKakao()">
+                     		<!-- input type="submit"id="kakao-login-btn" src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" name="kakao"--> 
+                     		
+                               <a id="kakao-login-btn" href="javascript:loginWithKakao()" name="kakao">
   								<img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222"
     							alt="카카오 로그인 버튼" />
 								</a>
@@ -61,7 +63,7 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
 								<button class="api-btn" onclick="requestUserInfo()" style="visibility:hidden">사용자 정보 가져오기</button>
 								<input type="button" value="아이디찾기" class="ui fluid large teal submit button" id = "login_btn">
 								<br>
-                        		<input type="button" value="비밀번호찾기" class="ui fluid large teal submit button" id = "login_btn">
+                        		<input type="button" value="비밀번호찾기" class="ui fluid large teal submit button" id = "searchPassword" onclick="search();">
                         		
                    
                 </div>
@@ -71,7 +73,7 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
             </form>
 
             <div class="ui message">
-                로그인 할 계정이 없다면 <a href="<%=request.getContextPath()%>/member/enrollMember.do">여기</a>를 눌러주세요.
+                로그인 할 계정이 없다면 <a href="<%=request.getContextPath()%>/login/enrollMember.do">여기</a>를 눌러주세요.
             </div>
         </div>
     </div>
@@ -85,6 +87,8 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
   section#mainSection{width:300px; margin:0 auto; text-align:center;}
     section#mainSection h2{margin:10px 0;}
 </style>
+
+
 
 
 
@@ -129,6 +133,7 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
 </script> -->
 
 
+
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -139,6 +144,10 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
 	<div id="result"></div>
 	
 <script type="text/javascript">
+const search=()=>{
+	  location.assign("<%=request.getContextPath()%>/search/searchPassWord.do");
+}
+
   function unlinkApp() {
     Kakao.API.request({
       url: '/v1/user/unlink',
@@ -162,12 +171,15 @@ console.log(Kakao.isInitialized());
       Kakao.API.request({
         url: '/v2/user/me',
         success: function(result) {
+        	
           $('#result').append(result);
           id = result.id
+          console.log("result"+result)
           connected_at = result.connected_at
           kakao_account = result.kakao_account
-          console.log(kakao_account)
-          console.log(result)
+          
+          console.log("account"+kakao_account)
+          console.log("result"+result)
           let nickname=kakao_account.profile.nickname
           $('#result').append(kakao_account);
           resultdiv="<h2>로그인 성공 !!"
@@ -185,6 +197,25 @@ console.log(Kakao.isInitialized());
           resultdiv += '<h4>nickName: '+nickname+'<h4>'
           $('#result').append(resultdiv);
           
+        
+          $.ajax({
+              url: "<%=request.getContextPath()%>/login/kakaologin.do",
+              type: "POST",
+              <!--dataType: "json",-->
+              dataType:"text",
+              processData: true,
+              <!--contentType: "application/json; charset=UTF-8",-->
+              <!--data:SON.stringify(result),-->
+              success: function(data) {
+                  if (data == 1) {
+                      alert("등록 성공");
+                  } else {
+                      alert("등록 실패!");
+                  }
+              }
+          });
+
+        
         },
         fail: function(error) {
           alert(

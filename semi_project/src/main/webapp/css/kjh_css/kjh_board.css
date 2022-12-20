@@ -1,0 +1,80 @@
+@charset "UTF-8";
+
+	#inputArea{
+		width:100%;
+		height:160px;
+		background-color:#F8F8F8;
+	}
+	
+	#infoInputArea{
+		height:120px;
+		margin-left:10px;
+		padding-top:1px;
+		margin-bottom:10px;
+	}
+	
+	#tagContainer{
+		/* border:1px solid black; */
+		height:30px;
+		margin-top:10px;
+		display:flex;
+	}
+	
+	#thumbContainer{
+		/* border:1px solid blue; */
+		height:30px;
+		margin-top:10px;
+		margin-bottom:10px;
+	}
+	
+	#tagSelectContainer span{
+	 	/* border:1px solid blue; */
+	}
+	
+	#mapContainer{
+		/* border:1px solid red; */
+		height:30px;
+	}
+	
+	#submitArea{
+		margin-left:10px;
+		margin-right:10px;
+	}
+	
+	#submitLeft{
+		display:inline-block;
+		float:left;
+	}
+	
+	#submitRight{
+		display:inline-block;
+		float:right;
+	}
+	
+	.tg{
+		border:1px solid #F1C40F;
+		border-radius:5px;
+		background-color:yellow;
+		margin-left:5px;
+		padding-left:3px;
+		padding-right:3px;
+	}
+	
+	.tg:hover{
+		cursor:pointer;
+	}
+	
+	.inputFileBtn{
+	  padding: 1px 10px;
+	  background-color:rgb(12, 186, 243);
+	  border-radius: 4px;
+	  color: white;
+	  cursor: pointer;
+	}
+	
+	.viewFileBtn{
+	  padding: 1px 10px;
+	  background-color:#F1C40F;
+	  border-radius: 4px;
+	  color: white;
+	}
