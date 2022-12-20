@@ -204,8 +204,8 @@ console.log(Kakao.isInitialized());
               <!--dataType: "json",-->
               dataType:"text",
               processData: true,
-              contentType: "application/json; charset=UTF-8",
-              data:SON.stringify(result),
+              <!--contentType: "application/json; charset=UTF-8",-->
+              <!--data:SON.stringify(result),-->
               success: function(data) {
                   if (data == 1) {
                       alert("등록 성공");
