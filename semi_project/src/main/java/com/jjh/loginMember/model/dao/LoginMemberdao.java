@@ -21,7 +21,7 @@ public class LoginMemberdao {
 		// TODO Auto-generated constructor stub
 		try {
 			String path=LoginMemberdao.class
-					.getResource("/sql/jjh/member/member_sql.properties")
+					.getResource("/sql/member/member_sql.properties")
 					.getPath();
 			sql.load(new FileReader(path));
 		}catch(IOException e) {
