@@ -16,7 +16,7 @@ import com.jjh.questions.model.vo.Questions;
 /**
  * Servlet implementation class QuestionsListViewServlet
  */
-@WebServlet("/matter/matterListView.do")
+@WebServlet("/questions/questionsListView.do")
 public class QuestionsListViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

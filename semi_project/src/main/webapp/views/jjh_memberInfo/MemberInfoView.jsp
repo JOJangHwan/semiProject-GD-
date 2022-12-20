@@ -22,6 +22,8 @@
                             <a href="<%=request.getContextPath()%>/member/memberInfo.do"><button class="ui fluid large teal submit button">내정보 조회하기</button></a>
                    <br>
                             <a href="<%=request.getContextPath()%>/member/memberupdate.do"><button class="ui fluid large teal submit button">찜한 여행지 리스트</button></a>
+                            <br>  
+                     <a href="<%=request.getContextPath()%>/member/memberupdate.do"><button class="ui fluid large teal submit button">찜한 추천 동선 리스트</button></a>
                    <br>  
                      <a href="<%=request.getContextPath()%>/member/memberupdate.do"><button class="ui fluid large teal submit button">내 동선리스트</button></a>
                      

@@ -21,5 +21,14 @@ public class MemberServlce {
 		return result;
 		
 	}
+	
+	public int updatepassword(Member m) {
+		Connection conn=getConnection();
+		int result=new MemberDao().updatepassword(conn,m);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+	}
 
 }

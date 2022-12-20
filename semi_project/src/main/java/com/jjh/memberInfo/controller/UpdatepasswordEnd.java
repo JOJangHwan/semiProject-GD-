@@ -1,7 +1,6 @@
 package com.jjh.memberInfo.controller;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,19 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import com.jjh.member.model.vo.Member;
 import com.jjh.memberInfo.model.service.MemberServlce;
 
-
-
 /**
- * Servlet implementation class MemeberUpdateEneServlet
+ * Servlet implementation class UpdatepasswordEnd
  */
-@WebServlet("/member/memeberUpdateEnd.do")
-public class MemeberUpdateEneServlet extends HttpServlet {
+@WebServlet("/member/updatepasswordEnd.do")
+public class UpdatepasswordEnd extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MemeberUpdateEneServlet() {
+    public UpdatepasswordEnd() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,38 +31,27 @@ public class MemeberUpdateEneServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String userId=(String)request.getParameter("userId");
-		String nickName=(String)request.getParameter("nickName");
-		//String password=(String)request.getParameter("password");
-		int age=Integer.parseInt(request.getParameter("age"));
-		String address=(String)request.getParameter("address");
-		String email=(String)request.getParameter("email");
-		String phone=(String)request.getParameter("phone");
-		String gender=(String)request.getParameter("gender");
-		System.out.println(userId+nickName+age+address+email+phone+gender);
+		String userId=request.getParameter("userId");
+		String chpassword=request.getParameter("chpassword");
+		String email=request.getParameter("email");
+		String phone=request.getParameter("phone");
 		
-		Member m= Member.builder()
+		Member m=Member.builder()
 				.userId(userId)
-				.nickName(nickName)
-				//.password(password)
-				.address(address)
-				.age(age)
+				.password(chpassword)
 				.email(email)
 				.phone(phone)
-				.gender(gender.charAt(0))
 				.build();
+		int result=new MemberServlce().updatepassword(m);
 		
-		int result =new MemberServlce().memerUpdate(m);
-				
-				String msg="", loc="";
+		String msg="", loc="";
 		if(result>0) {
-			msg="회원 정보를 수정합니다.";
+			msg="비밀번호를 수정합니다.";
 			loc="/member/memberInfo.do";
 			request.getSession().setAttribute("loginMember", m);
 		}else {
-			msg="회원정보 수정을 실패했습니다.";
-			loc="/member/memeberUpdate.do";
-			
+			msg="비밀번호수정을 실패했습니다.";
+			loc="/member/passwordUpdate.do";
 			
 			
 		}

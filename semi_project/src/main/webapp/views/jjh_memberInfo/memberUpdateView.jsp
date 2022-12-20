@@ -9,7 +9,7 @@
   <%@ include file="/views/common/header.jsp" %>
     
         <section id="mainSection">
-<form name="memberupdate" action="<%=request.getContextPath() %>/member/memberUpdateEnd.do" method="post" onsubmit="return fn_invalidate">
+<form name="memberupdate" action="<%=request.getContextPath() %>/member/memeberUpdateEnd.do" method="post" onsubmit="return fn_invalidate">
           			<div class="ui middle aligned center aligned grid">
         <div class="column">
         <br>
@@ -22,7 +22,7 @@
                     <div class="field">
                         <div class="ui left icon input">
                         	<input type="button" class="ui fluid large teal submit button" value="아이디">&nbsp;
-                            <input type="text" id="u_id" autofocus autocomplete="off" name="userId" placeholder="<%=loginMember.getUserId() %>"  value="<%=loginMember.getUserId()%>">
+                            <input type="text" id="u_id" autofocus autocomplete="off" name="userId" readonly="readonly"  value="<%=loginMember.getUserId()%>">
                             
                         </div>
     
@@ -33,18 +33,7 @@
                             <input type="text" id="u_id" autofocus autocomplete="off" name="nickName" placeholder="<%=loginMember.getNickName() %>" value="<%=loginMember.getNickName()%>">
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                        <input type="button" class="ui fluid large teal submit button" value="비밀번호">&nbsp;
-                            <input type="password" id="password" placeholder="비밀번호" name="password" value="<%=loginMember.getPassword()%>">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                         <input type="button" class="ui fluid large teal submit button" value="비밀번호확인">&nbsp;
-                            <input type="password" id="passwordch" placeholder="비밀번호 확인" name="chpassword" value="<%=loginMember.getPassword()%>">
-                        </div>
-                    </div>
+                   
                    <span id="pwresult"></span>
                    
                     
@@ -82,7 +71,8 @@
           						여<input type="radio" name="gender" value="여" id="u_pw2" value="여" id="u_pw2" value="여" <%=loginMember.getGender()=='여'?"checked":"" %>>
                         </div>
                     </div>
-                    <a href="<%=request.getContextPath()%>/member/memeberUpdate.do"><button class="ui fluid large teal submit button">수정하기</button></a>
+                    <input type="submit" class="ui fluid large teal submit button" value="수정하기">
+                   
                 </div>
 
                 <div class="ui error message"></div>
@@ -90,7 +80,7 @@
             </div>
 
             <div class="ui message">
-                뒤로 가고 싶으면 <a href="<%=request.getContextPath()%>/member/memberinfoview.do">여기</a>를 눌러주세요.
+                뒤로 가고 싶으면 <a href="<%=request.getContextPath()%>/member/memberInfo.do">여기</a>를 눌러주세요.
             </div>
         </div>
         

@@ -9,58 +9,42 @@
   <%@ include file="/views/common/header.jsp" %>
     
         <section id="mainSection">
-        
-    
-          	
-          		
-          		
+<form name="memberupdate" action="<%=request.getContextPath() %>/member/updatepasswordEnd.do" method="post" onsubmit="return fn_invalidate">
           			<div class="ui middle aligned center aligned grid">
         <div class="column">
         <br>
             <h2 class="ui teal image header">
-                회원정보
+                비밀번호수정하기
             </h2>
+            
             <div class="ui large form">
                 <div class="ui stacked segment">
                     <div class="field">
                         <div class="ui left icon input">
                         	<input type="button" class="ui fluid large teal submit button" value="아이디">&nbsp;
-                            <input type="text" id="u_id" placeholder="아이디" autofocus autocomplete="off" name="userId" value="<%=loginMember.getUserId()%>" readonly="readonly">
+                            <input type="text" id="u_id" autofocus autocomplete="off" name="userId" readonly="readonly"  value="<%=loginMember.getUserId()%>">
                             
                         </div>
     
                     </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                        <input type="button" class="ui fluid large teal submit button" value="닉네임">&nbsp;
-                            <input type="text" id="u_id" placeholder="닉네임" autofocus autocomplete="off" name="nickName" value="<%=loginMember.getNickName()%>"readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                        <input type="button" class="ui fluid large teal submit button" value="비밃번호">&nbsp;
-                            <input type="password" id="password" placeholder="비밀번호" name="password" value="<%=loginMember.getPassword()%>" readonly="readonly">
-                        </div>
-                    </div>
+        
                    
+                   <div class="field">
+                        <div class="ui left icon input">
+                            <input type="password" id="password" placeholder="비밀번호" name="password">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <input type="password" id="passwordch" placeholder="비밀번호 확인" name="chpassword">
+                        </div>
+                    </div>
+                    <span id="pwresult"></span>
                    
-                    
-                    <div class="field">
-                        <div class="ui left icon input">
-                         <input type="button" class="ui fluid large teal submit button" value="나이">&nbsp;
-                            <input type="number" id="u_pw2" placeholder="나이" name="age" value="<%=loginMember.getAge()%>" readonly="readonly">
-                        </div>
-                    </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                         <input type="button" class="ui fluid large teal submit button" value="주소">&nbsp;
-                            <input type="text" id="u_pw2" placeholder="주소" name="address" value="<%=loginMember.getAddress()%>" readonly="readonly">
-                        </div>
-                    </div>
                     <div class="field">
                         <div class="ui left icon input">
                          <input type="button" class="ui fluid large teal submit button" value="이메일">&nbsp;
-                            <input type="email" id="u_pw2" placeholder="이메일" name="email" value="<%=loginMember.getEmail() %>" readonly="readonly">
+                            <input type="email" id="u_pw2" name="email" placeholder="이메일을 입력하세요" >
                         </div>
                         
                         
@@ -68,20 +52,10 @@
                     <div class="field">
                         <div class="ui left icon input">
                          <input type="button" class="ui fluid large teal submit button" value="전화번호">&nbsp;
-                            <input type="tel" id="u_pw2" placeholder="전화번호" name="phone" value="<%=loginMember.getPhone()%>" readonly="readonly">
+                            <input type="tel" id="u_pw2" placeholder="전화번호를 입력하세요" name="phone" >
                         </div>
                     </div>
-                    <div class="field">
-                        <div class="ui left icon input">
-                           
-                             <input type="button" class="ui fluid large teal submit button" value="성별"> &nbsp;&nbsp;&nbsp;
-          						남<input type="radio" name="gender" value="남" id="u_pw2" value="남" <%=loginMember.getGender()=='남'?"checked":"" %> onclick="return false">
-          						여<input type="radio" name="gender" value="여" id="u_pw2" value="여" id="u_pw2" value="여" <%=loginMember.getGender()=='여'?"checked":"" %> onclick="return false">
-                        </div>
-                    </div>
-                     <a href="<%=request.getContextPath()%>/member/passwordUpdate.do"><button class="ui fluid large teal submit button">비밀번호 수정하기</button></a>
-                     <br>
-                    <a href="<%=request.getContextPath()%>/member/memeberUpdate.do"><button class="ui fluid large teal submit button">수정하기</button></a>
+                    <input type="submit" class="ui fluid large teal submit button" value="수정하기">
                 </div>
 
                 <div class="ui error message"></div>
@@ -89,16 +63,16 @@
             </div>
 
             <div class="ui message">
-                뒤로 가고 싶으면 <a href="<%=request.getContextPath()%>/member/memberinfoview.do">여기</a>를 눌러주세요.
+                뒤로 가고 싶으면 <a href="<%=request.getContextPath()%>/login/memberinfoview.do">여기</a>를 눌러주세요.
             </div>
         </div>
+        
     </div>
+    </form>
           			
           			 
           		
-          		<form name="duplicateIdFrm">
-			<input type="hidden" name="userId">
-		</form>
+          	
           	
             
         </section>
