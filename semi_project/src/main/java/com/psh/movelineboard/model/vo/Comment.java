@@ -2,8 +2,6 @@ package com.psh.movelineboard.model.vo;
 
 import java.sql.Date;
 
-import com.psh.moveline.model.vo.MoveLine;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,13 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MoveLineBoard {
-	private int movelineNo;
-	private String userId;
-	private String thumbFileName;
+public class Comment {
+	private int commentNo;
 	private int boardNo;
-	private String boardTitle;
-	private String boardContent;
-	private Date boardEnroll;
+	private String userId;
+	private int moveLineBoardlevel;
+	private String commentContent;
+	private int commentRef;
+	private Date commentEnroll;
 	
 }

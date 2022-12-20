@@ -10,7 +10,7 @@
         int d=3;//일차값 이ㅏㅁ의로
    %>
     <!-- 에디터 -->
-	<!-- include libraries(jQuery, bootstrap) -->
+	<!-- include libraries(jQuery, bootstrap)-->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -20,9 +20,8 @@
     <!-- 지도 -->
     <style>
 		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;}
-		#infoTb{text-align: center;text-align: center;display: flex}
-		td{text-align: center;}
-		th{text-align: center;}
+		#infoTitle{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
+		#infoContent{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
 		#mapwrap{position:relative;overflow:hidden;}
 		.category, .category *{margin:0;padding:0;color:#000;}   
 		.category {position:absolute;overflow:hidden;top:10px;left:10px;height:50px;z-index:10;border:1px solid black;font-family:'Malgun Gothic','맑은 고딕',sans-serif;font-size:12px;text-align:center;background-color:#fff;}
@@ -40,67 +39,56 @@
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
-
-				<form action="<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do">
+				<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do" >
 					<!-- 제목 -->
-				   <div >
+				    <div >
 					   <input name="mlbTitle" type="text" placeholder="제목을 입력하세요">
-				   </div>
-				   <p>작성자 <%=ml.getUserId()%></p>  
-				   <input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
-				   <input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
+				    </div>
+				    <p>작성자 <%=ml.getUserId()%></p>  
+					<input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
+					<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
+				   
 				   <hr>
+				   
 				   <!-- 지도 시작 -->
 				   <div id="mapwrap"> 
-					   <!-- 지도가 표시될 div -->
-					   <div id="map" style="width:100%;height:350px;"></div>
-					   <!-- 지도 위에 표시될 마커 카테고리 -->
-                       <!-- 스크립트로 포문 돌려서 출력 최대 일차까지 -->
-					   <div class="category">
-						   <ul>
+					    <!-- 지도가 표시될 div -->
+					    <div id="map" style="width:100%;height:350px;"></div>
+					    <!-- 지도 위에 표시될 마커 카테고리 -->
+                        <!-- 스크립트로 포문 돌려서 출력 최대 일차까지 -->
+					    <div class="category">
+						<ul>
 							  	<!-- 카테고리출력 -->
-						   </ul>
+						</ul>
 					   </div>
 				   </div>
 				   
 				   <div id="infoBox">
-						<%for(int i=0;i<d;i++){%>
-							<table id=infoTb>
-								<tbody>
-										<tr>
-											<th>No.</th>
-											<th>장소명</th>
-											<th>주소</th>
-											<th>메모</th>
-										</tr>
-												
-						<%for(Marker m: mList){%>
-							<%if(Integer.parseInt(m.getMovelineDay())==i+1){%>
-										<tr>
-											<td font-size: large><%=m.getMarkerNo()%></td>
-											<td font-size: large><%=m.getPlaceName()%></td>
-											<td font-size: large><%=m.getAddress()%></td>
-											<td font-size: large><%=m.getMemo()%></td>
-										</tr>
-								</tbody>
-	                        </table>
-								<%}
-							}
-				
-						}%>
-				   </div>
-
-				    <div name="mlbContent" id="summernote"></div>
+				   		<div id="info">
+							<%for(int i=0;i<d;i++){%>
+							<div id="infoTitle">
+								<div><h3><%=i+1%>일차</h3></div>
+								<div><h3>No.</h3></div>
+								<div><h3>장소명</h3></div>
+								<div><h3>주소</h3></div>
+								<div><h3>메모</h3></div>
+							</div>
+							<%for(Marker m: mList){%>
+									<%if(Integer.parseInt(m.getMovelineDay())==i+1){%>
+										<div id="infoContent">
+											<div><h4><%=m.getMarkerNo()%></h4></div>
+											<div><h4><%=m.getPlaceName()%></h4></div>
+											<div><h4><%=m.getAddress()%></h4></div>
+											<div><h4><%=m.getMemo()%></h4></div>
+										</div>
+									<%}
+							      }
+							}%>
+					   </div>
+					</div>   
+				    <textarea name="mlbContent" id="summernote"></textarea>
 				    
-				    <script>
-					    $(document).ready(function() {
-	                        $('#summernote').summernote({
-	                           height: 500
-	                        });
-	                    });
-				    </script>
-				    
-                   <input type="submit" value="등록" onclick="sbm();">
+				    <input type="submit" value="등록">
                 </form>
              </div>
 	    <div id="rightMarginMain"></div>
@@ -108,9 +96,12 @@
     
 	<script>
 		//에디터 함수
-		function sbm(){
-			$('#summernote').summernote('code').submit();
-		}
+		$(document).ready(function() {
+			$('#summernote').summernote({
+					height: 500
+					
+	        });
+	    });
 		
  		//카테고리
  		for(let i=0;i<<%=d%>;i++){

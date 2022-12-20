@@ -21,5 +21,4 @@ public class MoveLine {
 	private String movelineName;
 	private char openandclosed;
 	private Date movelineEnroll;
-//	private List<Marker> mList;
 }

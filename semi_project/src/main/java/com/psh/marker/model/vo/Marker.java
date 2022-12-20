@@ -2,6 +2,9 @@ package com.psh.marker.model.vo;
 
 import java.sql.Date;
 
+import com.psh.moveline.model.vo.MoveLine;
+import com.psh.movelineboard.model.vo.MoveLineBoard;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,4 +24,7 @@ public class Marker {
 	private String placeName;
 	private int price;
 	private String markerTime;
+	private MoveLineBoard mlb;
+	private MoveLine ml;
+	
 }
