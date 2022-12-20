@@ -119,6 +119,42 @@ public class TravelBoardDao {
 		}return list;
 	}
 	
+	public List<TravelBoard> searchTempBoardList(Connection conn, int cPage, int numPerpage){
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		List<TravelBoard> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTempBoardList"));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, (cPage*numPerpage));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getTravelBoard(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+	
+	public int searchTempBoardCount(Connection conn) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTempBoardCount"));
+			rs=pstmt.executeQuery();
+			if(rs.next())result=rs.getInt(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
+	}
+	
 	public int searchTagBoardsCount(Connection conn, List tagTitleList) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -242,6 +278,24 @@ public class TravelBoardDao {
 		int result=0;
 		try {
 			opstmt=(OraclePreparedStatement)conn.prepareStatement(sql.getProperty("insertBoard"));
+			opstmt.setString(1, board.getBoardTitle());
+			opstmt.setString(2, board.getThumbFilename());
+			opstmt.setStringForClob(3, board.getBoardContent());
+			result=opstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(opstmt);
+			close(pstmt);
+		}return result;
+	}
+	
+	public int insertTempBoard(Connection conn, TravelBoard board) { // 새로운 TempBoard 임시 게시글 삽입하기.
+		PreparedStatement pstmt=null;
+		OraclePreparedStatement opstmt = null;    
+		int result=0;
+		try {
+			opstmt=(OraclePreparedStatement)conn.prepareStatement(sql.getProperty("insertTempBoard"));
 			opstmt.setString(1, board.getBoardTitle());
 			opstmt.setString(2, board.getThumbFilename());
 			opstmt.setStringForClob(3, board.getBoardContent());

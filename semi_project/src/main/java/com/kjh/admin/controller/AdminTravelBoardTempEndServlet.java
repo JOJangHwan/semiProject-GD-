@@ -20,16 +20,16 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 /**
- * Servlet implementation class AdminTravelBoardWriteEndServlet
+ * Servlet implementation class AdminTravelBoardTempEndServlet
  */
-@WebServlet("/admin/travelboardwriteend.do")
-public class AdminTravelBoardWriteEndServlet extends HttpServlet {
+@WebServlet("/admin/travelboardtempend.do")
+public class AdminTravelBoardTempEndServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminTravelBoardWriteEndServlet() {
+    public AdminTravelBoardTempEndServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -41,18 +41,6 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			response.sendRedirect(request.getContextPath());
 		}else {
-		//2. 요청방식이 맞는다면 
-		// cos.jar에서 제공하는 클래스를 이용해서 지정된
-		// 위치에 전송된 파일을 저장
-		//MultipartRequest클래스 이용! 
-		// -> 자동으로 전달된 파일을 지정된 위치에 저장
-		//MultiparRequest클래스 매개변수있는 생성자를 이용하면됨.
-		//첫번째 매개변수 : HttpServletRequest객체
-		//두번째 매개변수 : 저장위치설정(String) *절대경로로 가져옴
-		//세번째 매개변수 : 업로드된 파일의 최대크기설정(int)
-		//네번째 매개변수 : 인코딩방식(String) * UTF-8
-		//다번째 매개변수 : rename규칙클래스 *적용 기본클래스 제공/커스터마이징가능
-			//저장할 위치설정하기
 			String path=request.getServletContext().getRealPath("/upload/kjh_travelBoard/postThumbImages");
 			
 			int maxSize=1024*1024*10;//10MB
@@ -75,37 +63,41 @@ public class AdminTravelBoardWriteEndServlet extends HttpServlet {
 			String thumbFilename=mr.getFilesystemName("upFile");
 			List<Tag> tagList=new ArrayList();
 			
-			if(tagStr!=null&&tagStr!=" ") {
+			if(tagStr!=null&&!tagStr.equals("")&&!tagStr.equals(" ")) {
 				String[] strArr=tagStr.split(",");
 				List<String> tags = new ArrayList<>(Arrays.asList(strArr));
+				
 				for(String t:tags) {
 					String t2=t.replace('✕', ' ');
 					Tag tg=Tag.builder().tagTitle(t2.trim()).build();
 					tagList.add(tg);
 				}
+				
+				TravelBoard board=
+						TravelBoard.builder().
+						boardTitle(title).
+						boardContent(content).
+						thumbFilename(thumbFilename).
+						build();
+					
+					int result=new TravelBoardService().insertTempBoard(board, tagList);
+					
+					if(result==1) {
+						System.out.println("등록 성공");
+					}else{
+						System.out.println("등록 실패"); 
+					}
+					
+					TravelBoard targetTb=new TravelBoardService().selectTravelBoard(board);
+					
+					request.setAttribute("board", targetTb);
+					request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").forward(request, response);
+				
 			}else {
-				System.out.println("tag가 null입니다.");
+				System.out.println("tag가 null입니다. 등록 실패");
+				request.getRequestDispatcher("/travelboard/travelboardmain.do").forward(request, response);
 			} 
 			
-			TravelBoard board=
-				TravelBoard.builder().
-				boardTitle(title).
-				boardContent(content).
-				thumbFilename(thumbFilename).
-				build();
-			
-			int result=new TravelBoardService().insertTravelBoard(board, tagList);
-			
-			if(result==1) {
-				System.out.println("등록 성공");
-			}else{
-				System.out.println("등록 실패"); 
-			}
-			
-			TravelBoard targetTb=new TravelBoardService().selectTravelBoard(board);
-			
-			request.setAttribute("board", targetTb);
-			request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").forward(request, response);
 		}
 	}
 

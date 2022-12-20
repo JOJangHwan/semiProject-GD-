@@ -163,6 +163,61 @@ public class TravelBoardService {
 		return result;
 	}
 	
+	public int insertTempBoard(TravelBoard board, List<Tag> tagList) {
+		Connection conn=getConnection();
+		int result=dao.insertTempBoard(conn,board); //tag갖고 있지 않은 상태에서 보드 삽입.
+		
+		if(result!=1) {
+			System.out.println("에러 발생 : 보드를 삽입하지 못했습니다. :(");
+		}
+		
+		List<TravelBoard> tb=dao.selectTravelBoard(conn, board.getBoardTitle());  //보드 정보 다시 불러오기. boardNo 필요하기 때문. 검색 기준은 타이틀.
+		TravelBoard targetTb=null;
+		System.out.println(tb);
+		if(!tb.isEmpty()) {
+			int lastIndex = tb.size()-1;
+			targetTb = tb.get(lastIndex); //맨마지막으로 삽입한 보드 객체 가져옴.
+		}
+		List<Tag> allTags=dao.searchTagList(conn); //전체 태그 정보 가져옴.
+		System.out.println("마지막 삽입한 보드 넘버 : "+targetTb.getBoardNo());
+		
+		for(Tag tg:tagList) {
+			tg.setBoardNo(targetTb.getBoardNo()); //현재 태그 리스트에 boardNo를 설정.
+		}
+		
+		System.out.println("모든 태그 정보 : "+allTags);
+		
+		
+		ArrayList<Tag> targetTagList = new ArrayList<Tag>(tagList);
+		
+		for(int i=0; i<allTags.size();i++) {
+			for(int j=0; j<tagList.size(); j++) {
+				
+				if(allTags.get(i).getTagTitle().equals(tagList.get(j).getTagTitle().trim())) {
+					targetTagList.get(j).setTagNo(allTags.get(i).getTagNo());
+				}
+			}
+		}
+		
+		System.out.println("현재 보드의 tagList : "+targetTagList); 
+		
+		targetTb.setTags(targetTagList); //현재 삽입 중인 보드에 태그 리스트를 set
+		
+		for(Tag tg:targetTagList) {
+			int insertResult=dao.insertTravelBoardTag(conn,tg); //boardTag 삽입.
+			if(insertResult==1) {
+				System.out.println("보드-태그를 삽입하였습니다. 태그 정보 = "+tg);
+				commit(conn);
+			}else {
+				System.out.println("에러 발생 : 보드-태그를 삽입하지 못했습니다. 태그 정보 = "+tg);
+				rollback(conn);
+			}
+		}
+		
+		close(conn);
+		return result;
+	}
+	
 	public int updateTravelBoard(TravelBoard board, List<Tag> tagList) {
 		Connection conn=getConnection();
 		
@@ -218,6 +273,13 @@ public class TravelBoardService {
 		return result;
 	}
 	
+	public int searchTempBoardCount() {
+		Connection conn=getConnection();
+		int result=dao.searchTempBoardCount(conn);
+		close(conn);
+		return result;
+	}
+	
 	public int searchTagBoardsCount(List tagTitleList) {
 		Connection conn=getConnection();
 		int result=dao.searchTagBoardsCount(conn, tagTitleList);
@@ -255,5 +317,19 @@ public class TravelBoardService {
 		
 		close(conn);
 		return result3;
+	}
+	
+	public List<TravelBoard> searchTempBoardList(int cPage, int numPerpage){
+		Connection conn=getConnection();
+		List<TravelBoard> list=dao.searchTempBoardList(conn, cPage, numPerpage);
+		
+		for(TravelBoard tb:list) {
+			List<Tag> tags=dao.searchTagBoardList(conn, tb.getBoardNo());
+			tb.setTags(tags);
+			System.out.println(tags);
+		}
+		
+		close(conn);
+		return list;
 	}
 }

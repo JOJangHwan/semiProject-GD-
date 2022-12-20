@@ -26,7 +26,8 @@
 		    <div id="mainSectionContainer">
 		    	<div id="totalContainer">
 		    		<section id="mainSectionTotal">
-					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardupdateend.do">
+					<form method="post" enctype="multipart/form-data" id="boardForm" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do"
+						onsubmit="return submitCk();">
 						<div id="titleInput">
 							<input type="text" id="titleInputV" name="titleInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
 						</div>
@@ -157,8 +158,20 @@
 			$('#selectedTags').val(tx3);
 		});
 		
-		const openTempSave=()=>{
-			window.open("<%=request.getContextPath()%>/admin/travelboardtemp.do","_blank","width=600,height=400");
+		var tempPopup;
+
+		function openTempSave() {
+		  tempPopup = window.open("<%=request.getContextPath()%>/admin/travelboardtemp.do","_blank","width=600, height=400, scrollbars=no, resizable=no, toolbars=no, menubar=no");
+
+		  tempPopup.addEventListener('beforeunload', function() {
+			  	$("#boardForm").attr("action", "<%=request.getContextPath()%>/admin/travelboardtempend.do");
+			  	document.getElementById('boardForm').submit();
+		     	return false;
+		  });
+		}
+		
+		function submitCk() {
+			return false;
 		}
 		
     </script>

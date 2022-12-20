@@ -23,7 +23,8 @@
 		    <div id="mainSectionContainer">
 		    	<div id="totalContainer">
 		    		<section id="mainSectionTotal">
-					<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do">
+					<form method="post" enctype="multipart/form-data" id="boardForm" action="<%=request.getContextPath()%>/admin/travelboardwriteend.do"
+						onsubmit="return submitCk();">
 						<div id="titleInput">
 							<input type="text" name="titleInput" id="titieInput" style="width:1000; height:50px; font-size:20px" placeholder="제목 입력">
 						</div>
@@ -130,9 +131,35 @@
 			$(this).remove();
 		});
 		
-		const openTempSave=()=>{
-			window.open("<%=request.getContextPath()%>/admin/travelboardtemp.do","_blank","width=600,height=400");
+		var tempPopup;
+
+		function openTempSave() {
+		  tempPopup = window.open("<%=request.getContextPath()%>/admin/travelboardtemp.do","_blank","width=600, height=400, scrollbars=no, resizable=no, toolbars=no, menubar=no");
+
+		  tempPopup.addEventListener('beforeunload', function() {
+			  	$("#boardForm").attr("action", "<%=request.getContextPath()%>/admin/travelboardtempend.do");
+			  	$("#boardForm").attr("onsubmit", "submitTempCk();");
+			  	document.getElementById('boardForm').submit();
+		  });
 		}
+		
+		function submitCk() {
+			if($('#titieInput').val()==""||$('#titieInput').val()==" "){
+				alert("제목을 입력해 주세요.");
+				return false;
+			}else if($('#summernote').val()==""||$('#summernote').val()==" "){
+				alert("본문을 입력해 주세요.");
+				return false;
+			}else if($('#selectedTags').val()==""||$('#selectedTags').val()==" "){
+				alert("태그를 한 개 이상 선택해 주세요.");
+				return false;
+			}else if($('#upFile').val()==""||$('#upFile').val()==" "){
+				alert("섬네일을 설정해 주세요.");
+				return false;
+			}
+			return true;
+		}
+		
 		
     </script>
 <%@ include file="/views/common/footer.jsp" %>
