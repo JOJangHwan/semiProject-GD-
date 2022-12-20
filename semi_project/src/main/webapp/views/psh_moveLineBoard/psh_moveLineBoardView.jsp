@@ -176,10 +176,11 @@
 					"boardNo":<%=mlb.getBoardNo()%>
 				},
 				success:data=>{
-					for(data){
+					console.log(data);
+					/* for(data){
 						
-					}
-					const div=$("<div>")
+					} */
+					/* const div=$("<div>")
 					const addDiv=$("<div>")
 					const sub=$("<sub>").html(data["userId"])
 					const sub2=$("<sub>").html(data["commentEroll"])
@@ -193,10 +194,8 @@
 					comBtns.append(deletebtn).append(updatebtn)
 					div.append(addDiv).append(comBtns)
 					$(e.target).prepend(div)
-				}
-			})
-			
-		});
+				}*/
+			}
 		}
 		
 		//댓글등록 ajax
