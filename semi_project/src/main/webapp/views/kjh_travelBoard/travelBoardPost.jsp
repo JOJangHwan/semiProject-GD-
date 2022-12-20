@@ -110,15 +110,16 @@
 			    	<div id="lineLightGray"></div>
 			    	<div id="tagAndPick">
 				    	<div id="tagArea">
-				    		<%if(board.getTags().isEmpty()) {%>
-							<%}else{
-								for(int i=0; i<board.getTags().size();i++){%>
+				    		<%if(board.getTags()!=null&&!board.getTags().isEmpty()) {
+				    			for(int i=0; i<board.getTags().size();i++){%>
 									<button id="tagSearchBtn" name="tagSearchBtn"
 										onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardtagsearch.do?tagTitle=<%=board.getTags().get(i).getTagTitle()%>';">
 										#<%=board.getTags().get(i).getTagTitle()%>
 									</button>
 							   	<%}%>
-							<%}%>
+							<%}else{
+								
+							}%>
 				    	</div>
 				    	<div id="pickArea"
 				    		onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardpickcontroll.do?boardNo=<%=board.getBoardNo()%>&pick=<%=board.getTravelPick()%>';"

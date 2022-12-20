@@ -37,6 +37,7 @@ public class AdminTravelBoardTempEndServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			response.sendRedirect(request.getContextPath());
@@ -51,8 +52,6 @@ public class AdminTravelBoardTempEndServlet extends HttpServlet {
 			MultipartRequest mr=new MultipartRequest(request, 
 						path,maxSize,encoding,dfr);
 			
-			//클라이언트가 보낸 데이터를 DB에 저장하는 기능
-			//파일을 저장하면서 재정의된 파일명을 저장해야한다.
 			String title=mr.getParameter("titleInput");
 			String content=mr.getParameter("editordata");
 			String tagStr=mr.getParameter("selectedTags");
@@ -60,44 +59,66 @@ public class AdminTravelBoardTempEndServlet extends HttpServlet {
 			System.out.println("본문 : "+content);
 			System.out.println("태그들 : "+tagStr);
 			//파일이름 리네임된 파일이름!
+			
 			String thumbFilename=mr.getFilesystemName("upFile");
 			List<Tag> tagList=new ArrayList();
 			
-			if(tagStr!=null&&!tagStr.equals("")&&!tagStr.equals(" ")) {
-				String[] strArr=tagStr.split(",");
-				List<String> tags = new ArrayList<>(Arrays.asList(strArr));
-				
-				for(String t:tags) {
-					String t2=t.replace('✕', ' ');
-					Tag tg=Tag.builder().tagTitle(t2.trim()).build();
-					tagList.add(tg);
-				}
-				
-				TravelBoard board=
-						TravelBoard.builder().
-						boardTitle(title).
-						boardContent(content).
-						thumbFilename(thumbFilename).
-						build();
+			if(title.equals("")&& content.equals("") && tagStr.equals("") && thumbFilename==null) {
+				//thumbFilename만 null 나머지 "" equals로 비교. 중요!!!!!!
+				System.out.println("저장할 내용이 없습니다.");
+				request.getRequestDispatcher("/travelboard/travelboardmain.do").forward(request, response);
+			}else {
+				if(tagStr!=null&&!tagStr.equals("")) {
+					String[] strArr=tagStr.split(",");
+					List<String> tags = new ArrayList<>(Arrays.asList(strArr));
 					
-					int result=new TravelBoardService().insertTempBoard(board, tagList);
-					
-					if(result==1) {
-						System.out.println("등록 성공");
-					}else{
-						System.out.println("등록 실패"); 
+					for(String t:tags) {
+						String t2=t.replace('✕', ' ');
+						Tag tg=Tag.builder().tagTitle(t2.trim()).build();
+						tagList.add(tg);
 					}
 					
-					TravelBoard targetTb=new TravelBoardService().selectTravelBoard(board);
-					
-					request.setAttribute("board", targetTb);
-					request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").forward(request, response);
-				
-			}else {
-				System.out.println("tag가 null입니다. 등록 실패");
-				request.getRequestDispatcher("/travelboard/travelboardmain.do").forward(request, response);
-			} 
-			
+					TravelBoard board=
+							TravelBoard.builder().
+							boardTitle(title).
+							boardContent(content).
+							thumbFilename(thumbFilename).
+							build();
+						
+						int result=new TravelBoardService().insertTempBoard(board, tagList);
+						
+						if(result==1) {
+							System.out.println("등록 성공");
+						}else{
+							System.out.println("등록 실패"); 
+						}
+						
+						TravelBoard targetTb=new TravelBoardService().selectTravelBoard(board);
+						
+						request.setAttribute("board", targetTb);
+						request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardPost.jsp").forward(request, response);
+				}else {
+					TravelBoard board=
+							TravelBoard.builder().
+							boardTitle(title).
+							boardContent(content).
+							thumbFilename(thumbFilename).
+							build();
+						
+						int result=new TravelBoardService().insertTempBoardWithoutTag(board);
+						
+						if(result==1) {
+							System.out.println("등록 성공");
+						}else{
+							System.out.println("등록 실패"); 
+						}
+						
+						TravelBoard targetTb=new TravelBoardService().selectTravelBoardWithoutTag(board);
+						
+						request.setAttribute("board", targetTb);
+						request.getRequestDispatcher("/admin/travelboardupdate.do?boardNo="+targetTb.getBoardNo()).forward(request, response);
+				}
+			}	
 		}
 	}
 

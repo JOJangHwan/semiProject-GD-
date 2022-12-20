@@ -138,7 +138,6 @@
 
 		  tempPopup.addEventListener('beforeunload', function() {
 			  	$("#boardForm").attr("action", "<%=request.getContextPath()%>/admin/travelboardtempend.do");
-			  	$("#boardForm").attr("onsubmit", "submitTempCk();");
 			  	document.getElementById('boardForm').submit();
 		  });
 		}

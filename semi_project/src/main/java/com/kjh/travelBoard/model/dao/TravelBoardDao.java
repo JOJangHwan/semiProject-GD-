@@ -296,9 +296,23 @@ public class TravelBoardDao {
 		int result=0;
 		try {
 			opstmt=(OraclePreparedStatement)conn.prepareStatement(sql.getProperty("insertTempBoard"));
-			opstmt.setString(1, board.getBoardTitle());
-			opstmt.setString(2, board.getThumbFilename());
-			opstmt.setStringForClob(3, board.getBoardContent());
+			if(board.getBoardTitle().equals("")) {
+				opstmt.setString(1, "");
+			}else {
+				opstmt.setString(1, board.getBoardTitle());
+			}
+			
+			if(board.getThumbFilename()==null) {
+				opstmt.setString(2, "");
+			}else {
+				opstmt.setString(2, board.getThumbFilename());
+			}
+			
+			if(board.getBoardContent().equals("")) {
+				opstmt.setStringForClob(3, "");
+			}else {
+				opstmt.setStringForClob(3, board.getBoardContent());
+			}
 			result=opstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

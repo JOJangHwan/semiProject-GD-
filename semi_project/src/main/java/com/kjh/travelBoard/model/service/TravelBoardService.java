@@ -108,6 +108,22 @@ public class TravelBoardService {
 		close(conn);
 		return targetTb;
 	}
+	
+	public TravelBoard selectTravelBoardWithoutTag(TravelBoard board) {
+		Connection conn=getConnection();
+		List<TravelBoard> tb=dao.selectTravelBoard(conn, board.getBoardTitle());  //보드 정보 다시 불러오기. boardNo 필요하기 때문. 검색 기준은 타이틀.
+		TravelBoard targetTb=null;
+		System.out.println(tb);
+		if(!tb.isEmpty()) {
+			int lastIndex = tb.size()-1;
+			targetTb = tb.get(lastIndex); //맨마지막으로 삽입한 보드 객체 가져옴.
+		}
+		
+		close(conn);
+		return targetTb;
+	}
+	
+	
 	public int insertTravelBoard(TravelBoard board, List<Tag> tagList) {
 		Connection conn=getConnection();
 		int result=dao.insertTravelBoard(conn,board); //tag갖고 있지 않은 상태에서 보드 삽입.
@@ -218,6 +234,21 @@ public class TravelBoardService {
 		return result;
 	}
 	
+	public int insertTempBoardWithoutTag(TravelBoard board) {
+		Connection conn=getConnection();
+		int result=dao.insertTempBoard(conn,board); //tag갖고 있지 않은 상태에서 보드 삽입.
+		
+		if(result!=1) {
+			System.out.println("에러 발생 : 보드를 삽입하지 못했습니다. :(");
+			rollback(conn);
+		}else {
+			System.out.println("보드를 삽입하였습니다. :)");
+			commit(conn);
+		}
+		close(conn);
+		return result;
+	}
+	
 	public int updateTravelBoard(TravelBoard board, List<Tag> tagList) {
 		Connection conn=getConnection();
 		
@@ -239,11 +270,11 @@ public class TravelBoardService {
 			}
 		}
 		
-		System.out.println("현재 보드의 tagList : "+targetTagList); 
+		System.out.println("현재 보드의 tagList : "+targetTagList);
 		
 		board.setTags(targetTagList); //현재 삽입 중인 보드에 태그 리스트를 set
 		int deleteResult=dao.deleteBoardTagAll(conn, board);
-		
+		 
 		if(deleteResult!=0) {
 			for(Tag tg:targetTagList) {
 				int insertResult=dao.insertTravelBoardTag(conn,tg); //boardTag 삽입.
