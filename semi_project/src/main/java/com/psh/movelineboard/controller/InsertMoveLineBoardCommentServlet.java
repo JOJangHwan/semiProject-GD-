@@ -1,32 +1,29 @@
 package com.psh.movelineboard.controller;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.psh.marker.model.service.MarkerService;
-import com.psh.marker.model.vo.Marker;
+import org.json.simple.JSONObject;
+
+import com.google.gson.Gson;
 import com.psh.movelineboard.model.servlce.MoveLineBoardService;
 import com.psh.movelineboard.model.vo.Comment;
-import com.psh.movelineboard.model.vo.MoveLineBoard;
 
 /**
- * Servlet implementation class MoveLineBoardViewServlet
+ * Servlet implementation class InsertMoveLineBoardCommentServlet
  */
-@WebServlet("/moveLineBoard/moveLineBoardView.do")
-public class MoveLineBoardViewServlet extends HttpServlet {
+@WebServlet("/moveLineBoard/moveLineBoardComment.do")
+public class InsertMoveLineBoardCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MoveLineBoardViewServlet() {
+    public InsertMoveLineBoardCommentServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,18 +33,27 @@ public class MoveLineBoardViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
-		int moveLineNo=Integer.parseInt(request.getParameter("moveLineNo"));
-		//추천동선이랑 조인한 마커리스트 불러오기
+		int level=Integer.parseInt(request.getParameter("commentLevel"));
+		int commentRef=Integer.parseInt(request.getParameter("commentRef"));
+		String userId=request.getParameter("commentWriter");
+		String content=request.getParameter("content");
+		Comment c=Comment.builder()
+				.boardNo(boardNo)
+				.userId(userId)
+				.moveLineBoardlevel(level)
+				.commentRef(commentRef)
+				.commentContent(content)
+				.build();
 		
-		List<Marker> mList=new MarkerService().searchMoveLineBoardMarker(boardNo,moveLineNo);
-		MoveLineBoard mlb=new MoveLineBoardService().searchMoveLineBoard(boardNo);
-		List<Comment> cList=new MoveLineBoardService().searchComment(boardNo);
+		Comment comment=new MoveLineBoardService().insertComment(c);
+
+		//전송할때 contentType설정
+		response.setContentType("application/json;charset=utf-8");
 		
-		request.setAttribute("cList", cList);
-		request.setAttribute("moveLineBoard", mlb);
-		request.setAttribute("mList", mList);
-		request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardView.jsp").forward(request, response);
-		
+		//GSon라이브러리 이용해서 데이터 전송
+		Gson g=new Gson();
+		//toJson()메소드 이용
+		g.toJson(comment,response.getWriter());
 	}
 
 	/**
