@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class moveLineServlet
  */
-@WebServlet("/moveline/checkmoveline.do")
-public class moveLineServlet extends HttpServlet {
+@WebServlet("/moveLine/checkmoveline.do")
+public class MoveLineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public moveLineServlet() {
+    public MoveLineServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,7 +27,7 @@ public class moveLineServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getRequestDispatcher("/views/csk_moveline/csk_moveline.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/csk_moveline/moveline.jsp").forward(request, response);
 	}
 
 	/**
