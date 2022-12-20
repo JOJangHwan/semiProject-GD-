@@ -1,7 +1,6 @@
 package com.kjh.travelBoard.model.service;
 
-import static com.kjh.common.JDBCTemplate.close;
-import static com.kjh.common.JDBCTemplate.getConnection;
+import static com.kjh.common.JDBCTemplate.*;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -19,6 +18,30 @@ public class TravelBoardService {
 	public List<TravelBoard> searchTravelBoardList(int cPage, int numPerpage, String userId){
 		Connection conn=getConnection();
 		List<TravelBoard> list=dao.searchTravelBoardList(conn, cPage, numPerpage);
+		
+		for(TravelBoard tb:list) {
+			List<Tag> tags=dao.searchTagBoardList(conn, tb.getBoardNo());
+			tb.setTags(tags);
+			System.out.println(tags);
+		}
+		
+		for(TravelBoard tb:list) {
+			int result=dao.searchTravelBoardPick(conn, userId, tb.getBoardNo());
+			System.out.println("result : "+result);
+			char pick=' ';
+			if(result!=0)pick='Y';
+			else pick='N';
+			tb.setTravelPick(pick);
+			System.out.println("pick : "+pick);
+		}
+		
+		close(conn);
+		return list;
+	}
+	
+	public List<TravelBoard> searchTagBoards(List tagTitleList, int cPage, int numPerpage, String userId){
+		Connection conn=getConnection();
+		List<TravelBoard> list=dao.searchTagBoards(conn, tagTitleList, cPage, numPerpage);
 		
 		for(TravelBoard tb:list) {
 			List<Tag> tags=dao.searchTagBoardList(conn, tb.getBoardNo());
@@ -109,11 +132,6 @@ public class TravelBoardService {
 		
 		System.out.println("모든 태그 정보 : "+allTags);
 		
-		/*
-		 * for(Tag t:allTags) { for(Tag tg:tagList) {
-		 * if(t.getTagTitle()==tg.getTagTitle()) { tg.setTagNo(t.getTagNo()); //현재
-		 * 태그리스트에 tagNo를 설정. } } }
-		 */
 		
 		ArrayList<Tag> targetTagList = new ArrayList<Tag>(tagList);
 		
@@ -129,12 +147,64 @@ public class TravelBoardService {
 		System.out.println("현재 보드의 tagList : "+targetTagList); 
 		
 		targetTb.setTags(targetTagList); //현재 삽입 중인 보드에 태그 리스트를 set
+		
 		for(Tag tg:targetTagList) {
 			int insertResult=dao.insertTravelBoardTag(conn,tg); //boardTag 삽입.
-			if(insertResult!=1) {
+			if(insertResult==1) {
+				System.out.println("보드-태그를 삽입하였습니다. 태그 정보 = "+tg);
+				commit(conn);
+			}else {
 				System.out.println("에러 발생 : 보드-태그를 삽입하지 못했습니다. 태그 정보 = "+tg);
+				rollback(conn);
 			}
 		}
+		
+		close(conn);
+		return result;
+	}
+	
+	public int updateTravelBoard(TravelBoard board, List<Tag> tagList) {
+		Connection conn=getConnection();
+		
+		List<Tag> allTags=dao.searchTagList(conn); //전체 태그 정보 가져옴.
+		
+		for(Tag tg:tagList) {
+			tg.setBoardNo(board.getBoardNo()); //현재 태그 리스트에 boardNo를 설정.
+		}
+		
+		System.out.println("모든 태그 정보 : "+allTags);
+		
+		ArrayList<Tag> targetTagList = new ArrayList<Tag>(tagList);
+		
+		for(int i=0; i<allTags.size();i++) {
+			for(int j=0; j<tagList.size(); j++) {
+				if(allTags.get(i).getTagTitle().equals(tagList.get(j).getTagTitle().trim())) {
+					targetTagList.get(j).setTagNo(allTags.get(i).getTagNo());
+				}
+			}
+		}
+		
+		System.out.println("현재 보드의 tagList : "+targetTagList); 
+		
+		board.setTags(targetTagList); //현재 삽입 중인 보드에 태그 리스트를 set
+		int deleteResult=dao.deleteBoardTagAll(conn, board);
+		
+		if(deleteResult!=0) {
+			for(Tag tg:targetTagList) {
+				int insertResult=dao.insertTravelBoardTag(conn,tg); //boardTag 삽입.
+				if(insertResult==1) {
+					System.out.println("보드-태그를 삽입하였습니다. 태그 정보 = "+tg);
+					commit(conn);
+				}else {
+					System.out.println("에러 발생 : 보드-태그를 삽입하지 못했습니다. 태그 정보 = "+tg);
+					rollback(conn);
+				}
+			}
+		}else {
+			System.out.println("오류가 발생하였습니다 : 보드에 연결된 태그 삭제 실패");
+		}
+		
+		int result=dao.updateTravelBoard(conn, board);
 		
 		close(conn);
 		return result;
@@ -144,6 +214,13 @@ public class TravelBoardService {
 	public int searchTravelBoardCount() {
 		Connection conn=getConnection();
 		int result=dao.searchTravelBoardCount(conn);
+		close(conn);
+		return result;
+	}
+	
+	public int searchTagBoardsCount(List tagTitleList) {
+		Connection conn=getConnection();
+		int result=dao.searchTagBoardsCount(conn, tagTitleList);
 		close(conn);
 		return result;
 	}
@@ -160,5 +237,23 @@ public class TravelBoardService {
 		int result=dao.boardPickChange(conn, userId, boardNo, pick);
 		close(conn);
 		return result;
+	}
+	
+	public int deleteTravelBoard(int boardNo) {
+		Connection conn=getConnection();
+		int result=dao.deleteBoardTagAll(conn, boardNo);
+		int result2=dao.deleteTravelBoard(conn,boardNo);
+		int result3=0;
+		
+		if(result!=0&&result2==1) {
+			commit(conn);
+			result3=1;
+		}else {
+			rollback(conn);
+			result3=0;
+		}
+		
+		close(conn);
+		return result3;
 	}
 }

@@ -56,7 +56,7 @@
 		}
 		
 		#tagAndPick{
-			border:1px solid black;
+			/* border:1px solid black; */
 			width:60%;
 			margin:auto;
 			padding-top:20px;
@@ -67,7 +67,7 @@
 		#pickArea{
 			width:20px;
 			height:20px;
-			border:1px solid green;
+			/* border:1px solid green; */
 		}
 		
 		.moveTopBtn {

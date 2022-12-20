@@ -68,6 +68,37 @@ public class TravelBoardDao {
 		}return list;
 	}
 	
+	public List<TravelBoard> searchTagBoards(Connection conn, List tagTitleList, int cPage, int numPerpage){ //태그로 찾은 보드 반환, 보드 검색.
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		String arrData="";
+		for(int i=0; i<tagTitleList.size(); i++) {
+			if(i==0) {
+				arrData+="'"+tagTitleList.get(i)+"'";
+			}else {
+				arrData+=",'"+tagTitleList.get(i)+"'";
+			}
+		}
+		System.out.println("searchTagBoards arrData : "+arrData);
+		
+		List<TravelBoard> list=new ArrayList();
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTagBoards").replace("#DATA", arrData));
+			pstmt.setInt(1, (cPage-1)*numPerpage+1);
+			pstmt.setInt(2, (cPage*numPerpage));
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(getTravelBoardWithoutCon(rs));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return list;
+	}
+	
 	public List<TravelBoard> searchTravelBoardList(Connection conn, int cPage, int numPerpage){ //전체 보드 리스트 가져오기
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
@@ -86,6 +117,32 @@ public class TravelBoardDao {
 			close(rs);
 			close(pstmt);
 		}return list;
+	}
+	
+	public int searchTagBoardsCount(Connection conn, List tagTitleList) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String arrData="";
+		for(int i=0; i<tagTitleList.size(); i++) {
+			if(i==0) {
+				arrData+="'"+tagTitleList.get(i)+"'";
+			}else {
+				arrData+=",'"+tagTitleList.get(i)+"'";
+			}
+		}
+		System.out.println("arrData : "+arrData);
+		
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchTagBoardsCount").replace("#DATA", arrData));
+			rs=pstmt.executeQuery();
+			if(rs.next())result=rs.getInt(1);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return result;
 	}
 	
 	public int searchTravelBoardCount(Connection conn) { //페이징처리를 위한 카운트
@@ -214,13 +271,64 @@ public class TravelBoardDao {
 	
 	public int updateTravelBoard(Connection conn, TravelBoard board) { //보드 정보 업데이트.
 		PreparedStatement pstmt=null;
+		OraclePreparedStatement opstmt = null;    
 		int result=0;
 		try {
-			pstmt=conn.prepareStatement(sql.getProperty("updateBoard"));
-			pstmt.setString(1, board.getBoardTitle());
-			pstmt.setString(2, board.getThumbFilename());
-			pstmt.setString(3, board.getBoardContent());
-			pstmt.setInt(4, board.getBoardNo());
+			if(board.getThumbFilename()!=null) {
+				opstmt=(OraclePreparedStatement)conn.prepareStatement(sql.getProperty("updateBoardFile"));
+				opstmt.setString(1, board.getBoardTitle());
+				opstmt.setString(2, board.getThumbFilename());
+				opstmt.setStringForClob(3, board.getBoardContent());
+				opstmt.setInt(4, board.getBoardNo());
+			}else {
+				opstmt=(OraclePreparedStatement)conn.prepareStatement(sql.getProperty("updateBoard"));
+				opstmt.setString(1, board.getBoardTitle());
+				opstmt.setStringForClob(2, board.getBoardContent());
+				opstmt.setInt(3, board.getBoardNo());
+			}
+			result=opstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(opstmt);
+			close(pstmt);
+		}return result;
+	}
+	
+	public int deleteBoardTagAll(Connection conn, TravelBoard board) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteBoardTagAll"));
+			pstmt.setInt(1, board.getBoardNo());
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int deleteBoardTagAll(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteBoardTagAll"));
+			pstmt.setInt(1, boardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
+	public int deleteTravelBoard(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteTravelBoard"));
+			pstmt.setInt(1, boardNo);
 			result=pstmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -254,6 +362,19 @@ public class TravelBoardDao {
 				boardContent(rs.getString("board_content")).
 				build();
 	}
+	
+	private TravelBoard getTravelBoardWithoutCon(ResultSet rs) throws SQLException{ //보드 객체 빌더
+		return TravelBoard.builder().
+				boardNo(rs.getInt("board_no")).
+				userId(rs.getString("user_id")).
+				boardTitle(rs.getString("board_title")).
+				boardEnroll(rs.getDate("board_enroll")).
+				thumbFilename(rs.getString("thumb_filename")).
+				tempYn(rs.getString("temp_yn").charAt(0)).
+				openYn(rs.getString("open_yn").charAt(0)).
+				build();
+	}
+	
 	
 	private TravelPick getTravelPick(ResultSet rs) throws SQLException{
 		return TravelPick.builder().
