@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MoveLineBoard {
 	private int movelineNo;
-	private int userNo;
+	private String userId;
 	private String thumbFileName;
 	private int boardNo;
 	private String boardTitle;

@@ -1,6 +1,7 @@
 package com.kjh.admin.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.kjh.admin.model.vo.Tag;
 import com.kjh.travelBoard.model.service.TravelBoardService;
 import com.kjh.travelBoard.model.vo.TravelBoard;
 
@@ -33,6 +35,8 @@ public class AdminTravelBoardUpdateServlet extends HttpServlet {
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
 		TravelBoard board=new TravelBoardService().selectTravelBoard(boardNo);
 		request.setAttribute("board", board);
+		List<Tag> tags=new TravelBoardService().searchTagList();
+		request.setAttribute("tags", tags);
 		
 		request.getRequestDispatcher("/views/kjh_travelBoard/travelBoardUpdate.jsp").forward(request, response);
 	}

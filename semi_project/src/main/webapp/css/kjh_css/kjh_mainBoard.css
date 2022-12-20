@@ -1,0 +1,82 @@
+@charset "UTF-8";
+
+		img{
+			max-width:100%;
+		}
+	
+		#titleArea{
+			width:60%;
+			height:auto;
+			/* border:1px solid black; */
+			margin: auto;
+			
+			font-family:'Do Hyeon', sans-serif;
+			font-size:40px;
+			font-weight:border;
+			line-height:45px;
+			padding-top:15px;
+			padding-bottom:15px;
+		}
+		
+		#lineLightGray{
+			border:1px solid #D2D2D2;
+			background-color:#D2D2D2;
+			width:60%;
+			margin:auto;
+		}
+		
+		#tagArea{
+			/* border:1px solid #D2D2D2; */
+			height:30px;
+		}
+		
+		#contentArea{
+			padding-top:40px;
+			padding-bottom:40px;
+			width:60%;
+			height:auto;
+			/* border:1px solid black; */
+			margin: auto;
+		}
+		
+		#tagAndPick{
+			border:1px solid black;
+			width:60%;
+			margin:auto;
+			padding-top:20px;
+			display:flex;
+			justify-content:space-between;
+		}
+		
+		#pickArea{
+			width:20px;
+			height:20px;
+			border:1px solid green;
+		}
+		
+		.moveTopBtn {
+		  position: fixed;
+		  bottom: 4rem;
+		  right: 18rem;
+		  width: 4rem;
+		  height: 4rem;
+		  border-radius:40px;
+		  background-color:#F1C40F;
+		  color: black;
+		 }
+		 
+		 #buttonsContainer{
+		 	width:60%;
+		 	margin:auto;
+		 	display:flex;
+		 	justify-content:space-between;
+		 }
+		 
+		 #mainListBtnContainer{
+		 	
+		 }
+		 
+		 #mainListBtnContainer>button{
+		 	float:right;
+		 	margin-bottom:40px;
+		 }

@@ -32,15 +32,12 @@ private Properties sql=new Properties();
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		MoveLine ml=new MoveLine();
-		
 		try {
-			
 			pstmt=conn.prepareStatement(sql.getProperty("searchMoveLine"));
 			pstmt.setInt(1, movelineNo);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				ml=getMoveLine(rs);
-				System.out.println(ml);
 			}
 			
 		}catch(SQLException e) {
