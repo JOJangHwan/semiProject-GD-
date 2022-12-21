@@ -30,7 +30,7 @@
                         <div class="sidebar-content">
                             <ul class="lists">
                                 <li class="list">
-                                    <a href="<%=request.getContextPath() %>/matter/matterListView.do" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/questions/questionsListView.do" class="nav-link">
                                         <i class="bx bx-home-alt icon"></i>
                                         <span class="link">문의사항</span>
                                         </a>
@@ -75,13 +75,13 @@
                             
                             <div class="bottom-cotent">
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/member/memberinfoview.do" class="nav-link">
                                     <i class="bx bx-cog icon"></i>
                                     <span class="link">마이페이지</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/logout.do" class="nav-link">
                                     <i class="bx bx-log-out icon"></i>
                                     <span class="link">로그아웃</span>
                                     </a>
@@ -104,7 +104,7 @@
             <%if(loginMember==null){ %>
             <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
             <%}else{ %>
-            <div id="login"><a href="<%=request.getContextPath()%>"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <div id="login"><a href="<%=request.getContextPath()%>/login/memberinfoview.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
             <%} %>
         </div>
 
@@ -112,7 +112,7 @@
         <div id="subHeaderDiv">
             <div id="subHeaderFrm">
                 <div id="sub_menu1"><a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do">여행지</a></div>
-                <div id="sub_menu2"><a href="">내동선</a></div>
+                <div id="sub_menu2"><a href="<%=request.getContextPath()%>/moveLine/movelineList.do">내동선</a></div>
                 <div id="sub_menu3"><a href="">추천동선</a></div>
                 <div id="sub_menu4"><a href="">찜페이지</a></div>
             </div>

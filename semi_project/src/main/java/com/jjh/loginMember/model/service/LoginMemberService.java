@@ -32,5 +32,30 @@ public class LoginMemberService {
 		close(conn);
 		return m;
 	}
+	
+	public Member searchMemberId(String userId) {
+		Connection conn=getConnection();
+		Member m=loginDao.searchMemberId(conn,userId);
+		close(conn);
+		return m;
 
+	}
+	
+	public Member searchpassword(Member m) {
+		Connection conn=getConnection();
+		Member M=loginDao.searchpassword(conn,m);
+		close(conn);
+		return m;
+	}
+	
+	public int passWordUpdate(String password, String userId) {
+		Connection conn=getConnection();
+		int result=loginDao.passWordUpdate(conn, password,userId);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
+	
 }

@@ -1,6 +1,7 @@
 package com.jjh.loginMember.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
 
 import com.jjh.loginMember.model.service.LoginMemberService;
 import com.jjh.member.model.vo.Member;
@@ -36,6 +39,9 @@ public class LoginServlet extends HttpServlet {
 //		response.getWriter().append("Served at: ").append(request.getContextPath());
 		String userId= request.getParameter("loginId");
 		String password=request.getParameter("password");
+		JSONObject o=new JSONObject();
+		//o=(JSONObject)request.getParameter("kakao");
+		System.out.println(o.toJSONString());
 		Member m=new LoginMemberService().searchMember(userId,password);
 		
 		String saveId=request.getParameter("saveId");
