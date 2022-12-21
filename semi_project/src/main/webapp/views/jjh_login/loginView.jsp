@@ -168,6 +168,8 @@ console.log(Kakao.isInitialized());
   Kakao.Auth.createLoginButton({
     container: '#kakao-login-btn',
     success: function(authObj) {
+    	
+    	
       Kakao.API.request({
         url: '/v2/user/me',
         success: function(result) {
@@ -177,9 +179,9 @@ console.log(Kakao.isInitialized());
           console.log("result"+result)
           connected_at = result.connected_at
           kakao_account = result.kakao_account
-          
-          console.log("account"+kakao_account)
-          console.log("result"+result)
+          console.log(authObj);
+          console.log(kakao_account)
+          console.log(result)
           let nickname=kakao_account.profile.nickname
           $('#result').append(kakao_account);
           resultdiv="<h2>로그인 성공 !!"
@@ -196,19 +198,23 @@ console.log(Kakao.isInitialized());
           resultdiv += '<h4>gender: '+gender+'<h4>'
           resultdiv += '<h4>nickName: '+nickname+'<h4>'
           $('#result').append(resultdiv);
-          
-        
+          console.log("처음");
+          console.log(kakao_account);
           $.ajax({
               url: "<%=request.getContextPath()%>/login/kakaologin.do",
               type: "POST",
+              dataType:"json",
+              data:{"nickName":kakao_account.profile.nickname,"authObj":JSON.stringify(authObj),"account":JSON.stringify(kakao_account),"result":JSON.stringify(result)},
+			
               <!--dataType: "json",-->
-              dataType:"text",
-              processData: true,
+              <!--dataType:"text",-->
+              <!--processData: true,-->
               <!--contentType: "application/json; charset=UTF-8",-->
               <!--data:SON.stringify(result),-->
               success: function(data) {
                   if (data == 1) {
                       alert("등록 성공");
+                      location.href="<%=request.getContextPath()%>";
                   } else {
                       alert("등록 실패!");
                   }

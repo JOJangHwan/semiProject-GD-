@@ -57,5 +57,14 @@ public class LoginMemberService {
 		return result;
 		
 	}
+	public int kakaoInsertMember(Member m) {
+		Connection conn=getConnection();
+		int result=loginDao.kakaoInsertMember(conn, m);
+		if(result>0) commit(conn);
+		else rollback(conn);
+		close(conn);
+		return result;
+		
+	}
 	
 }
