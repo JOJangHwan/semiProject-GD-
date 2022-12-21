@@ -34,11 +34,14 @@ public class DeleteCommentServlet extends HttpServlet {
 		Comment c=Comment.builder()
 				.commentNo(commentNo)
 				.build();
-		//int result=new MoveLineBoardService().deleteComment(c);
-		
-		/*
-		 * if(result>0) { System.out.println("성공"); }else { System.out.println("실패"); }
-		 */
+		int result=new MoveLineBoardService().deleteComment(c);
+		response.getWriter().print(result);
+		if(result>0) { 
+			System.out.println("성공"); 
+		}else { 
+			System.out.println("실패"); 
+		}
+		 
 	}
 
 	/**

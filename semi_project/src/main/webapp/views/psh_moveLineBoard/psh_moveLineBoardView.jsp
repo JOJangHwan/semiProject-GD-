@@ -14,14 +14,16 @@
    %>
    <!-- 에디터 -->
 	<!-- include libraries(jQuery, bootstrap)-->
+    <!-- 지도 -->
+<%@ include file="/views/common/header.jsp"%>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
      <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-    <!-- 지도 -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
     <style>
-		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;}
+ 		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;} 
 		#infoTitle{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
 		#infoContent{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
 		#mapwrap{position:relative;overflow:hidden;}
@@ -34,8 +36,6 @@
 		.category .ico_store {background-position:-10px -36px;}   
 		.category .ico_carpark {background-position:-10px -72px;}
 	</style>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
-<%@ include file="/views/common/header.jsp"%>
 
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
@@ -44,9 +44,14 @@
 				   <div >
 					   <h1><%=mlb.getBoardTitle()%></h1>
 				   </div>
-				   <!-- 작성자 -->
+				   <div>
+				   	<!-- 작성자 -->
 				   <p>작성자 <%=mlb.getUserId()%></p>  
-				   <input type="hidden" name="mlNo" value="<%=mlb.getMovelineNo()%>" readonly>
+				   <input type="hidden" name="mlNo" value="<%=mlb.getMovelineNo()%>">
+				   <!-- 찜 -->
+				   <!-- <img alt="찜" src=""> -->
+				   </div>
+				   
 				   <hr>
 				   
 				   <!-- 지도 시작 -->
@@ -101,28 +106,27 @@
 	                   		<button id="commentInsert">등록</button>
 	                   	</div>
                    	</div>
-                   	<div id=commenntPrint>
+                   	<div id=commentPrint>
                    		<%if(!cList.isEmpty()){
                    			for(Comment c:cList){%>
-                   				<%if(c.getMoveLineBoardlevel()==1){%>	
-		                   		<div>
+                   				<%if(c.getMoveLineBoardlevel()==1){%>
 		                   			<div class="level1">
 			                   			<div class="commentIn">
 			                   				<sub class="writer"><%=c.getUserId() %></sub>
 			                   				<sub class="commentdate"><%=c.getCommentEnroll()%></sub>
 			                   				<h5><%=c.getCommentContent()%></h5>
-			                   				<input name="commentNo" value="<%=c.getCommentNo()%>" readonly>
+			                   				<input name="commentNo" value="<%=c.getCommentNo()%>" type="hidden">
 			                   			</div>
 			                   			<div class=commentBtns>
-						                   	<%if(loginMember!=null){%>
-						                   			<button class="reComment" value="<%=c.getCommentNo()%>">답글</button>
-						                   	<%}%>
-						                   	<%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(c.getUserId()))) {%>
-								   						<button class="commentDelete">삭제</button>
-								   						<button class="commentUpdate">수정</button>
-								   			<%}%>
+						                   	<%-- <%if(loginMember!=null){%> --%>
+						                   			<button class="reComment" onclick="reComment(event);" value="<%=c.getCommentNo()%>">답글</button>
+						                   	<%-- <%}%> --%>
+						                   	<%-- <%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(c.getUserId()))) {%> --%>
+								   						<button name="commentNo" onclick="commentDelete(event);"value="<%=c.getCommentNo()%>">삭제</button>
+								   						<button name="commentNo" onclick="commentUpdate(event);"value="<%=c.getCommentNo()%>">수정</button>
+								   			<%-- <%}%> --%>
 			                   			</div>
-			                   		</div>	
+			                  		 </div>
 		                   		<%}else{%>
 		          					<div class="level2">
 					   					<div>
@@ -132,12 +136,13 @@
 			                   				<input name="commentNo" value="<%=c.getCommentNo()%>" readonly>
 					   					</div>
 					   					<div>
-					   						<button class="commentDelete">삭제</button>
-									   		<button class="commentUpdate">수정</button>
+					   						<button name="commentNo" onclick="reComment(event);" value="<%=c.getCommentNo()%>">답글</button>
+					   						<button name="commentNo" onclick="commentDelete(evente);"value="<%=c.getCommentNo()%>">삭제</button>
+									   		<button name="commentNo" onclick="commentUpdate(event);"value="<%=c.getCommentNo()%>">수정</button>
 					   					</div>
 						   					
 					   				</div>
-					   		</div>	
+					   			
 					   			<%}
 					   		}%>
 					   	<%}%>
@@ -147,8 +152,8 @@
 				   <!-- 수정 삭제 버튼 -->
 				  <%--  <%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(mlb.getUserId()))){%> --%>
 						<div id="mlbBtns">
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/updateMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>&&moveLineNo=<%=mlb.getMovelineNo()%>')">수 정</button>
-							<button onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/deleteMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>')">삭 제</button>
+				    		<button  onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/updateMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>&&moveLineNo=<%=mlb.getMovelineNo()%>')">수 정</button>
+							<button  onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/deleteMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>')">삭 제</button>
 				   		</div>	  
 					<%-- <%} %> --%>
 				   
@@ -166,40 +171,10 @@
 				}
 			})
 		}); --%>
-		//댓글 출력
-		commentList();
-		function commentList(){
-			$.ajax({
-				url:"<%=request.getContextPath()%>/comment/listComment.do",
-				dataType:"text",
-				data:{
-					"boardNo":<%=mlb.getBoardNo()%>
-				},
-				success:data=>{
-					console.log(data);
-					/* for(data){
-						
-					} */
-					/* const div=$("<div>")
-					const addDiv=$("<div>")
-					const sub=$("<sub>").html(data["userId"])
-					const sub2=$("<sub>").html(data["commentEroll"])
-					const h5=$("<h5>").html(data["commentContent"])
-					const input=$("<input>").val(data["commentNo"])
-					addDiv.append(sub).append(sub2).append(h5).append(input).append(addDiv)
-							
-					const comBtns=$("<div>")
-					const deletebtn=$("<button>").text("수정")
-					const updatebtn=$("<button>").text("삭제")
-					comBtns.append(deletebtn).append(updatebtn)
-					div.append(addDiv).append(comBtns)
-					$(e.target).prepend(div)
-				}*/
-			}
-		}
 		
-		//댓글등록 ajax
+		//댓글등록
 		$("#commentInsert").click(e=>{
+			
 			$.ajax({
 				url:"<%=request.getContextPath()%>/moveLineBoard/moveLineBoardComment.do",
 				dataType:"Json",
@@ -211,28 +186,38 @@
 					"commentWriter":$(e.target).siblings("input[name=commentWriter]").val(),
 				},
 				success:data=>{
-					const div=$("<div>")
+					//console.log(data["boardNo"])
+					if(data["boardNo"]!=2){
+						console.log("실패")
+					}else{
+						 commentList();
+					}
+					/* const div=$("<div>")
 					const addDiv=$("<div>")
 					const sub=$("<sub>").html(data["userId"])
 					const sub2=$("<sub>").html(data["commentEroll"])
 					const h5=$("<h5>").html(data["commentContent"])
-					const input=$("<input>").val(data["commentNo"])
-					addDiv.append(sub).append(sub2).append(h5).append(input).append(addDiv)
+					addDiv.append(sub).append(sub2).append(h5).append(addDiv)
 							
 					const comBtns=$("<div>")
-					const deletebtn=$("<button>").text("수정")
-					const updatebtn=$("<button>").text("삭제")
-					comBtns.append(deletebtn).append(updatebtn)
+					const replybtn=$("<button[class:reComment]>").val(data["commentNo"]).text("답글")
+					const updatebtn=$("<button>").text("수정")
+					const deletebtn=$("<button>").text("삭제")
+					comBtns.append(updatebtn).append(deletebtn).append(replybtn)
 					div.append(addDiv).append(comBtns)
-					$(e.target).prepend(div)
+					//console.log($(e.target).parents("#commentEditor").next()[0])
+					div.insertAfter($(e.target).parents("#commentEditor"))
+					$("textarea[name=content]").val("") */
 				}
 			})
+			
 			
 		});
 		
 		
-		//답글작성칸 출력 및 저장
-		$(".reComment").click(e=>{
+		//답글작성칸 출력
+		function reComment(e){
+			console.log(e)
     		const rediv=$("<div>")
     		const rediv2=$("<div>");
     		const retextarea=$("<textarea>").attr({"rows":"1","name":"content"});
@@ -247,11 +232,11 @@
     		div2.find("button[id=commentInsert]").removeAttr("id").attr("id","commentinsert2"); */
     		rediv2.append(retextarea).append(reinputlevel).append(reinputboardNo).append(reinputWriter).append(reinputRef).append(rebtn)
     		rediv.append(rediv2);
-    		rediv.insertAfter($(e.target).parent());
-			$(e.target).off("click");
+    		rediv.insertAfter($(e.target).parents()[1]);
+			//$(e.target).off("click");
 			
-    	});
-		
+    	};
+		//답글 저장
 		function reply(e){
 			console.log(e.target);
 			$.ajax({
@@ -265,7 +250,8 @@
 					"commentWriter":$(e.target).siblings("input[name=commentWriter]").val(),
 				},
 				success:data=>{
-					const div=$("<div>")
+					commentList();
+					/* const div=$("<div>")
 					const addDiv=$("<div>")
 					const sub=$("<sub>").html(data["userId"])
 					const sub2=$("<sub>").html(data["commentEroll"])
@@ -278,42 +264,100 @@
 					const updatebtn=$("<button>").text("삭제")
 					comBtns.append(deletebtn).append(updatebtn)
 					div.append(addDiv).append(comBtns)
-					$(e.target).append(div)
+					console.log($(e.target))
+					div.insertAfter($(e.target).parents()[1]) */
+					//$("<div[name=re]>").html("")
 				}
 			})
 			
 		}
 		
 		
-		//댓글수정 ajax
-		$(".commentUpdate").click(e=>{
-			console.log($("textarea[name=content]").val())
+		//댓글수정 정보입력 출력
+		function commentUpdate(e){
+			console.log($(e.target).val())
+    		const updiv2=$("<div>");
+    		const uptextarea=$("<textarea>").attr({"rows":"1","name":"commentContent"});
+    		const upbtn=$("<button>").val($(e.target).val()).text("등록");
+    		upbtn.on("click",replyUpdate);
+    		
+    		updiv2.append(uptextarea).append(upbtn)
+    		updiv2.insertAfter($(e.target).parents()[1]);
+			
+		}
+		//댓글 수정
+		function replyUpdate(e){
 			$.ajax({
 				url:"<%=request.getContextPath()%>/comment/updateComment.do",
 				data:{
-					"content":$("textarea[name=content]").val(),
+					"commentContent":$("textarea[name=commentContent]").val(),
 					"commentNo":$("input[name=commentNo]").val()
 				},
 				success:data=>{
-					console.log(data);
+					console.log(data)
+					if(data>0){
+						commentList();
+					}else{
+						console.log("실패")
+					}
 				}
 			})
-		})
+		}
 		
-		//댓글삭제 ajax
-		$(".commentDelete").click(e=>{
-			console.log($("textarea[name=content]"))
+		//댓글 삭제 
+		function commentDelete(e){
+			//console.log($("textarea[name=content]"))
 			$.ajax({
 				url:"<%=request.getContextPath()%>/comment/deleteComment.do",
 				data:{
 					"commentNo":$("input[name=commentNo]").val()
 				},
 				success:data=>{
-					console.log(data);
+					console.log(data)
+					if(data>0){
+						commentList();
+					}else{
+						console.log("실패")
+					}
 				}
 			})
-		})
-		
+		}
+		//댓글 출력
+		function commentList(){
+			console.log("출력")
+			$.ajax({
+				url:"<%=request.getContextPath()%>/comment/listComment.do",
+				dataType:"Json",
+				data:{
+					"boardNo":<%=mlb.getBoardNo()%>
+				},
+				success:data=>{
+					$("#commentPrint").text("")
+					data.forEach((v)=>{
+						console.log(v["commentNo"])
+						const commentPrint=$("<div>")
+						const commentIn=$("<div>")
+						const sub=$("<sub>").html(v["userId"])
+						const sub2=$("<sub>").html(v["commentEnroll"])
+						const h5=$("<h5>").html(v["commentContent"])
+						const input=$("<input>").val(v["commentNo"]).attr({"type":"hidden","name":"commentNo"})
+						commentIn.append(sub).append(sub2).append(h5).append(input)
+							
+						const comBtns=$("<div>")
+						const deletebtn=$("<button>").val(v["commentNo"]).attr({"class":"commentDelete"}).text("삭제")
+						const updatebtn=$("<button>").val(v["commentNo"]).attr({"class":"commentUpdate"}).text("수정").val(v["commentNo"])
+						const replybtn=$("<button>").val(v["commentNo"]).attr({"class":"reComment"}).text("답글").val(v["commentNo"])
+							
+						deletebtn.on("click",commentDelete);
+						updatebtn.on("click",commentUpdate);
+						replybtn.on("click",reComment);
+						comBtns.append(deletebtn).append(updatebtn).append(replybtn)
+						commentPrint.append(commentIn).append(comBtns)
+						$("#commentPrint").append(commentPrint);
+					})
+				}
+			})
+		};
 		
  		//카테고리
  		for(let i=0;i<<%=d%>;i++){

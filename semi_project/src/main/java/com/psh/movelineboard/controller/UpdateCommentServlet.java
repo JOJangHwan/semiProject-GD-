@@ -30,13 +30,14 @@ public class UpdateCommentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String content=request.getParameter("commentContent");
-		int comment=Integer.parseInt(request.getParameter("commentContent"));
+		int commentNo=Integer.parseInt(request.getParameter("commentNo"));
+		System.out.println(content);
 		Comment c=Comment.builder()
 				.commentContent(content)
-				.commentNo(comment)
+				.commentNo(commentNo)
 				.build();
 		int result=new MoveLineBoardService().updateComment(c);
-		
+		response.getWriter().print(result);
 		if(result>0) {
 			System.out.println("성공");
 		}else {

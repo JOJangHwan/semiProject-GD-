@@ -131,6 +131,7 @@ private Properties sql=new Properties();
 	}
 	
 	public int updateComment(Connection conn,Comment c) {
+		System.out.println(c.getCommentContent());
 		PreparedStatement pstmt=null;
 		int result=0;
 		try {
@@ -161,6 +162,7 @@ private Properties sql=new Properties();
 		}finally {
 			close(pstmt);
 		}
+		System.out.println(result);
 		return result;
 	}
 	
@@ -173,7 +175,6 @@ private Properties sql=new Properties();
 			pstmt=conn.prepareStatement(sql.getProperty("searchComment"));
 			
 			pstmt.setInt(1, boardNo); 
-			pstmt.setInt(2, boardNo);
 			 
 			rs=pstmt.executeQuery();
 			while(rs.next()) {
