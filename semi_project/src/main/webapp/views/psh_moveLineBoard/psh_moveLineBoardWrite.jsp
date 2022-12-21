@@ -190,7 +190,7 @@
 	                            spriteOrigin: new kakao.maps.Point(10, 0),    
 	                            spriteSize: new kakao.maps.Size(55, 50)  
 	                        };     
-	                    
+	                    $("<input>").val(total);
 	                    // 마커이미지와 마커를 생성합니다
 	                    var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
 	                        marker = createMarker(data[j][i], markerImage);  
