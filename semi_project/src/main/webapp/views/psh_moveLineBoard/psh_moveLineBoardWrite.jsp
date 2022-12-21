@@ -1,15 +1,22 @@
-<%@page import="com.psh.movelineboard.model.vo.MoveLineBoard"%>
 <%@page import="com.psh.marker.model.vo.Marker"%>
 <%@page import="com.psh.moveline.model.vo.MoveLine"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%
-   MoveLineBoard ml=(MoveLineBoard)request.getAttribute("moveLine");
-   List<Marker> mList=(List<Marker>)request.getAttribute("mList");
- 	System.out.println(ml);
-   int d=3;//일차값 이ㅏㅁ의로    
+        MoveLine ml=(MoveLine)request.getAttribute("moveline");
+        List<Marker> mList=(List<Marker>)request.getAttribute("marker");
+      
+        int d=3;//일차값 이ㅏㅁ의로
    %>
+    <!-- 에디터 -->
+	<!-- include libraries(jQuery, bootstrap)-->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+   
     <!-- 지도 -->
     <style>
 		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;}
@@ -27,16 +34,19 @@
 	</style>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
 <%@ include file="/views/common/header.jsp"%>
-
+    
+	
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
+				<form method="post" enctype="multipart/form-data" action="<%=request.getContextPath()%>/moveLineBoard/insertMoveLineBoard.do" >
 					<!-- 제목 -->
-				   <div >
-					   <h1><%=ml.getBoardTitle()%></h1>
-				   </div>
-				   <!-- 작성자 -->
-				   <p>작성자 <%=ml.getUserId()%></p>  
+				    <div >
+					   <input name="mlbTitle" type="text" placeholder="제목을 입력하세요">
+				    </div>
+				    <p>작성자 <%=ml.getUserId()%></p>  
+					<input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
+					<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
 				   
 				   <hr>
 				   
@@ -75,26 +85,29 @@
 							      }
 							}%>
 					   </div>
-					</div>
-				   <!-- 수정 삭제 버튼 -->
-				   <%-- <%if(loginMember!=null&&(loginMember.getUserId().equals(mlb.getUserId()))){%> --%>
-						<div id="mlbBtns">
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/updateMoveLine.do?moveLineNo=<%=ml.getMovelineNo()%>')">수 정</button>
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do?moveLineNo=<%=ml.getMovelineNo()%>')">공 유</button>
-							<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/deleteMoveLine.do?moveLineNo=<%=ml.getMovelineNo()%>')">삭 제</button>
-				   		</div>	  
-					<%-- <%} %>	 --%>
-				   
+					</div>   
+				    <textarea name="mlbContent" id="summernote"></textarea>
+				    
+				    <input type="submit" value="등록">
+                </form>
              </div>
 	    <div id="rightMarginMain"></div>
     </section>
     
 	<script>
+		//에디터 함수
+		$(document).ready(function() {
+			$('#summernote').summernote({
+					height: 500
+					
+	        });
+	    });
+		
  		//카테고리
  		for(let i=0;i<<%=d%>;i++){
- 			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
- 	 	}
- 
+			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
+ 		}
+ 		
         var movelineDay=new Array();
     	var mlday=[];
     	//좌표값 배열 생성
@@ -241,7 +254,9 @@
 			 }
         } 
         
-	
+		
+        
+		
         // 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
         function changeMarker(value){
         	for (var i = 0; i < <%=d%>; i++) {  
