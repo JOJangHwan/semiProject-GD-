@@ -16,8 +16,6 @@ import com.google.gson.Gson;
 import com.jjh.loginMember.model.service.LoginMemberService;
 import com.jjh.member.model.vo.Member;
 
-import oracle.net.aso.j;
-
 /**
  * Servlet implementation class KakaologinServlet
  */
