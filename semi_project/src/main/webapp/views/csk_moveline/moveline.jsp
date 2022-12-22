@@ -138,7 +138,7 @@
 						const endDate=new Date(durDate2[2], durDate2[0], durDate2[1])
 						const minus = endDate.getTime() - strDate.getTime();
 						const total = minus / (1000*60*60*24)+1;//일차
-						console.log(total);
+						
 						console.log(endDate.getTime());
 						console.log(strDate.getTime());
 						document.querySelector("div#tableContainer").innerHTML="";

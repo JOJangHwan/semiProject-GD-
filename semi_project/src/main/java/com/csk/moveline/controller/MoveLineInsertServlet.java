@@ -36,12 +36,15 @@ public class MoveLineInsertServlet extends HttpServlet {
 //		private String movelineName;
 //		private char openandclosed;
 //		private Date movelineEnroll;
-		MoveLine ml = MoveLine.builder()
+		/*MoveLine ml = MoveLine.builder()
 				.userId(request.getParameter("userId"))
 				.movelineName(request.getParameter("movelineName"))
 				
-				.build();
+				.build();*/
+		request.getRequestDispatcher("views/psh_moveLine/psh_moveLineView.jsp").forward(request, response);
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

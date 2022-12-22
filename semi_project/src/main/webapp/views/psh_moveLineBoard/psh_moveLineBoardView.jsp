@@ -1,3 +1,4 @@
+<%@page import="io.opentelemetry.exporter.logging.SystemOutLogRecordExporter"%>
 <%@page import="com.psh.movelineboard.model.vo.Comment"%>
 <%@page import="com.psh.movelineboard.model.vo.MoveLineBoard"%>
 <%@page import="com.psh.marker.model.vo.Marker"%>
@@ -9,13 +10,13 @@
    MoveLineBoard mlb=(MoveLineBoard)request.getAttribute("moveLineBoard");
    List<Marker> mList=(List<Marker>)request.getAttribute("mList");
    List<Comment> cList=(List<Comment>)request.getAttribute("cList");
- 	//System.out.println(cList);
-   int d=1;//일차값 이ㅏㅁ의로    
+   System.out.println(cList);
+   int d=2;//일차값 이ㅏㅁ의로    
    %>
    <!-- 에디터 -->
 	<!-- include libraries(jQuery, bootstrap)-->
     <!-- 지도 -->
-<%@ include file="/views/common/header.jsp"%>
+
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -23,6 +24,7 @@
      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
     <style>
+    	#pickMLB, .pickMLB{width: 15px; height: 15px;}
  		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;} 
 		#infoTitle{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
 		#infoContent{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
@@ -36,21 +38,23 @@
 		.category .ico_store {background-position:-10px -36px;}   
 		.category .ico_carpark {background-position:-10px -72px;}
 	</style>
-
+<%@ include file="/views/common/header.jsp"%>
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 					<!-- 제목 -->
-				   <div >
-					   <h1><%=mlb.getBoardTitle()%></h1>
-				   </div>
-				   <div>
-				   	<!-- 작성자 -->
-				   <p>작성자 <%=mlb.getUserId()%></p>  
-				   <input type="hidden" name="mlNo" value="<%=mlb.getMovelineNo()%>">
-				   <!-- 찜 -->
-				   <!-- <img alt="찜" src=""> -->
-				   </div>
+				    <div >
+					   <h1><%=mlb.getBoardTitle() %></h1>
+				    </div>
+					<div>
+						<p>작성자 <%=mlb.getUserId()%></p>  
+						<input type="hidden" name="mlbWriter" value="<%=mlb.getUserId()%>" readonly>
+						<input type="hidden" name="mlNo" value="<%=mlb.getMovelineNo()%>" readonly>
+					</div>
+					<!-- 찜하기 -->
+					<div class="pickMLB">
+						<img id="pickMLB" src="<%=request.getContextPath()%>/images/pickoff.png">
+					</div>
 				   
 				   <hr>
 				   
@@ -68,16 +72,18 @@
 				   </div>
 				   
 				   <div id="infoBox">
-				   		<div id="info">
 							<%for(int i=0;i<d;i++){%>
+						<div id="info">
 							<div id="infoTitle">
-								<div><h3><%=i+1%>일차</h3></div>
+								<div value=i><h3><%=i+1%>일차</h3></div>
 								<div><h3>No.</h3></div>
 								<div><h3>장소명</h3></div>
 								<div><h3>주소</h3></div>
 								<div><h3>메모</h3></div>
 							</div>
+							<div id=infoContentBox value=i>
 							<%for(Marker m: mList){%>
+							
 									<%if(Integer.parseInt(m.getMovelineDay())==i+1){%>
 										<div id="infoContent">
 											<div><h4><%=m.getMarkerNo()%></h4></div>
@@ -85,10 +91,12 @@
 											<div><h4><%=m.getAddress()%></h4></div>
 											<div><h4><%=m.getMemo()%></h4></div>
 										</div>
-									<%}
-							      }
-							}%>
-					   </div>
+									<%}%>
+							<%}%>
+							</div>
+						</div>
+					<%}%>
+					
 					</div>
 					
 					<!-- 게시글 내용 -->   
@@ -102,7 +110,7 @@
 	                   		<input type="hidden" name="boardNo" value=<%=mlb.getBoardNo()%>>
 	                   		<input type="hidden" name="commentLevel" value="1">
 	                   		<input type="hidden" name="commentRef" value="0">
-	                   		<input type="hidden" name="commentWriter" value="<%=mlb.getUserId()%>"><%-- <%=loginMember!=null?loginMember.getUserId():""%> --%>
+	                   		<input type="hidden" name="commentWriter" value="<%=loginMember.getUserId()%>"><%-- <%=loginMember!=null?loginMember.getUserId():""%> --%>
 	                   		<button id="commentInsert">등록</button>
 	                   	</div>
                    	</div>
@@ -118,13 +126,13 @@
 			                   				<input name="commentNo" value="<%=c.getCommentNo()%>" type="hidden">
 			                   			</div>
 			                   			<div class=commentBtns>
-						                   	<%-- <%if(loginMember!=null){%> --%>
+						                   	<%if(loginMember!=null){%>
 						                   			<button class="reComment" onclick="reComment(event);" value="<%=c.getCommentNo()%>">답글</button>
-						                   	<%-- <%}%> --%>
-						                   	<%-- <%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(c.getUserId()))) {%> --%>
+						                   	<%}%>
+						                   	<%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(c.getUserId()))) {%>
 								   						<button name="commentNo" onclick="commentDelete(event);"value="<%=c.getCommentNo()%>">삭제</button>
 								   						<button name="commentNo" onclick="commentUpdate(event);"value="<%=c.getCommentNo()%>">수정</button>
-								   			<%-- <%}%> --%>
+								   			<%}%>
 			                   			</div>
 			                  		 </div>
 		                   		<%}else{%>
@@ -133,12 +141,14 @@
 					   						<sub class="writer"><%=c.getUserId() %></sub>
 			                   				<sub class="commentdate"><%=c.getCommentEnroll()%></sub>
 			                   				<h5><%=c.getCommentContent()%></h5>
-			                   				<input name="commentNo" value="<%=c.getCommentNo()%>" readonly>
+			                   				<input name="commentNo" value="<%=c.getCommentNo()%>" type="hidden">
 					   					</div>
 					   					<div>
-					   						<button name="commentNo" onclick="reComment(event);" value="<%=c.getCommentNo()%>">답글</button>
-					   						<button name="commentNo" onclick="commentDelete(evente);"value="<%=c.getCommentNo()%>">삭제</button>
-									   		<button name="commentNo" onclick="commentUpdate(event);"value="<%=c.getCommentNo()%>">수정</button>
+			
+						                   	<%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(c.getUserId()))) {%>
+								   						<button name="commentNo" onclick="commentDelete(event);"value="<%=c.getCommentNo()%>">삭제</button>
+								   						<button name="commentNo" onclick="commentUpdate(event);"value="<%=c.getCommentNo()%>">수정</button>
+								   			<%}%>
 					   					</div>
 						   					
 					   				</div>
@@ -150,28 +160,67 @@
                    </div>
 				   
 				   <!-- 수정 삭제 버튼 -->
-				  <%--  <%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(mlb.getUserId()))){%> --%>
+				  <%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(mlb.getUserId()))){%>
 						<div id="mlbBtns">
 				    		<button  onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/updateMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>&&moveLineNo=<%=mlb.getMovelineNo()%>')">수 정</button>
 							<button  onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/deleteMoveLineBoard.do?boardNo=<%=mlb.getBoardNo()%>')">삭 제</button>
 				   		</div>	  
-					<%-- <%} %> --%>
+					<%} %>
 				   
              </div>
 	    <div id="rightMarginMain"></div>
     </section>
     
 	<script>
-		//로그인 유저 댓글기능
-		<%-- $(()=>{
-			$("#content").focus(e=>{
-				if(<%=loginMember==null%>){
-					alert("로그인 후 이용할 수 있습니다.");
-					$("#userId").focus();
+		$("#pickMLB").click(e=>{
+            if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png"){
+				insertPicMLB(event);
+			}else if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickon.png") 
+				$("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png"
+				deletePickMLB(event);
+		})
+		//찜 등록
+		function insertPicMLB(e){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/pick/insertPick.do",
+				dataType:"text",
+				data:{
+					"boardNo":$(e.target).siblings("input[name=boardNo]").val(),
+					"commentWriter":$(e.target).siblings("input[name=commentWriter]").val()
+				},
+				success:data=>{
+					//console.log(data["boardNo"])
+					if(data>0){
+						$("#pickMLB").src="<%=request.getContextPath()%>/images/pickon.png";
+					}else{
+						$("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png";
+					}
+					
 				}
 			})
-		}); --%>
-		
+		}
+		//찜 삭제
+		function deletePickMLB(e){
+			$.ajax({
+				url:"<%=request.getContextPath()%>/pick/deletePick.do",
+				dataType:"text",
+				data:{
+					"boardNo":$(e.target).siblings("input[name=boardNo]").val(),
+					"commentWriter":$(e.target).siblings("input[name=commentWriter]").val()
+				},
+				success:data=>{
+					//console.log(data["boardNo"])
+					if(data>0){
+						$("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png";
+					}else{
+						$("#pickMLB").src="<%=request.getContextPath()%>/images/pickon.png";
+						
+					}
+					
+				}
+			})
+		}
+
 		//댓글등록
 		$("#commentInsert").click(e=>{
 			
@@ -187,10 +236,10 @@
 				},
 				success:data=>{
 					//console.log(data["boardNo"])
-					if(data["boardNo"]!=2){
-						console.log("실패")
+					if(data!=null){
+						commentList(data["userId"]);
 					}else{
-						 commentList();
+						console.log("실패")
 					}
 					/* const div=$("<div>")
 					const addDiv=$("<div>")
@@ -296,7 +345,7 @@
 				success:data=>{
 					console.log(data)
 					if(data>0){
-						commentList();
+						commentList("<%=loginMember.getUserId()%>");
 					}else{
 						console.log("실패")
 					}
@@ -323,8 +372,8 @@
 			})
 		}
 		//댓글 출력
-		function commentList(){
-			console.log("출력")
+		function commentList(userId){
+			console.log("테스트3" + userId);
 			$.ajax({
 				url:"<%=request.getContextPath()%>/comment/listComment.do",
 				dataType:"Json",
@@ -334,7 +383,7 @@
 				success:data=>{
 					$("#commentPrint").text("")
 					data.forEach((v)=>{
-						console.log(v["commentNo"])
+						console.log(typeof v["userId"])
 						const commentPrint=$("<div>")
 						const commentIn=$("<div>")
 						const sub=$("<sub>").html(v["userId"])
@@ -342,17 +391,36 @@
 						const h5=$("<h5>").html(v["commentContent"])
 						const input=$("<input>").val(v["commentNo"]).attr({"type":"hidden","name":"commentNo"})
 						commentIn.append(sub).append(sub2).append(h5).append(input)
-							
+						
 						const comBtns=$("<div>")
+						const replybtn=$("<button>").val(v["commentNo"]).attr({"class":"reComment"}).text("답글").val(v["commentNo"])
 						const deletebtn=$("<button>").val(v["commentNo"]).attr({"class":"commentDelete"}).text("삭제")
 						const updatebtn=$("<button>").val(v["commentNo"]).attr({"class":"commentUpdate"}).text("수정").val(v["commentNo"])
-						const replybtn=$("<button>").val(v["commentNo"]).attr({"class":"reComment"}).text("답글").val(v["commentNo"])
-							
+						
 						deletebtn.on("click",commentDelete);
 						updatebtn.on("click",commentUpdate);
 						replybtn.on("click",reComment);
-						comBtns.append(deletebtn).append(updatebtn).append(replybtn)
+						//로그인 유저 아이디와 댓글 아이디가 같다면
+						//console.log("테스트" , comBtns);
+						//console.log("테스트2", userId);
+						
+						if(v["moveLineBoardlevel"]==1&&(v["userId"]!=userId||userId!="admin")){
+							comBtns.append(replybtn)
+						}
+						else if(v["moveLineBoardlevel"]==1&&(v["userId"]==userId||userId=="admin")){
+							comBtns.append(deletebtn).append(updatebtn).append(replybtn)
+						}
+						else if(v["moveLineBoardlevel"]==2&&(v["userId"]!=userId||userId!="admin")){
+							
+						}
+						else if(v["moveLineBoardlevel"]==2&&(v["userId"]==userId||userId=="admin")){
+							comBtns.append(deletebtn).append(updatebtn)
+						} 
+						
+						
+						//comBtns.append(deletebtn).append(updatebtn).append(replybtn)
 						commentPrint.append(commentIn).append(comBtns)
+						
 						$("#commentPrint").append(commentPrint);
 					})
 				}

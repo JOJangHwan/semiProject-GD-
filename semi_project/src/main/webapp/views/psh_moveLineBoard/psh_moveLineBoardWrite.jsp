@@ -7,7 +7,7 @@
         MoveLine ml=(MoveLine)request.getAttribute("moveline");
         List<Marker> mList=(List<Marker>)request.getAttribute("marker");
       
-        int d=3;//일차값 이ㅏㅁ의로
+        int d=2;//일차값 이ㅏㅁ의로
    %>
     <!-- 에디터 -->
 	<!-- include libraries(jQuery, bootstrap)-->
@@ -44,9 +44,16 @@
 				    <div >
 					   <input name="mlbTitle" type="text" placeholder="제목을 입력하세요">
 				    </div>
-				    <p>작성자 <%=ml.getUserId()%></p>  
-					<input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
-					<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
+					<div>
+						<p>작성자 <%=ml.getUserId()%></p>  
+						<input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
+						<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
+					</div>
+					<!-- 찜하기 -->
+					<div>
+						<img src="<%=request.getContextPath()%>/images/pickoff.png">
+					</div>
+				    
 				   
 				   <hr>
 				   

@@ -7,23 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
-
-import com.google.gson.Gson;
+import com.csk.moveline.service.MoveLineService;
 import com.psh.movelineboard.model.servlce.MoveLineBoardService;
 import com.psh.movelineboard.model.vo.Comment;
 
 /**
- * Servlet implementation class InsertMoveLineBoardCommentServlet
+ * Servlet implementation class InsertPickMLBServlet
  */
-@WebServlet("/moveLineBoard/moveLineBoardComment.do")
-public class InsertMoveLineBoardCommentServlet extends HttpServlet {
+@WebServlet("/pick/insertPick.do")
+public class InsertPickMLBServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public InsertMoveLineBoardCommentServlet() {
+    public InsertPickMLBServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,27 +31,12 @@ public class InsertMoveLineBoardCommentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
-			int level=Integer.parseInt(request.getParameter("commentLevel"));
-		int commentRef=Integer.parseInt(request.getParameter("commentRef"));
 		String userId=request.getParameter("commentWriter");
-		String content=request.getParameter("content");
 		Comment c=Comment.builder()
 				.boardNo(boardNo)
 				.userId(userId)
-				.moveLineBoardlevel(level)
-				.commentRef(commentRef)
-				.commentContent(content)
 				.build();
-		
-		Comment comment=new MoveLineBoardService().insertComment(c);
-	
-		//전송할때 contentType설정
-		response.setContentType("application/json;charset=utf-8");
-		
-		//GSon라이브러리 이용해서 데이터 전송
-		Gson g=new Gson();
-		//toJson()메소드 이용
-		g.toJson(comment,response.getWriter());
+		int result=new MoveLineBoardService().insertPick(c);
 	}
 
 	/**

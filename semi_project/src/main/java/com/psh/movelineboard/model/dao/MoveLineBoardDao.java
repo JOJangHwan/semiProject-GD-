@@ -237,6 +237,42 @@ private Properties sql=new Properties();
 		return comment;
 	}
 	
+	public int insertPick(Connection conn,Comment c) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("insertPick"));
+			pstmt.setInt(1, c.getBoardNo());
+			pstmt.setString(2, c.getUserId());
+			
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int deletePick(Connection conn,Comment c) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deletePick"));
+			pstmt.setInt(1, c.getBoardNo());
+			pstmt.setString(2, c.getUserId());
+			
+			result=pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
 	private MoveLineBoard getMoveLineBoard(ResultSet rs) throws SQLException{
 		return MoveLineBoard.builder()
 				.movelineNo(rs.getInt("moveline_No"))
@@ -255,7 +291,7 @@ private Properties sql=new Properties();
 				.userId(rs.getString("user_Id"))
 				.moveLineBoardlevel(rs.getInt("moveline_board_level"))
 				.commentContent(rs.getString("comment_content"))
-				.commentRef(rs.getInt("comment_ref"))
+				.commentRef(rs.getInt("board_comment_ref"))
 				.commentEnroll(rs.getDate("comment_Enroll"))
 				.build();
 	}
