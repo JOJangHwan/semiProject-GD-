@@ -1,3 +1,5 @@
+<%@page import="io.opentelemetry.exporter.logging.SystemOutLogRecordExporter"%>
+<%@page import="com.psh.movelineboard.model.vo.Comment"%>
 <%@page import="com.psh.movelineboard.model.vo.MoveLineBoard"%>
 <%@page import="com.psh.marker.model.vo.Marker"%>
 <%@page import="com.psh.moveline.model.vo.MoveLine"%>
@@ -5,14 +7,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%
-   MoveLineBoard ml=(MoveLineBoard)request.getAttribute("moveLine");
+   MoveLine ml=(MoveLine)request.getAttribute("moveline");
    List<Marker> mList=(List<Marker>)request.getAttribute("mList");
- 	System.out.println(ml);
-   int d=3;//일차값 이ㅏㅁ의로    
+   System.out.println(mList);
+   System.out.println(ml);
+   int d=2;//일차값 이ㅏㅁ의로    
    %>
+   <!-- 에디터 -->
+	<!-- include libraries(jQuery, bootstrap)-->
     <!-- 지도 -->
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
     <style>
-		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;}
+    	#pickMLB, .pickMLB{width: 15px; height: 15px;}
+ 		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;} 
 		#infoTitle{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
 		#infoContent{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
 		#mapwrap{position:relative;overflow:hidden;}
@@ -25,19 +38,23 @@
 		.category .ico_store {background-position:-10px -36px;}   
 		.category .ico_carpark {background-position:-10px -72px;}
 	</style>
-	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
 <%@ include file="/views/common/header.jsp"%>
-
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 					<!-- 제목 -->
-				   <div >
-					   <h1><%=ml.getBoardTitle()%></h1>
-				   </div>
-				   <!-- 작성자 -->
-				   <p>작성자 <%=ml.getUserId()%></p>  
-				   
+				    <div >
+					   <h1><%=ml.getMovelineName() %></h1>
+				    </div>
+				    <div>
+				    	<button  onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do?movelineNo=<%=ml.getMovelineNo()%>')">공 유</button>
+				    </div>
+					<div>
+						<p>작성자 <%=ml.getUserId()%></p>  
+						<input type="hidden" name="mlWriter" value="<%=ml.getUserId()%>" >
+						<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" >
+					</div>
+					
 				   <hr>
 				   
 				   <!-- 지도 시작 -->
@@ -47,23 +64,25 @@
 					    <!-- 지도 위에 표시될 마커 카테고리 -->
                         <!-- 스크립트로 포문 돌려서 출력 최대 일차까지 -->
 					    <div class="category">
-							<ul>
-								  	<!-- 카테고리출력 -->
-							</ul>
+						<ul>
+							  	<!-- 카테고리출력 -->
+						</ul>
 					   </div>
 				   </div>
 				   
 				   <div id="infoBox">
-				   		<div id="info">
 							<%for(int i=0;i<d;i++){%>
+						<div id="info">
 							<div id="infoTitle">
-								<div><h3><%=i+1%>일차</h3></div>
+								<div value=i><h3><%=i+1%>일차</h3></div>
 								<div><h3>No.</h3></div>
 								<div><h3>장소명</h3></div>
 								<div><h3>주소</h3></div>
 								<div><h3>메모</h3></div>
 							</div>
+							<div id=infoContentBox value=i>
 							<%for(Marker m: mList){%>
+							
 									<%if(Integer.parseInt(m.getMovelineDay())==i+1){%>
 										<div id="infoContent">
 											<div><h4><%=m.getMarkerNo()%></h4></div>
@@ -71,30 +90,35 @@
 											<div><h4><%=m.getAddress()%></h4></div>
 											<div><h4><%=m.getMemo()%></h4></div>
 										</div>
-									<%}
-							      }
-							}%>
-					   </div>
+									<%}%>
+							<%}%>
+							</div>
+						</div>
+					<%}%>
+					
 					</div>
+					
 				   <!-- 수정 삭제 버튼 -->
-				   <%-- <%if(loginMember!=null&&(loginMember.getUserId().equals(mlb.getUserId()))){%> --%>
+				  <%if(loginMember!=null&&(loginMember.getUserId().equals("admin")||loginMember.getUserId().equals(ml.getUserId()))){%>
 						<div id="mlbBtns">
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/updateMoveLine.do?moveLineNo=<%=ml.getMovelineNo()%>')">수 정</button>
-				    		<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do?moveLineNo=<%=ml.getMovelineNo()%>')">공 유</button>
-							<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/deleteMoveLine.do?moveLineNo=<%=ml.getMovelineNo()%>')">삭 제</button>
+							<button  onclick="location.assign('<%=request.getContextPath()%>/moveLineBoard/deleteMoveLineBoard.do?mocNo=<%=ml.getMovelineNo()%>')">삭 제</button>
+
 				   		</div>	  
-					<%-- <%} %>	 --%>
+					<%} %>
 				   
              </div>
 	    <div id="rightMarginMain"></div>
     </section>
     
 	<script>
- 		//카테고리
+		
+ 		//카테고리ㅌ
  		for(let i=0;i<<%=d%>;i++){
  			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
  	 	}
- 
+ 		
+
+ 		
         var movelineDay=new Array();
     	var mlday=[];
     	//좌표값 배열 생성
@@ -169,9 +193,12 @@
         
         // 일차별 마커를 생성하고 일차별 마커 배열에 추가하는 함수입니다
         	//markers=[];
+        
         	function creData() {
         		for(let j=1;j<<%=d%>+1;j++){
-	        		for (var i = 0; i < data[j].length; i++) {   
+        			console.log(data[j].length)
+	        		for (var i = 0; i < data[j].length; i++) {  
+	        			
 	                    var imageSize = new kakao.maps.Size(35, 50),
 	                        imageOptions = {  
 	                            spriteOrigin: new kakao.maps.Point(10, 0),    
@@ -208,7 +235,6 @@
                 		setCenter(i);
                 	}else{
                 		markers[i][j].setMap(null);
-                		
                 	}
                 }
             }       

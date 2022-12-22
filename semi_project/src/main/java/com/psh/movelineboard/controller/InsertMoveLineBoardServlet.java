@@ -37,16 +37,20 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//요청방식 multipart/form-data방식으로 왔는지 확인
 		if(!ServletFileUpload.isMultipartContent(request)) {
 			response.sendRedirect(request.getContextPath());
 		}else {
-			//저장할 위치설정하기
-			String path=request.getServletContext().getRealPath("/upload/psh_moveLineBoard");
+		
+			String path=request.getServletContext().getRealPath("/upload/psh_moveLineBoard/mlb");
+			
 			int maxSize=1024*1024*10;//10MB
+		
 			String encoding="UTF-8";
+		
 			DefaultFileRenamePolicy dfr=new DefaultFileRenamePolicy();
-			MultipartRequest mr=new MultipartRequest(request, path,maxSize,encoding,dfr);
+			
+			MultipartRequest mr=new MultipartRequest(request, 
+						path,maxSize,encoding,dfr);
 			
 		int movelineNo=Integer.parseInt(mr.getParameter("mlNo"));
 		String userId=mr.getParameter("mlbWriter");
@@ -63,9 +67,9 @@ public class InsertMoveLineBoardServlet extends HttpServlet {
 		int result=new MoveLineBoardService().insertMoveLineBoard(mlb);
 		
 		if(result>0) {
-			request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardList.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/csk_movelineboard/recMoveLineBoard.jsp").forward(request, response);
 		}else {
-			request.getRequestDispatcher("/view/psh_moveLineBoard/psh_moveLineBoardWrite.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardWrite.jsp").forward(request, response);
 		}
 		}
 		

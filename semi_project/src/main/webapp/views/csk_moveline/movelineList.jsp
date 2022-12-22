@@ -11,7 +11,7 @@
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 				<h2>여행계획 리스트</h2>
-				<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/checkmoveline.do')">➕여행계획</button>
+				<button onclick="location.assign('<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do')">➕여행계획</button>
 				<table id="tbl-board" style="text-align:center; justify-content: center;">
 					<tr>
 						<th>선택</th>
@@ -24,9 +24,9 @@
 						<tr>
 							<td><input type="checkbox"></td>
 							<td>
-							<!-- View에서 갖고오기 
-								<a href="<%=request.getContextPath()%>/moveLine/boardView.do?boardNo=<%=ml.getMovelineNo()%>">
-								-->
+						
+								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?movelineNo=<%=ml.getMovelineNo()%>">
+								
 								<%=ml.getMovelineName() %>
 								</a>
 							</td>

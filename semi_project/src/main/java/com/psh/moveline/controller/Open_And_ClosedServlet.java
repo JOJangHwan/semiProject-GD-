@@ -35,7 +35,7 @@ public class Open_And_ClosedServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int movelineNo=11;//Integer.parseInt(request.getParameter("mlDay"));//아직 값을 받아 올 수 없으므로 임시 지정
+		int movelineNo=Integer.parseInt(request.getParameter("movelineNo"));//아직 값을 받아 올 수 없으므로 임시 지정
 		System.out.println(movelineNo);
 		MoveLine ml=(MoveLine)new MoveLineService().searchMoveLine(movelineNo);
 		System.out.println(ml);

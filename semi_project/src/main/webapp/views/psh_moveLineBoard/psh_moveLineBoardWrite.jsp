@@ -49,12 +49,7 @@
 						<input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
 						<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
 					</div>
-					<!-- 찜하기 -->
-					<div>
-						<img src="<%=request.getContextPath()%>/images/pickoff.png">
-					</div>
-				    
-				   
+					
 				   <hr>
 				   
 				   <!-- 지도 시작 -->
@@ -115,166 +110,166 @@
 			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
  		}
  		
-        var movelineDay=new Array();
-    	var mlday=[];
-    	//좌표값 배열 생성
-        <%for(Marker m:mList){%>
-			movelineDay.push(<%=m.getLonggitude()%>+","+<%=m.getLatitude()%>+","+<%=m.getMovelineDay()%>);
-		<%}%>
-		
-		
-		//위도,경도,일차 인덱스로 쪼개서 배열에 넣음
-		for(let i=0;i<<%=mList.size()%>;i++){		
-			mlday.push(movelineDay[i].split(","));
-		};
-	
-		//일차별로 배열인덱스에 넣음
-		let data={};
-		let markers={};
-		let mySet=new Set();
-		for(let i=0;i<mlday.length;i++){
-			mySet.add(mlday[i][2]);
-			//console.log(typeof mlday[i][j])
-		};
-		//key값으로 배열생성
-		for(let key of mySet){
-			//좌표배열
-			data[key]=[];
-			//마커배열
-			markers[key]=[];
-		};
-		//console.log(markers)
-		//일차별마커객체 생성	
-		
-		for(let i=0;i<mlday.length;i++){
-			//console.log(typeof mlday[i][2],mlday[i][0],mlday[i][1]);
- 			data[mlday[i][2]].push(new kakao.maps.LatLng(Number(mlday[i][0]),Number(mlday[i][1])));
- 			
- 			//처음 생성된 지도의 중심 최표를 첫날 첫 장소로 지정
- 			if(i==1){
- 				//지도 생성
- 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
- 		        mapOption = { 
- 		            center: new kakao.maps.LatLng(Number(mlday[i][0]),Number(mlday[i][1])), // 지도의 중심좌표 (일차별 첫번째 장소로 지정)
- 		            level: 5 // 지도의 확대 레벨 
- 		        };
- 				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
- 			}
-		};
-		
-		//console.log(data);
-		
-        var markerImageSrc = '<%=request.getContextPath()%>/images/mark.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
- 
-            creData(); // 일차별 마커를 생성하고 일차별마커 배열에 추가합니다
+ 		 var movelineDay=new Array();
+     	var mlday=[];
+     	//좌표값 배열 생성
+         <%for(Marker m:mList){%>
+ 			movelineDay.push(<%=m.getLonggitude()%>+","+<%=m.getLatitude()%>+","+<%=m.getMovelineDay()%>);
+ 		<%}%>
+ 		
+ 		
+ 		//위도,경도,일차 인덱스로 쪼개서 배열에 넣음
+ 		for(let i=0;i<<%=mList.size()%>;i++){		
+ 			mlday.push(movelineDay[i].split(","));
+ 		};
+ 	
+ 		//일차별로 배열인덱스에 넣음
+ 		let data={};
+ 		let markers={};
+ 		let mySet=new Set();
+ 		for(let i=0;i<mlday.length;i++){
+ 			mySet.add(mlday[i][2]);
+ 			//console.log(typeof mlday[i][j])
+ 		};
+ 		//key값으로 배열생성
+ 		for(let key of mySet){
+ 			//좌표배열
+ 			data[key]=[];
+ 			//마커배열
+ 			markers[key]=[];
+ 		};
+ 		//console.log(markers)
+ 		//일차별마커객체 생성	
+ 		
+ 		for(let i=0;i<mlday.length;i++){
+ 			//console.log(typeof mlday[i][2],mlday[i][0],mlday[i][1]);
+  			data[mlday[i][2]].push(new kakao.maps.LatLng(Number(mlday[i][0]),Number(mlday[i][1])));
+  			
+  			//처음 생성된 지도의 중심 최표를 첫날 첫 장소로 지정
+  			if(i==1){
+  				//지도 생성
+  				var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+  		        mapOption = { 
+  		            center: new kakao.maps.LatLng(Number(mlday[i][0]),Number(mlday[i][1])), // 지도의 중심좌표 (일차별 첫번째 장소로 지정)
+  		            level: 5 // 지도의 확대 레벨 
+  		        };
+  				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+  			}
+ 		};
+ 		
+ 		//console.log(data);
+ 		
+         var markerImageSrc = '<%=request.getContextPath()%>/images/mark.png';  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+  
+             creData(); // 일차별 마커를 생성하고 일차별마커 배열에 추가합니다
+            
+             //changeMarker(); // 지도에 마커가 보이도록 설정합니다    
+
+
+         // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
+         function createMarkerImage(src, size, options) {
+             var markerImage = new kakao.maps.MarkerImage(src, size, options);
+             return markerImage;            
+         }
+
+         // 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
+         function createMarker(position, image) {
+             var marker = new kakao.maps.Marker({
+                 position: position,
+                 image: image
+             });
            
-            //changeMarker(); // 지도에 마커가 보이도록 설정합니다    
+             return marker;  
+         }   
+         
+         // 일차별 마커를 생성하고 일차별 마커 배열에 추가하는 함수입니다
+         	//markers=[];
+         
+         	function creData() {
+         		for(let j=1;j<<%=d%>+1;j++){
+         			console.log(data[j].length)
+ 	        		for (var i = 0; i < data[j].length; i++) {  
+ 	        			
+ 	                    var imageSize = new kakao.maps.Size(35, 50),
+ 	                        imageOptions = {  
+ 	                            spriteOrigin: new kakao.maps.Point(10, 0),    
+ 	                            spriteSize: new kakao.maps.Size(55, 50)  
+ 	                        };     
+ 	                    
+ 	                    // 마커이미지와 마커를 생성합니다
+ 	                    var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+ 	                        marker = createMarker(data[j][i], markerImage);  
+ 	                   	 		                    // 생성된 마커를 마커 배열에 추가합니다
+ 	                    	markers[j].push(marker);
+ 	                }
+ 	        		
+ 	            }	
+ 	        	
+ 	        }
+         	//console.log(markers[1].length); 
+         	
+         	function setCenter(i) {            
+         	   map.panTo(data[i][0])
+         	}
+ 		
+         	
+         	
+         	
+         // 마커들 지도 표시 여부를 설정하는 함수입니다
+         function setMarkers(map, su) {
+         	//marker.setMap(null)
+            for (var i = 1; i < <%=d%>+1; i++) {  
+                 for(let j=0; j<markers[i].length;j++){
+                 	//console.log(su)
+                 	if(su == i-1){
+                 		markers[i][j].setMap(map);
+                 		setCenter(i);
+                 	}else{
+                 		markers[i][j].setMap(null);
+                 	}
+                 }
+             }       
+         }
+         
+         /* 거리출력기능  */
+         //선을 생성합니다
+         var polyline = new kakao.maps.Polyline({
+ 				map: map, // 선을 표시할 지도 객체
+ 				endArrow: true, // 선의 끝을 화살표로 표시되도록 설정한다
+ 				strokeWeight: 3, // 선의 두께
+ 				strokeColor: '#06093D', // 선 색
+ 				strokeOpacity: 0.9, // 선 투명도
+ 				strokeStyle: 'solid' // 선 스타일
+ 		});	
 
-
-        // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
-        function createMarkerImage(src, size, options) {
-            var markerImage = new kakao.maps.MarkerImage(src, size, options);
-            return markerImage;            
-        }
-
-        // 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
-        function createMarker(position, image) {
-            var marker = new kakao.maps.Marker({
-                position: position,
-                image: image
-            });
-          
-            return marker;  
-        }   
-        
-        // 일차별 마커를 생성하고 일차별 마커 배열에 추가하는 함수입니다
-        	//markers=[];
-        	function creData() {
-        		for(let j=1;j<<%=d%>+1;j++){
-	        		for (var i = 0; i < data[j].length; i++) {   
-	                    var imageSize = new kakao.maps.Size(35, 50),
-	                        imageOptions = {  
-	                            spriteOrigin: new kakao.maps.Point(10, 0),    
-	                            spriteSize: new kakao.maps.Size(55, 50)  
-	                        };     
-	                    $("<input>").val(total);
-	                    // 마커이미지와 마커를 생성합니다
-	                    var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-	                        marker = createMarker(data[j][i], markerImage);  
-	                   	 		                    // 생성된 마커를 마커 배열에 추가합니다
-	                    	markers[j].push(marker);
-	                }
-	        		
-	            }	
-	        	
-	        }
-        	//console.log(markers[1].length); 
-        	
-        	function setCenter(i) {            
-        	   map.panTo(data[i][0])
-        	}
-		
-        	
-        	
-        	
-        // 마커들 지도 표시 여부를 설정하는 함수입니다
-        function setMarkers(map, su) {
-        	//marker.setMap(null)
-           for (var i = 1; i < <%=d%>+1; i++) {  
-                for(let j=0; j<markers[i].length;j++){
-                	//console.log(su)
-                	if(su == i-1){
-                		markers[i][j].setMap(map);
-                		setCenter(i);
-                	}else{
-                		markers[i][j].setMap(null);
-                		
-                	}
-                }
-            }       
-        }
-        
-        /* 거리출력기능  */
-        //선을 생성합니다
-        var polyline = new kakao.maps.Polyline({
-				map: map, // 선을 표시할 지도 객체
-				endArrow: true, // 선의 끝을 화살표로 표시되도록 설정한다
-				strokeWeight: 3, // 선의 두께
-				strokeColor: '#06093D', // 선 색
-				strokeOpacity: 0.9, // 선 투명도
-				strokeStyle: 'solid' // 선 스타일
-		});	
-
-        
-        //일차별 선 & 거리(미완) 출력
-		function line(value){
-        	console.log(value)
-			 for (var i = 1; i < <%=d%>+1; i++) { 
-				 for(let j=0; j<data[i].length;j++){
-					 if( value == i-1){
-						 polyline.setPath(data[i]);
-						 //var distance=Math.round(polyline.getLength())
-						 //console.log(distance)
-						 polyline.setMap(map);
-					 }
-				  }		
-			 }
-        } 
-        
-		
-        
-		
-        // 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
-        function changeMarker(value){
-        	for (var i = 0; i < <%=d%>; i++) {  
-	        	console.log(value)
-	                if ( value == i ) {
-	                    // 클릭일차 마커들만 지도에 표시하도록 설정합니다
-	                    setMarkers(map, i);
-	                    line(i);
-	            	} 
-	        }  	  
-        };
+         
+         //일차별 선 & 거리(미완) 출력
+ 		function line(value){
+         	console.log(value)
+ 			 for (var i = 1; i < <%=d%>+1; i++) { 
+ 				 for(let j=0; j<data[i].length;j++){
+ 					 if( value == i-1){
+ 						 polyline.setPath(data[i]);
+ 						 //var distance=Math.round(polyline.getLength())
+ 						 //console.log(distance)
+ 						 polyline.setMap(map);
+ 					 }
+ 				  }		
+ 			 }
+         } 
+         
+ 	
+         // 카테고리를 클릭했을 때 type에 따라 카테고리의 스타일과 지도에 표시되는 마커를 변경합니다
+         function changeMarker(value){
+         	for (var i = 0; i < <%=d%>; i++) {  
+ 	        	console.log(value)
+ 	                if ( value == i ) {
+ 	                    // 클릭일차 마커들만 지도에 표시하도록 설정합니다
+ 	                    setMarkers(map, i);
+ 	                    line(i);
+ 	            	} 
+ 	        }  	  
+         };
         
         
 

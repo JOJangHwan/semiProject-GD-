@@ -174,19 +174,20 @@
 	<script>
 		$("#pickMLB").click(e=>{
             if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png"){
-				insertPicMLB(event);
+				insertPicMLB();
 			}else if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickon.png") 
 				$("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png"
-				deletePickMLB(event);
+				deletePickMLB();
 		})
 		//찜 등록
-		function insertPicMLB(e){
+		function insertPicMLB(){
+			console.log("<%=mlb.getBoardNo()%>")
 			$.ajax({
 				url:"<%=request.getContextPath()%>/pick/insertPick.do",
 				dataType:"text",
 				data:{
-					"boardNo":$(e.target).siblings("input[name=boardNo]").val(),
-					"commentWriter":$(e.target).siblings("input[name=commentWriter]").val()
+					"boardNo":"<%=mlb.getBoardNo()%>",
+					"commentWriter":"<%=mlb.getUserId()%>"
 				},
 				success:data=>{
 					//console.log(data["boardNo"])
@@ -427,7 +428,7 @@
 			})
 		};
 		
- 		//카테고리
+ 		//카테고리ㅌ
  		for(let i=0;i<<%=d%>;i++){
  			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
  	 	}

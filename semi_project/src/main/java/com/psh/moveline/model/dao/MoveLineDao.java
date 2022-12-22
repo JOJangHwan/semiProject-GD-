@@ -3,6 +3,7 @@ package com.psh.moveline.model.dao;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,13 +29,14 @@ private Properties sql=new Properties();
 		}
 	}
 	
-	public MoveLine searchMoveLine(Connection conn,int movelineNo) {
+	public MoveLine searchMoveLine(Connection conn,int movelinNo) {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		MoveLine ml=new MoveLine();
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("searchMoveLine"));
-			pstmt.setInt(1, movelineNo);
+			pstmt.setInt(1, movelinNo);
+	
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				ml=getMoveLine(rs);
