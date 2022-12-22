@@ -6,9 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.PseudoColumnUsage;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Properties;
 
 import com.jjh.member.model.vo.Member;
@@ -98,6 +98,28 @@ public class LoginMemberdao {
 		try {
 			pstmt=conn.prepareStatement(sql.getProperty("searchpassword"));
 			pstmt.setNString(1, m.getUserId());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m=getMember(rs);
+				System.out.println(m);
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+		}return m;
+	}
+	
+	public Member searchId(Connection conn, Member m) {
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("searchId"));
+			pstmt.setNString(1, m.getPassword());
 			pstmt.setString(2, m.getPhone());
 			pstmt.setString(3, m.getEmail());
 			rs=pstmt.executeQuery();
