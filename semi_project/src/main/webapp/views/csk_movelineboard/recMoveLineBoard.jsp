@@ -108,7 +108,7 @@
 		    <div><h2>게시판</h2></div>
 				<div><button onclick="location.assign
 				('<%=request.getContextPath()%>/moveLineBoard/moveLineBoardView.do')>상세 화면</button></div>
-		    	<div id=totalArea">
+		    	<div id="totalArea">
 			    	<div id="titleArea">
 			    	</div>
 			    	
