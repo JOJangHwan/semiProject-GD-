@@ -131,6 +131,23 @@ public class LoginMemberdao {
 			close(pstmt);
 		}return result;
 	}
+	public int kakaoInsertMember(Connection conn, Member m) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("kakaoinsertMemer"));
+			pstmt.setString(1, m.getUserId());
+			
+			pstmt.setString(2, m.getEmail());
+			pstmt.setString(3, m.getNickName());
+			pstmt.setString(4, String.valueOf(m.getGender()));
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
 	
 	
 	
