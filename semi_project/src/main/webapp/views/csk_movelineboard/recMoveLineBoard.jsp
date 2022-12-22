@@ -1,23 +1,24 @@
-<%@page import="com.kjh.admin.model.vo.BoardTag"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ page import="java.util.ArrayList, java.util.List, com.psh.movelineboard.model.vo.MoveLineBoard, 
-    com.jjh.member.model.vo.Member"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
-	<script	src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
+<%@ page import="java.util.Iterator,
+				java.util.Arrays, 
+				java.util.ArrayList, 
+				java.util.List, 
+				java.util.Collections, 
+				com.psh.movelineboard.model.vo.MoveLineBoard,
+				com.jjh.member.model.vo.Member"%>
+<script   src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
 
-<%@ page import="com.kjh.travelBoard.model.vo.TravelBoard" %>
 <%@ include file="/views/common/header.jsp" %>
-<%	
-	String userId="";
-	if(loginMember!=null){
-		userId=loginMember.getUserId();
-	}
-	/*  
-	List<MoveLineBoard> boards=(List<MobeLineBoard>)request.getAttribute("boards");
-	*/
-%>
+    <%
+    	String userId="";
+		if(loginMember!=null){userId=loginMember.getUserId();}
+		List<MoveLineBoard> boards=(List<MoveLineBoard>)request.getAttribute("boards");
+		
+	%> 
+
 	<style>
 		img{
 			max-width:100%;
@@ -101,53 +102,62 @@
 		 }
 		
 	</style>
-	<% TravelBoard board=(TravelBoard)request.getAttribute("board"); %>
+
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
-		    <div><h2>게시판</h2></div>
-				<div><button onclick="location.assign
-				('<%=request.getContextPath()%>/moveLineBoard/moveLineBoardView.do')>상세 화면</button></div>
-		    	<div id="totalArea">
-			    	<div id="titleArea">
-			    	</div>
-			    	
-			    	<div class="moveTopBtn"><img src="<%=request.getContextPath()%>/images/forwardTopIcon.png" style="width:20px; height:20px; margin-top:20px; margin-left:22px;"></div>
-			    	<div id="buttonsContainer">
-			    		<%if(userId!=null&&userId.equals(loginMember.getUserId())){ %>
-			    			<div id="updateContainer">
-				    		<button onclick="location.href='<%=request.getContextPath()%>/admin/travelboarddelete.do?boardNo=<%=board.getBoardNo()%>';"
-				    			style="background-color:red; color:white;">삭제</button>
-				    		<button onclick="location.href='<%=request.getContextPath()%>/admin/travelboardupdate.do?boardNo=<%=board.getBoardNo()%>';"
-				    			style="background-color:gray; color:white;">수정</button>
-				    		</div>
-		    			<%}else{%>
-				    		<div id="updateContainer">
-				    		<button onclick=""
-				    			style="background-color:red; color:white; display:none;">삭제</button>
-				    		<button onclick=""
-				    			style="background-color:gray; color:white; display:none;">수정</button>
-				    	</div>
-				    	<%} %>
-				    	<div id="mainListBtnContainer">
-				    		<button onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardmain.do';">목록으로</button>
-				    	</div>
-			    	</div>
+		    	<div id="listContainer">
+		    		<div id="boardTitleArea" name="boardTitleArea">
+		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">추천 동선 게시판
+		    			</label>
+		    			<!-- 주석부분에 button 게시글작성 만들기 -->
+		    			<% if(userId!=null){ %>
+					    	<div id="adminWriteBtnArea">
+					    		<button name="adminWriteBtn" onclick="location.href=''">
+					    			게시글 작성
+					    		</button>
+					    	</div>
+					    <%} %>
+		    		</div>
+	    			<div class="lineGray"></div>
+	    			<div id="boardPostAreaContainer">
+			    		<div id="boardPostArea">
+	    						<%if(boards.isEmpty()) {%>
+								<%}else{
+									for(MoveLineBoard b:boards){%>
+									<div class="kjh_boardPostBasic">
+										<div class="kjh_boardPostImg">
+					    					 <img src="" alt=""
+					    						onclick="location.assign='<%=request.getContextPath()%>/moveLineBoard/moveLineBoardView.do?=boardNo=<%=b.getBoardNo()%>&&moveLineNo=<%=b.getMovelineNo() %>';"
+					    						style="cursor:pointer;">
+					    				 
+				<!-- 	    			<script>
+					    					function loginAlert() {
+					    						alert("로그인 후 사용하십시오.");
+					    					}
+					    				</script> -->
+					    				
+					    				</div>
+					    				<div class="kjh_boardPostTitle">
+					    					<a href="<%=request.getContextPath()%>/moveLineBoard/boardlist.do?boardNo=<%=b.getBoardNo()%>">
+					    						<%=b.getBoardTitle()%>
+					    					</a>
+				    					</div>
+				    				</div>
+									<%}
+								}%>
+			    		</div>
+		    		</div>
+
+		    		
+			    	<div id="boardPagingContainer">
+			    		<div id="boardPagingBar">
+			    			<%=request.getAttribute("pageBar")%>
+			    		</div>
+			    	</div>		    		
 		    	</div>
 		    </div>
-		    <script>
-		    	$("#titleArea").html('<%=board.getBoardTitle()%>');
-		    	$("#contentArea").html('<%=board.getBoardContent()%>');
-		    	console.dir($("#titleArea").html());
-		    	console.dir($("#content").html());
-		    	
-		    	const $topBtn = document.querySelector(".moveTopBtn");
-
-		    	// 버튼 클릭 시 맨 위로 이동
-		    	$topBtn.onclick = () => {
-		    		window.scrollTo(0,0);
-		    	}
-		    </script>
+	    			
 		    
 	    <div id="rightMarginMain"></div>
     </section>

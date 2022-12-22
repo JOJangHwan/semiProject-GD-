@@ -24,14 +24,11 @@
 						<tr>
 							<td><input type="checkbox"></td>
 							<td>
-							<!-- View에서 갖고오기 
-								<a href="<%=request.getContextPath()%>/moveLine/boardView.do?boardNo=<%=ml.getMovelineNo()%>">
-								-->
+								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?boardNo=<%=ml.getMovelineNo()%>">
 								<%=ml.getMovelineName() %>
 								</a>
 							</td>
 							<td><%=ml.getMovelineEnroll() %></td>
-							<%-- <td><input type="hidden" name="userId" value="<%=loginMember.getUserId()%>"> --%>
 						</tr>
 						<%}
 					} %>  

@@ -44,7 +44,7 @@ public class MoveLineListServlet extends HttpServlet {
 	    if(m!=null) {
 	    	userId=m.getUserId();
 	    }
-	    //&id=?user01 -> &?id=user01
+
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
@@ -60,7 +60,7 @@ public class MoveLineListServlet extends HttpServlet {
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageEnd=pageNo+pageBarSize-1;
 		
-		//안 나오면 userId 지워~ 
+		 
 		if(pageNo==1) {
 			pageBar+="<span>[이전]</span>";
 		}else {
@@ -85,9 +85,11 @@ public class MoveLineListServlet extends HttpServlet {
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("movelines", movelines);
 		request.getRequestDispatcher("/views/csk_moveline/movelineList.jsp").forward(request, response);
+
+		System.out.println(pageBar);
 	}
 	
-//	}
+
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
