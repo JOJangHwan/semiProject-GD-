@@ -62,7 +62,7 @@ html,body{
 	margin-left:260px;
 	margin-right:260px;
 	width:100%;
-    border:1px solid gray;
+    /* border:1px solid gray; */
 }
 
 #mainSectionContainer img{

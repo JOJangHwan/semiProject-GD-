@@ -108,9 +108,9 @@
 					    					onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardpickcontroll.do?boardNo=<%=b.getBoardNo()%>&pick=<%=b.getTravelPick()%>';"
 					    						style="cursor:pointer;">
 					    					<%if(b.getTravelPick()=='N'){ %>
-					    						<div class="kjh_boardPostPick kjh_colorWhite"></div>
+					    						<div class="kjh_boardPostPickOff"><img src="<%=request.getContextPath()%>/images/pickon.png"></div>
 					    					<%}else if(b.getTravelPick()=='Y'){ %>
-					    						<div class="kjh_boardPostPick kjh_colorYellow"></div>
+					    						<div class="kjh_boardPostPickOn"><img src="<%=request.getContextPath()%>/images/pickoff.png"></div>
 					    					<%} %>
 					    				</div>
 					    				<%}else{ %>
