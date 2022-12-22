@@ -33,7 +33,7 @@ public class InsertMoveLineBoardCommentServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
-		int level=Integer.parseInt(request.getParameter("commentLevel"));
+			int level=Integer.parseInt(request.getParameter("commentLevel"));
 		int commentRef=Integer.parseInt(request.getParameter("commentRef"));
 		String userId=request.getParameter("commentWriter");
 		String content=request.getParameter("content");
@@ -46,7 +46,7 @@ public class InsertMoveLineBoardCommentServlet extends HttpServlet {
 				.build();
 		
 		Comment comment=new MoveLineBoardService().insertComment(c);
-
+	
 		//전송할때 contentType설정
 		response.setContentType("application/json;charset=utf-8");
 		

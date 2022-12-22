@@ -36,12 +36,24 @@ public class MoveLineInsertServlet extends HttpServlet {
 //		private String movelineName;
 //		private char openandclosed;
 //		private Date movelineEnroll;
+
+		/*MoveLine ml = MoveLine.builder()
+=======
+		//INSERT INTO MOVELINE VALUES
+		//(SEQ_MOVELINE_NO.NEXTVAL, 'user01', '2022-12-11' , '2022-12-12' , '걷기 여행' , 'Y' , SYSDATE );
 		MoveLine ml = MoveLine.builder()
+>>>>>>> branch 'master' of https://github.com/JOJangHwan/semiProject-GD-.git
 				.userId(request.getParameter("userId"))
 				.movelineName(request.getParameter("movelineName"))
+
 				
-				.build();
+				.build();*/
+		request.getRequestDispatcher("views/psh_moveLine/psh_moveLineView.jsp").forward(request, response);
+
+
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

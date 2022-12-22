@@ -94,4 +94,20 @@ public class MoveLineBoardService {
 		return comment;
 	}
 	
+	public int insertPick(Comment c) {
+		Connection conn=getConnection();
+		int result=dao.insertPick(conn,c);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		return result;
+	}
+	
+	public int deletePick(Comment c) {
+		Connection conn=getConnection();
+		int result=dao.deleteComment(conn,c);
+		if(result>0)commit(conn);
+		else rollback(conn);
+		return result;
+	}
+	
 }

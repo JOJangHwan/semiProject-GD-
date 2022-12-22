@@ -31,17 +31,24 @@ public class AESEncrypt {
 		//key를 저장하는 파일명 -> bslove.bs
 		this.path=AESEncrypt.class.getResource("/").getPath();
 		this.path=this.path.substring(0,this.path.indexOf("classes"));
-		System.out.println(this.path);
-		/*
-		 * File keyFile=new File(this.path+"bslove.bs"); if(keyFile.exists()) { //파일이
-		 * 있으면.... try(ObjectInputStream ois =new ObjectInputStream(new
-		 * FileInputStream(keyFile))) {
-		 * 
-		 * this.key=(SecretKey)ois.readObject();
-		 * 
-		 * }catch(IOException | ClassNotFoundException e) { e.printStackTrace(); } }else
-		 * { //파일이 없으면.... //key생성하고 생성된키를 지정된 파일에 저장 getGeneratedKey(); }
-		 */
+
+//		System.out.println(this.path);
+//		File keyFile=new File(this.path+"bslove.bs");
+//		if(keyFile.exists()) {
+//			//파일이 있으면....
+//			try(ObjectInputStream ois
+//					=new ObjectInputStream(new FileInputStream(keyFile))) {
+//				
+//				this.key=(SecretKey)ois.readObject();
+//				
+//			}catch(IOException | ClassNotFoundException e) {
+//				e.printStackTrace();
+//			}
+//		}else {
+//			//파일이 없으면....
+//			//key생성하고 생성된키를 지정된 파일에 저장
+//			getGeneratedKey();
+//		}
 	}
 	
 	private void getGeneratedKey() {

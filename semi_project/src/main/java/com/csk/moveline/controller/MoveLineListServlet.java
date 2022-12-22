@@ -36,7 +36,7 @@ public class MoveLineListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cPage;
-		int numPerpage=10;
+		int numPerpage=20;
 		
 		Member m=(Member)request.getSession().getAttribute("loginMember");
 		
@@ -44,7 +44,7 @@ public class MoveLineListServlet extends HttpServlet {
 	    if(m!=null) {
 	    	userId=m.getUserId();
 	    }
-		
+	    //&id=?user01 -> &?id=user01
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
@@ -65,14 +65,14 @@ public class MoveLineListServlet extends HttpServlet {
 			pageBar+="<span>[이전]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()
-			+"?cPage="+(pageNo-1)+"&id=?"+userId+"'>[이전]</a>";
+			+"?cPage="+(pageNo-1)+"&?id="+userId+"'>[이전]</a>";
 		}
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
 				pageBar+="<a href='"+request.getRequestURL()
-				+"?cPage="+pageNo+"&id=?"+userId+"'>"+pageNo+"</a>";
+				+"?cPage="+pageNo+"&?id="+userId+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -80,12 +80,11 @@ public class MoveLineListServlet extends HttpServlet {
 			pageBar+="<span>[다음]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()
-			+"?cPage="+pageNo+"&id=?"+userId+"'>[다음]</a>";
+			+"?cPage="+pageNo+"&?id="+userId+"'>[다음]</a>";
 		}
 		request.setAttribute("pageBar", pageBar);
 		request.setAttribute("movelines", movelines);
-		RequestDispatcher rd=request.getRequestDispatcher("/views/csk_moveline/movelineList.jsp");
-		rd.forward(request, response);
+		request.getRequestDispatcher("/views/csk_moveline/movelineList.jsp").forward(request, response);
 	}
 	
 //	}

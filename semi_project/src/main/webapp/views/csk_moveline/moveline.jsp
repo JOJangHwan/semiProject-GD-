@@ -14,37 +14,44 @@
 		    	<!-- 
 		    	//moveline table
 			    	1. movelineNo(x)
-			    	2. userId (hidden) : 
-			    	3. tripdateStart : id,name = tripdateStart 
-			    	4. tripdateFinish : id,name = tripdateFinish
+			    	2. (hidden)userId (hidden) : name=userId o
+			    	3. (hidden)tripdateStart : id,name = tripdateStart (whyrano) o
+			    	4. (hidden)tripdateFinish : id,name = tripdateFinish (whyrano) o
 			    	5. moveLineName : name=movelineName
 			    	6. moveLineEnroll(x)
 			    	7. openAndClosed (수화꺼)
 		    	//marker table
 			    	1. makerNo(x)
 			    	 moveLineNo(x)
-			    	2. longgitude(hidden) : 
-			    	3. latitude(hidden) : 
+			    	2. (hidden)longitude(hidden) : name=longitude o
+			    	3. (hidden)latitude(hidden) : name=latitude o
 			    	4. memo : name = memo
-			    	5. movelineDay(1,2,3일차가 들어감 ->for문으로 받기)
-			    	6. placeName(키워드로 넣기)
+			    	5. movelineDay(1,2,3일차가 들어감 ->for문으로 받기) id=movelineDay
+			    	6. placeName(키워드로 넣기) : name=place[movelineDay] : value=array로 받고 name은 1개값
 			    	7. price : name = cost
-			    	8. markerTime(시간)(hidden)
+			    	8. markerTime(시간) : name=time
 			    	9. address(수화꺼)
+					//(hidden)total : name=tripDay value값 넘겨줘야함 (hidden) o
 		    	
 		    	 -->
 				 <!-- action="<%=request.getContextPath() %>/moveLine/movelineinsert.do" -->
-				<form action="" method="post">
-					<!-- hidden input 태그 -->
-					<input type="hidden" id="total" name="toal" value=""> 
+				<form action="<%=request.getContextPath() %>/moveLine/movelineinsert.do" method="post">
+					<input type="hidden" id="movelineDay" name="movelineDay" value=""> <!--0~tripDay포문-->
+					<input type="hidden" id="tripDay" name="tripDay" value=""> 
+					<% if(loginMember!=null){ %>
+						<input type="hidden" name="userId" value="<%=loginMember.getUserId()%>"> 
+					<% } %>
+					<input type="hidden" name="longitude" value=""> 
+					<input type="hidden" name="latitude" value=""> 
+					
 					<input type="text" id="movelineName" name="movelineName" placeholder="여행제목을 입력해주세요">
 					<br><br><br>
 					<!-- 캘린더 -->
 					<div id="psh_calBox">
 							<input class="input-box" type="text" name="daterange"/>
 							<input type="reset" value="취소">
-							<input type="hidden" id="tripdateStart" value="">
-							<input type="hidden" id="tripdateFinish" value="">
+							<input type="hidden" name="tripdateStart" value="">
+							<input type="hidden" name="tripdateFinish" value="">
 					</div>
 				
 					<!--지도 공통 코드-->
@@ -73,34 +80,6 @@
 								<td>🌞<input type="text" name="memo1"></td>
 								<td>💲<input type="text" name="cost1"></td>
 							</tr>
-							<tr>
-								<td>2</td>
-								<td><input type="time" name="time"></td>
-								<td>🚩<input type="text" name="place2" id="place2" placeholder="주소 또는 키워드를 입력해주세요"></td>
-								<td>🌞<input type="text" name="memo2"></td>
-								<td>💲<input type="text" name="cost2"></td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td><input type="time" name="time"></td>
-								<td>🚩<input type="text" name="place3" id="place3" placeholder="주소 또는 키워드를 입력해주세요"></td>
-								<td>🌞<input type="text" name="memo3"></td>
-								<td>💲<input type="text" name="cost3"></td>
-							</tr>
-							<tr>
-								<td>4</td>
-								<td><input type="time" name="time"></td>
-								<td>🚩<input type="text" name="place4" id="place4" placeholder="주소 또는 키워드를 입력해주세요"></td>
-								<td>🌞<input type="text" name="memo4"></td>
-								<td>💲<input type="text" name="cost4"></td>
-							</tr>
-							<tr>
-								<td>5</td>
-								<td><input type="time" name="time"></td>
-								<td>🚩<input type="text" name="place5" id="place5" placeholder="주소 또는 키워드를 입력해주세요"></td>
-								<td>🌞<input type="text" name="memo5"></td>
-								<td>💲<input type="text" name="cost5"></td>
-							</tr>
 						</table>
 						<br><br>
 						<button onclick="fn_saveInfo();">저장하기</button>
@@ -110,13 +89,7 @@
 				</form>
 				
 				<script>
-				    /* 
-				    for(let i=0; i<10; i++){
-					   var dd = document.createElement("div");
-				        dd.id = i; //div1 div2 div3,,, input.id="place"+i input.name="place"+i
-				        $(".tableContainer").append(dd);
-				        console.log(dd);
-				    } */
+
 				 	let table;
 					let hTag;
 					let h2;
@@ -135,19 +108,39 @@
 						const durDate=duration[0].trim().split("/");
 						const durDate2=duration[1].trim().split("/");
 						const strDate=new Date(durDate[2], durDate[0], durDate[1]);
-						const endDate=new Date(durDate2[2], durDate2[0], durDate2[1])
+						const endDate=new Date(durDate2[2], durDate2[0], durDate2[1]);
 						const minus = endDate.getTime() - strDate.getTime();
 						const total = minus / (1000*60*60*24)+1;//일차
-						console.log(total);
-						console.log(endDate.getTime());
-						console.log(strDate.getTime());
+						//console.log(total);
+						let tripdateStart = (durDate[2]+"-"+durDate[0]+"-"+durDate[1]);
+						let tripdateFinish = (durDate2[2]+"-"+durDate2[0]+"-"+durDate2[1]);
+						
+						// let movelineday=[];
+						// for(let i=0; i<total; i++){
+						// 	movelineday.push(i+1);
+						// }
+
+						$('input[name=tripDay]').val(total);
+					 	$('input[name=tripdateStart]').val(tripdateStart);
+					 	$('input[name=tripdateFinish]').val(tripdateFinish);
+												
 						document.querySelector("div#tableContainer").innerHTML="";
 						let k=0;
 						for(k=0; k<total; k++){
-							hTag=$("<h2>")
 							h2=$("<h2>").text((k+1)+"일차").appendTo($("div#tableContainer"));
+							$(h2).attr("id","day"+(k+1));
 							let p=$("<p>").text("*경로는 최대 5개 설정 가능합니다.").appendTo($("div#tableContainer"));
-							let inputbtn=$("<input type='button' id='reflection' onclick='fn_reflection();'>").val("경로확인").appendTo($("div#tableContainer"));
+							//let inputbtn=$("<input type='button' id='reflection' onclick='fn_reflection();'>").val("경로확인").appendTo($("div#tableContainer"));
+							//let inputbtn=$("<input type='button' id='reflection' value='+(k+1)+'onclick='changeDisplayMarker(this.value)'>").text(k+1+"일차 경로확인").appendTo($("div#tableContainer"));
+							
+							let inputbtn=$("<button>")
+							.attr({
+								"type":"button",
+								"id":"reflection",
+								"value":(k+1),
+								"onclick":"changeDisplayMarker(this.value)"
+							}).text("경로확인").appendTo($("div#tableContainer"));
+							//inputbtn.attr("value",(k+1));
 							let sub=$("<sub>").text(" *버튼을 눌러 경로를 확인하세요.").appendTo($("div#tableContainer"));
 							let br=$("<br>").appendTo($("div#tableContainer"));
 							$("<br>").appendTo($("div#tableContainer"));
@@ -190,7 +183,7 @@
 										$(input).attr("name","memo"+(k+1));
 									} else if(j==4){
 										input=$("<input type='text'>");
-										$(input).attr("name","cose"+(k+1));
+										$(input).attr("name","cost"+(k+1));
 									}
 										tr.append($("<td>").append(input));
 
@@ -199,8 +192,10 @@
 							table.append(tr);
 						}
 						table.appendTo($("div#tableContainer"));
+						let btnsave=$("<input type='submit' value='등록하기'>").appendTo($("div#tableContainer"));
 						}
-						console.log(table); 
+						
+						mapMardkerOverlayReSet();
 
 					});
 
@@ -212,7 +207,7 @@
 					};
 					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 					var map = new kakao.maps.Map(mapContainer, mapOption); 
-					<!-- 키워드로 장소 검색하기 API -->
+					// <!-- 키워드로 장소 검색하기 API -->
 					// 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
 					var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 					// 장소 검색 객체를 생성합니다
@@ -237,50 +232,35 @@
 					let customOverlays=[]; //마커 위 장소명을 띄울 오버레이
 					let linePath=[];
 					let markerPosition=[];
-					
-					function fn_reflection() {
+					let day=[];
+
+					function fn_reflection(i) {
+
 						count=0; //플레이스를 누적할 카운트 변수
 						placeData=[]; //장소 저장
 						markers=[]; //마커 저장
 						customOverlays=[]; //마커 위 장소명을 띄울 오버레이							
 						bounds = new kakao.maps.LatLngBounds();//비동기
+						day=[];
 						
-						for (let i=0; i<markers.length; i++) {
-							markers[i].setMap(null);		
-							customOverlays[i].setMap(null);
-						}
-						
-						// markers=[];
-						// customOverlays=[];
+						//어느테이블의 input값인지 fn reflction 함수에서 지정하기
+						//i가 일차별이랑 같으면 
+						const inputTable=$("button[value="+(i+1)+"]").nextAll("table");
+						let arr = [];
+						//각 일차별 등록된 장소 input가져오기
+						const inputPlaces=inputTable.find("input[id*=place]");
+						console.log(markers);
+						console.log(customOverlays);
+						//maker초기화하기
+						mapMardkerOverlayReSet();
 
-						let place1 = document.getElementById("place1");
-						let place2 = document.getElementById("place2");
-						let place3 = document.getElementById("place3");
-						let place4 = document.getElementById("place4");
-						let place5 = document.getElementById("place5");
-						let arr = [place1, place2, place3, place4, place5];
-						
-						//정규표현 넣어?
-						// for(i = 0; i < arrTemp.length; i++)
-						// if (!arrTemp[i].value.replace(/^\s+|\s+$/g, '')) {
-						// 	alert('키워드를 입력해주세요!');
-						// 	return false;
-						// } else {
-						// 	if (arrTemp[i].value != null) {
-						// 		placeData.push(arrTemp[i].value);
-						// 	}
-						// }
-
-	
-						for (i=0; i<arr.length; i++) {
-							if (arr[i].value != "") {
-								placeData.push(arr[i].value);
+						inputPlaces.each((i,v)=>{
+							const place=v.value;
+							if(place.length>0){
+								placeSearch(place);
 							}
-						}
-
-						if (placeData!=null) {
-							placeSearch(placeData[count]);
-						}
+						});
+						
 					}
 
 					function placeSearch(p) {
@@ -298,25 +278,58 @@
 							displayMarker(data[0]);
 							bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
 
+							let latlng =  new kakao.maps.LatLng(data[0].y, data[0].x);
+							let latitude = latlng.getLat();
+							let longitude = latlng.getLng();
+							
+							$('input[name=latitude]').val(latitude);
+							$('input[name=longitude]').val(longitude);
+
 							// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-							if (count < placeData.length) {
-								placeSearch(placeData[count])
-							} else if (count == placeData.length) {
-								setBounds();
-							}
+							// if (count < placeData.length) {
+							// 	placeSearch(placeData[count])
+							// } else if (count == placeData.length) {
+							setBounds();
+							// }
 						}
 					}
-					
 
+					function changeDisplayMarker(value){
+						
+						//console.log(value);
+						//document.querySelectorAll("div#tableContainer>input").innerHTML="";
+						day=[];
+						
+						//console.log($('input[name=tripDay]').val());
+
+						for(let i=0; i<$('input[name=tripDay]').val();i++){
+						
+							//day.push(su+=i);
+							console.log("day"+i+":"+day[i]);
+							console.log(value==day[i]);
+							if(value==(i+1)) {
+							// 	클릭일차 마커들만 지도에 표시하도록 설정합니다
+								fn_reflection(i);
+								break;
+							} 
+						}
+
+					};
+
+
+
+					
 					// 지도에 마커를 표시하는 함수입니다
 					function displayMarker(place) {
-
+	
 						// 마커를 생성하고 지도에 표시합니다
 						var marker = new kakao.maps.Marker({
 							map: map,
 							position: new kakao.maps.LatLng(place.y, place.x),
 							image: markerImage
 						});
+						markers.push(marker);
+
 
 						
 						kakao.maps.event.addListener(marker, 'click', function () {
@@ -343,15 +356,13 @@
 							position: new kakao.maps.LatLng(place.y, place.x)
 						});
 						customOverlays.push(customOverlay);
-						//비동기 끝나고 실행되어야 하므로 위도경도가지고 오는 메소드는 여기에 추가
-						markers.push(marker);
-						markerPosition.push(marker.getPosition());
-						// for (let i=0; i<markerPosition.length; i++) {
-						// 	console.log("마커포지션테스트"+ i +": "+markerPosition[i]);
-						// }
-			
-						//지도에 표시할 선을 생성합니다
+
 						
+						//비동기 끝나고 실행되어야 하므로 위도경도가지고 오는 메소드는 여기에 추가
+						
+						markerPosition.push(marker.getPosition());
+
+						//지도에 표시할 선을 생성합니다						
 						var polyline = new kakao.maps.Polyline({
 						    path: markerPosition, // 선을 구성하는 좌표배열 입니다
 						    strokeWeight: 5, // 선의 두께 입니다
@@ -364,8 +375,20 @@
 						polyline.setMap(map);
 						console.log("폴리라인 총 거리" + Math.round(polyline.getLength()));		
 
+					}        
+					function mapMardkerOverlayReSet(){
+						if(markers.length>0){
+							console.log(markers);
+							for (let i=0; i<markers.length; i++) {
+								markers[i].setMap(null);		
+								customOverlays[i].setMap(null);
+							}
+							markers=[];
+							customOverlays=[];
+							//map.setMap(markers);
+							
+						}
 					}
-
 //여기서부터 지우기
 					//let distance = Math.round(polyline.getLength()); // 선의 총 거리를 계산합니다
 					//let	content = getTimeHTML(distance); // 커스텀오버레이에 추가될 내용입니다

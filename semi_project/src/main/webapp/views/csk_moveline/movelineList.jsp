@@ -11,19 +11,18 @@
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
 				<h2>여행계획 리스트</h2>
-				<button onclick="movelineInsert();">➕여행계획</button>
-				<table id="tbl-board">
+				<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/checkmoveline.do')">➕여행계획</button>
+				<table id="tbl-board" style="text-align:center; justify-content: center;">
 					<tr>
-						<th>번호</th>
+						<th>선택</th>
 						<th>제목</th>
 						<th>작성일</th>
-						<th>작성자</th>
 					</tr>
 					<%if(movelines.isEmpty()) {%>
 					<%}else {
 						for(MoveLine ml : movelines){%>
 						<tr>
-							<td><%=ml.getMovelineNo() %></td>
+							<td><input type="checkbox"></td>
 							<td>
 							<!-- View에서 갖고오기 
 								<a href="<%=request.getContextPath()%>/moveLine/boardView.do?boardNo=<%=ml.getMovelineNo()%>">
@@ -42,10 +41,10 @@
 				</div>
 		    </div>
 	    <div id="rightMarginMain"></div>
-	    <script>
+<%-- 	    <script>
 	    	function movelineInsert() {
 	    		location.assign("<%=request.getContextPath()%>/moveLine/checkmoveline.do");
 	    	}
-	    </script>
+	    </script> --%>
     </section>
 <%@ include file="/views/common/footer.jsp" %>
