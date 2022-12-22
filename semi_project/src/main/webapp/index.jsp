@@ -186,7 +186,7 @@
             <div id="snb">
                 <a id="map" href="<%=request.getContextPath()%>/travelboard/travelboardmain.do"><img src="<%=request.getContextPath()%>/images/여행지.png" alt=""><br>여행지</a>
                	<a id="route" href="<%=request.getContextPath()%>/moveLine/movelineList.do"><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
-               	<a id="rec" href="<%=request.getContextPath()%>/moveLineBoard/moveLineBoardList.do"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
+               	<a id="rec" href="<%=request.getContextPath()%>/moveLineBoard/boardlist.do"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
                 <a id="like" href="<%=request.getContextPath()%>/mypick/mypicklist.do"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
             </div>
     </div>

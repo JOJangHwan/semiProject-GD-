@@ -19,6 +19,41 @@
 		color:black;
 	}
 	
+	
+	.kjh_boardPostTitle{
+		color:black;
+		font-size:16px;
+		font-family:'IBM Plex Sans KR', sans-serif;
+		line-height:20px;
+		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space: nowrap;
+  		word-break:break-all;
+	}
+	
+	.kjh_boardPostEnroll{
+		color:black;
+		font-size:16px;
+		font-family:'IBM Plex Sans KR', sans-serif;
+		text-align:center;
+		line-height:20px;
+		overflow: hidden;
+  		text-overflow: ellipsis;
+  		white-space: nowrap;
+  		word-break:break-all;
+	}
+	
+	.kjh_boardPostDel{
+		color:black;
+		font-size:16px;
+		font-family:'IBM Plex Sans KR', sans-serif;
+		line-height:20px;
+	}
+	
+	.kjh_boardPostDel>a:hover{
+		color:red;
+	}
+	
 	button:hover{
 		cursor:pointer;
 	}
@@ -33,21 +68,18 @@
 	}
 	
 	#mainListContainer{
-		/* border:1px solid blue; */
 		width:400px;
-		height:380px;
+		height:350px;
 		margin:0;
 	}
 	
 	#boardPostAreaContainer{
-		/* border:1px solid red; */
 		width:400px;
 		height:350px;
 		margin:0;
 	}
 	
 	#boardPagingContainer{
-		/* border:1px solid green; */
 		width:400px;
 		height:50px;
 		margin:0;
@@ -57,7 +89,7 @@
 	}
 	
 	#titleContainer>button{
-		position: fixed;
+		position: absolute;
 		top:30px;
 		right: 100px;
 	}
@@ -81,44 +113,26 @@
 	}
 	
 	#tempTitle{
-		width:70%;
+		width:280px;
 		margin-top:20px;
 		height:30px;
 		text-align:center;
 	}
 	
 	#tempEnroll{
-		width:30%;
+		width:100px;
 		margin-top:20px;
 		height:30px;
 		text-align:center;
 	}
 	
 	.kjh_boardPostTitleCon{
-		/* border:1px solid black; */
-		width:70%;
-	}
-	
-	.kjh_boardPostTitle{
-		color:black;
-		font-size:16px;
-		font-family:'IBM Plex Sans KR', sans-serif;
-		line-height:20px;
-	}
-	
-	.kjh_boardPostEnroll{
-		color:black;
-		font-size:16px;
-		font-family:'IBM Plex Sans KR', sans-serif;
-		text-align:center;
-		line-height:20px;
+		width:275px;
 	}
 	
 	.kjh_boardPostEnrollCon{
-		/* border:1px solid black; */
-		width:30%;
+		width:100px;
 	}
-	
 	.kjh_boardPostBasic{
 		display:flex;
 	}
@@ -163,6 +177,14 @@
 					    					onClick="self.close(); javascript:parent.opener.location.href='<%=request.getContextPath()%>/admin/travelboardupdate.do?boardNo=<%=b.getBoardNo()%>'">
 					    						<%=b.getBoardEnroll()%>
 					    					</a>
+				    					</div>
+									<%}%>
+								</div>
+								<div class="kjh_boardPostDelCon">
+									<% for(TravelBoard b:boards){%>
+					    				<div class="kjh_boardPostDel">
+					    					<a href="#"
+					    					onclick="self.close(); javascript:parent.opener.location.href='<%=request.getContextPath()%>/admin/travelboarddelete.do?boardNo=<%=b.getBoardNo()%>'">✕</a>
 				    					</div>
 									<%}%>
 								</div>

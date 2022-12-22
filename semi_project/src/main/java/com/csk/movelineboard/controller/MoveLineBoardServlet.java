@@ -1,32 +1,30 @@
-package com.csk.moveline.controller;
+package com.csk.movelineboard.controller;
 
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.csk.moveline.service.MoveLineService;
+import com.csk.movelineboard.service.MoveLineBoardService;
 import com.jjh.member.model.vo.Member;
-import com.psh.moveline.model.vo.MoveLine;
 
+import com.psh.movelineboard.model.vo.MoveLineBoard;
 
 /**
- * Servlet implementation class MoveLineListServlet
+ * Servlet implementation class MoveLineBoardServlet
  */
-@WebServlet("/moveLine/movelineList.do")
-public class MoveLineListServlet extends HttpServlet {
+@WebServlet("/moveLineBoard/boardlist.do")
+public class MoveLineBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MoveLineListServlet() {
+    public MoveLineBoardServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,23 +34,22 @@ public class MoveLineListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int cPage;
-		int numPerpage=20;
+		int numPerpage=6;
 		
-		Member m=(Member)request.getSession().getAttribute("loginMember");
-		
-		String userId="";
-	    if(m!=null) {
-	    	userId=m.getUserId();
-	    }
-
 		try {
 			cPage=Integer.parseInt(request.getParameter("cPage"));
 		}catch(NumberFormatException e) {
 			cPage=1;
 		}
-		List<MoveLine> movelines=new MoveLineService().selectMoveLineList(cPage,numPerpage,userId);
 		
-		int totalData=new MoveLineService().selectMoveLineListCount();
+//		Member m=(Member)request.getSession().getAttribute("loginMember");
+//		String userId="";
+//		if(m!=null) {
+//			userId=m.getUserId();
+//		}
+		List<MoveLineBoard> boards=new MoveLineBoardService().seleceBoardListAll(cPage,numPerpage);
+		
+		int totalData=new MoveLineBoardService().selectBoardCount();
 		int totalPage=(int)Math.ceil((double)totalData/numPerpage);
 		
 		String pageBar="";
@@ -60,19 +57,18 @@ public class MoveLineListServlet extends HttpServlet {
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
 		int pageEnd=pageNo+pageBarSize-1;
 		
-		 
 		if(pageNo==1) {
 			pageBar+="<span>[이전]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()
-			+"?cPage="+(pageNo-1)+"&?id="+userId+"'>[이전]</a>";
+			+"?cPage="+(pageNo-1)+"'>[이전]</a>";
 		}
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<span>"+pageNo+"</span>";
 			}else {
 				pageBar+="<a href='"+request.getRequestURL()
-				+"?cPage="+pageNo+"&?id="+userId+"'>"+pageNo+"</a>";
+				+"?cPage="+pageNo+"'>"+pageNo+"</a>";
 			}
 			pageNo++;
 		}
@@ -80,17 +76,12 @@ public class MoveLineListServlet extends HttpServlet {
 			pageBar+="<span>[다음]</span>";
 		}else {
 			pageBar+="<a href='"+request.getRequestURL()
-			+"?cPage="+pageNo+"&?id="+userId+"'>[다음]</a>";
+			+"?cPage="+pageNo+"'>[다음]</a>";
 		}
 		request.setAttribute("pageBar", pageBar);
-		request.setAttribute("movelines", movelines);
-		request.getRequestDispatcher("/views/csk_moveline/movelineList.jsp").forward(request, response);
-
-		System.out.println(pageBar);
+		request.setAttribute("boards", boards);
+		request.getRequestDispatcher("/views/csk_movelineboard/recMoveLineBoard.jsp").forward(request, response);
 	}
-	
-
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
