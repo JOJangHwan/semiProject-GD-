@@ -31,6 +31,7 @@ public class AESEncrypt {
 		//key를 저장하는 파일명 -> bslove.bs
 		this.path=AESEncrypt.class.getResource("/").getPath();
 		this.path=this.path.substring(0,this.path.indexOf("classes"));
+
 //		System.out.println(this.path);
 //		File keyFile=new File(this.path+"bslove.bs");
 //		if(keyFile.exists()) {

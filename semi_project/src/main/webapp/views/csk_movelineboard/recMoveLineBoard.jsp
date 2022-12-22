@@ -2,13 +2,7 @@
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/kjh_css/kjh_style.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
-<%@ page import="java.util.Iterator,
-				java.util.Arrays, 
-				java.util.ArrayList, 
-				java.util.List, 
-				java.util.Collections, 
-				com.psh.movelineboard.model.vo.MoveLineBoard,
-				com.jjh.member.model.vo.Member"%>
+<%@ page import="java.util.List,com.psh.movelineboard.model.vo.MoveLineBoard,com.jjh.member.model.vo.Member"%>
 <script   src="<%=request.getContextPath()%>/js/jquery-3.6.1.min.js"></script>
 
 <%@ include file="/views/common/header.jsp" %>
@@ -130,13 +124,6 @@
 					    					 <img src="" alt=""
 					    						onclick="location.assign='<%=request.getContextPath()%>/moveLineBoard/moveLineBoardView.do?=boardNo=<%=b.getBoardNo()%>&&moveLineNo=<%=b.getMovelineNo() %>';"
 					    						style="cursor:pointer;">
-					    				 
-				<!-- 	    			<script>
-					    					function loginAlert() {
-					    						alert("로그인 후 사용하십시오.");
-					    					}
-					    				</script> -->
-					    				
 					    				</div>
 					    				<div class="kjh_boardPostTitle">
 					    					<a href="<%=request.getContextPath()%>/moveLineBoard/boardlist.do?boardNo=<%=b.getBoardNo()%>">
@@ -148,7 +135,6 @@
 								}%>
 			    		</div>
 		    		</div>
-
 		    		
 			    	<div id="boardPagingContainer">
 			    		<div id="boardPagingBar">

@@ -225,6 +225,12 @@ nav.open ~ .overlay {
     justify-content: center;
     padding-bottom: 10px;
 }
+
+#snb>a{
+    text-decoration:none;
+    color:black;
+}
+
 #map{
     width: 25%;
     height: 100%;
