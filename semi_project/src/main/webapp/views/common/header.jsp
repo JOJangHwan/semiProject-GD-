@@ -113,7 +113,7 @@
             <div id="subHeaderFrm">
                 <div id="sub_menu1"><a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do">여행지</a></div>
                 <div id="sub_menu2"><a href="<%=request.getContextPath()%>/moveLine/movelineList.do">내동선</a></div>
-                <div id="sub_menu3"><a href="<%=request.getContextPath()%>/moveLineBoard/moveLineBoardList.do">추천동선</a></div>
+                <div id="sub_menu3"><a href="<%=request.getContextPath()%>/moveLineBoard/boardlist.do">추천동선</a></div>
                 <div id="sub_menu4"><a href="">찜페이지</a></div>
             </div>
         </div>

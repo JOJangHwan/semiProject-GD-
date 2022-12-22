@@ -24,14 +24,17 @@
 						<tr>
 							<td><input type="checkbox"></td>
 							<td>
+
 						
 								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?movelineNo=<%=ml.getMovelineNo()%>">
 								
+
+								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?boardNo=<%=ml.getMovelineNo()%>">
+
 								<%=ml.getMovelineName() %>
 								</a>
 							</td>
 							<td><%=ml.getMovelineEnroll() %></td>
-							<%-- <td><input type="hidden" name="userId" value="<%=loginMember.getUserId()%>"> --%>
 						</tr>
 						<%}
 					} %>  

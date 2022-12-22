@@ -195,7 +195,7 @@
 						let btnsave=$("<input type='submit' value='등록하기'>").appendTo($("div#tableContainer"));
 						}
 						
-						mapMardkerOverlayReSet();
+						//mapMardkerOverlayReSet();
 
 					});
 
@@ -252,7 +252,14 @@
 						console.log(markers);
 						console.log(customOverlays);
 						//maker초기화하기
-						mapMardkerOverlayReSet();
+						//mapMardkerOverlayReSet();
+						
+						for (let i=0; i<markers.length; i++) {
+							markers[i].setMap(null);		
+							customOverlays[i].setMap(null);
+						}
+						markers=[];
+						customOverlays=[];
 
 						inputPlaces.each((i,v)=>{
 							const place=v.value;
@@ -286,27 +293,21 @@
 							$('input[name=longitude]').val(longitude);
 
 							// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-							// if (count < placeData.length) {
-							// 	placeSearch(placeData[count])
-							// } else if (count == placeData.length) {
-							setBounds();
-							// }
+							 if (count < placeData.length) {
+							 	placeSearch(placeData[count])
+							 } else if (count == placeData.length) {
+								setBounds();
+							 }
 						}
 					}
 
 					function changeDisplayMarker(value){
-						
-						//console.log(value);
-						//document.querySelectorAll("div#tableContainer>input").innerHTML="";
 						day=[];
 						
 						//console.log($('input[name=tripDay]').val());
 
 						for(let i=0; i<$('input[name=tripDay]').val();i++){
-						
-							//day.push(su+=i);
-							console.log("day"+i+":"+day[i]);
-							console.log(value==day[i]);
+			
 							if(value==(i+1)) {
 							// 	클릭일차 마커들만 지도에 표시하도록 설정합니다
 								fn_reflection(i);
@@ -347,7 +348,7 @@
 							'	</a>' +
 							'</div>';
 
-
+						
 						// 커스텀 오버레이를 생성합니다
 						var customOverlay = new kakao.maps.CustomOverlay({
 							map: map,
@@ -357,7 +358,6 @@
 						});
 						customOverlays.push(customOverlay);
 
-						
 						//비동기 끝나고 실행되어야 하므로 위도경도가지고 오는 메소드는 여기에 추가
 						
 						markerPosition.push(marker.getPosition());
@@ -376,7 +376,7 @@
 						console.log("폴리라인 총 거리" + Math.round(polyline.getLength()));		
 
 					}        
-					function mapMardkerOverlayReSet(){
+	/* 				function mapMardkerOverlayReSet(){
 						if(markers.length>0){
 							console.log(markers);
 							for (let i=0; i<markers.length; i++) {
@@ -388,7 +388,7 @@
 							//map.setMap(markers);
 							
 						}
-					}
+					} */
 //여기서부터 지우기
 					//let distance = Math.round(polyline.getLength()); // 선의 총 거리를 계산합니다
 					//let	content = getTimeHTML(distance); // 커스텀오버레이에 추가될 내용입니다
