@@ -27,6 +27,7 @@ public class MoveLineServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		//servlet이 삭제되어 다시 푸쉬하기 위해 추가한 주석입니다.
 		request.getRequestDispatcher("/views/csk_moveline/moveline.jsp").forward(request, response);
 	}
 
