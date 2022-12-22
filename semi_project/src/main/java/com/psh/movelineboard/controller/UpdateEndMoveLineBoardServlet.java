@@ -64,9 +64,9 @@ public class UpdateEndMoveLineBoardServlet extends HttpServlet {
 				int result=new MoveLineBoardService().updatetMoveLineBoard(mlb);
 				
 				if(result>0) {
-					request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardList.jsp").forward(request, response);
+					request.getRequestDispatcher("/views/csk_movelineboard/recMoveLineBoard.jsp").forward(request, response);
 				}else {
-					request.getRequestDispatcher("/view/psh_moveLineBoard/psh_moveLineBoardUpdate.jsp").forward(request, response);
+					request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardUpdate.jsp").forward(request, response);
 				}
 				}
 				

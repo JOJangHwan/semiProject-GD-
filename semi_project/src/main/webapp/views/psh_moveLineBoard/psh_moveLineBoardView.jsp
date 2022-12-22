@@ -11,6 +11,8 @@
    List<Marker> mList=(List<Marker>)request.getAttribute("mList");
    List<Comment> cList=(List<Comment>)request.getAttribute("cList");
    System.out.println(cList);
+   System.out.println(mList);
+   System.out.println(mlb);
    int d=2;//일차값 이ㅏㅁ의로    
    %>
    <!-- 에디터 -->
@@ -172,12 +174,14 @@
     </section>
     
 	<script>
-		$("#pickMLB").click(e=>{
+		<%-- $("#pickMLB").click(e=>{
             if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png"){
 				insertPicMLB();
-			}else if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickon.png") 
+			}else if($("#pickMLB").src="<%=request.getContextPath()%>/images/pickon.png"){
 				$("#pickMLB").src="<%=request.getContextPath()%>/images/pickoff.png"
-				deletePickMLB();
+					deletePickMLB();
+			} 
+				
 		})
 		//찜 등록
 		function insertPicMLB(){
@@ -220,7 +224,7 @@
 					
 				}
 			})
-		}
+		} --%>
 
 		//댓글등록
 		$("#commentInsert").click(e=>{
@@ -433,7 +437,9 @@
  			$(".category>ul").append($("<li>").attr({id:"md", onclick:"changeMarker(this.value)",value:i}).text(i+1+"일차"));
  	 	}
  		
+ 		
  		$("#boardContainer").html('<%=mlb.getBoardContent()%>');
+ 		
  		
         var movelineDay=new Array();
     	var mlday=[];
@@ -531,6 +537,7 @@
 	            }	
 	        	
 	        }
+
         	//console.log(markers[1].length); 
         	
         	function setCenter(i) {            
@@ -595,7 +602,6 @@
 	            	} 
 	        }  	  
         };
-        
         
 
     </script>
