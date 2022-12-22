@@ -49,18 +49,19 @@
                                         <span class="link">교통</span>
                                     </a>
                                     </li>
-                                <!-- <li class="list">
-                                    <a href="#" class="nav-link">
+                                 <li class="list">
+                                    <a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do" class="nav-link">
                                         <i class="bx bx-message-rounded icon"></i>
-                                        <span class="link">무언가</span>
+                                        <span class="link">여행지</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/admin/memberManage.do" class="nav-link">
                                         <i class="bx bx-pie-chart-alt-2 icon"></i>
-                                        <span class="link">무언가</span>
+                                        <span class="link">회원관리</span>
                                     </a>
                                 </li>
+                                <!--
                                 <li class="list">
                                     <a href="#" class="nav-link">
                                         <i class="bx bx-heart icon"></i>
@@ -186,7 +187,7 @@
                 <a id="map" href="<%=request.getContextPath()%>/travelboard/travelboardmain.do"><img src="<%=request.getContextPath()%>/images/여행지.png" alt=""><br>여행지</a>
                	<a id="route" href="<%=request.getContextPath()%>/moveLine/movelineList.do"><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
                	<a id="rec" href="<%=request.getContextPath()%>/moveLineBoard/moveLineBoardList.do"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
-                <a id="like"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
+                <a id="like" href="<%=request.getContextPath()%>/mypick/mypicklist.do"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
             </div>
     </div>
 </section> 

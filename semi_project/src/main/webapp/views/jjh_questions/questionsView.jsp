@@ -41,12 +41,13 @@
                 <div class="ui error message"></div>
 
             </form>
-            
+            <%if(loginMember.getUserId()==questions.getQuestionsWriter()){ %>
             <a href="<%=request.getContextPath()%>/questions/updateQuestions.do?questionsNo=<%=questions.getQuestionsNo()%>"><button class="ui fluid large teal submit button">수정하기</button></a>
             <br>
             <a href="<%=request.getContextPath()%>/questions/questionsDelete.do?open=<%=questions.getQuestionsNo()%>"><button class="ui fluid large teal submit button">삭제하기</button></a>
 			<br>
-            <a href="<%=request.getContextPath()%>/matter/matterListView.do"><button class="ui fluid large teal submit button">뒤로가기</button></a>
+			<%} %>
+            <a href="<%=request.getContextPath()%>/questions/matterListView.do"><button class="ui fluid large teal submit button">뒤로가기</button></a>
             <br>
         </div>
     </div>

@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import org.apache.tomcat.dbcp.dbcp2.PStmtKey;
+
 
 import com.jjh.Notice.model.vo.Notice;
-import com.jjh.questions.model.vo.Questions;
+
 
 public class MemberNoticeDao {
 	private Properties sql=new Properties();

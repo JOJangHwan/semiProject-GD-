@@ -47,19 +47,19 @@
                                         <span class="link">교통</span>
                                     </a>
                                     </li>
-                                <!-- <li class="list">
-                                    <a href="#" class="nav-link">
+                                 <li class="list">
+                                    <a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do" class="nav-link">
                                         <i class="bx bx-message-rounded icon"></i>
-                                        <span class="link">무언가</span>
+                                        <span class="link">여행지</span>
                                     </a>
                                 </li>
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/admin/memberManage.do" class="nav-link">
                                         <i class="bx bx-pie-chart-alt-2 icon"></i>
-                                        <span class="link">무언가</span>
+                                        <span class="link">회원관리</span>
                                     </a>
                                 </li>
-                                <li class="list">
+                                <!--<li class="list">
                                     <a href="#" class="nav-link">
                                         <i class="bx bx-heart icon"></i>
                                         <span class="link">무언가</span>
@@ -114,7 +114,7 @@
                 <div id="sub_menu1"><a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do">여행지</a></div>
                 <div id="sub_menu2"><a href="<%=request.getContextPath()%>/moveLine/movelineList.do">내동선</a></div>
                 <div id="sub_menu3"><a href="">추천동선</a></div>
-                <div id="sub_menu4"><a href="">찜페이지</a></div>
+                <div id="sub_menu4"><a href="<%=request.getContextPath()%>/mypick/mypicklist.do">찜페이지</a></div>
             </div>
         </div>
     </header>
