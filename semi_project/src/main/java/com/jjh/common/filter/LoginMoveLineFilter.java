@@ -1,5 +1,5 @@
-<<<<<<< HEAD
-/*
+/*<<<<<<< HEAD
+
  * package com.jjh.common.filter;
  * 
  * import java.io.IOException; import javax.servlet.Filter; import
@@ -13,28 +13,28 @@
  * 
  *//**
 	 * Servlet Filter implementation class LoginMoveLineFilter
-	 */
-/*
+	 *//*
+
  * @WebFilter("/moveLine/*") public class LoginMoveLineFilter extends HttpFilter
  * implements Filter {
  * 
  *//**
 	 * @see HttpFilter#HttpFilter()
-	 */
-/*
+	 *//*
+
  * public LoginMoveLineFilter() { super(); // TODO Auto-generated constructor
  * stub }
  * 
  *//**
 	 * @see Filter#destroy()
-	 */
-/*
+	 *//*
+
  * public void destroy() { // TODO Auto-generated method stub }
  * 
  *//**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
-	 */
-/*
+	 *//*
+
  * public void doFilter(ServletRequest request, ServletResponse response,
  * FilterChain chain) throws IOException, ServletException { // TODO
  * Auto-generated method stub // place your code here
@@ -57,7 +57,7 @@
 		 * Auto-generated method stub }
 		 * 
 		 * }
-		 */
+		 
 =======
 //package com.jjh.common.filter;
 //
@@ -128,4 +128,3 @@
 //	}
 //
 //}
->>>>>>> branch 'master' of https://github.com/JOJangHwan/semiProject-GD-.git
