@@ -343,7 +343,7 @@ public class TravelBoardService {
 			commit(conn);
 			result4=1;
 		}else {
-			rollback(conn);
+			commit(conn);
 			result4=0;
 		}
 		
