@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%--     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/moveline.css"> --%>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
 <%@page import="com.psh.moveline.model.vo.MoveLine"%>
 <%@page import="java.util.List"%>
 <%@ include file="/views/common/header.jsp" %>
@@ -10,8 +12,17 @@
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
-				<h2>여행계획 리스트</h2>
-				<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/checkmoveline.do')">➕여행계획</button>
+
+				<div id="titleArea" name="titleArea">
+		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">
+		    				여행계획
+		    			</label>
+		    	
+			    	<div>
+						<button onclick="location.assign('<%=request.getContextPath()%>/moveLine/checkmoveline.do')">➕여행계획</button>
+			    	</div>
+				</div>
+				<div class="lineGray"></div>
 				<table id="tbl-board" style="text-align:center; justify-content: center;">
 					<tr>
 						<th>선택</th>
@@ -24,14 +35,13 @@
 						<tr>
 							<td><input type="checkbox"></td>
 							<td>
-							<!-- View에서 갖고오기 
-								<a href="<%=request.getContextPath()%>/moveLine/boardView.do?boardNo=<%=ml.getMovelineNo()%>">
-								-->
+
+								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?movelineNo=<%=ml.getMovelineNo()%>">
+								
 								<%=ml.getMovelineName() %>
 								</a>
 							</td>
 							<td><%=ml.getMovelineEnroll() %></td>
-							<%-- <td><input type="hidden" name="userId" value="<%=loginMember.getUserId()%>"> --%>
 						</tr>
 						<%}
 					} %>  
@@ -39,7 +49,8 @@
 				<div id="pageBar">
 					<%=request.getAttribute("pageBar") %>
 				</div>
-		    </div>
+			</div>
+
 	    <div id="rightMarginMain"></div>
 <%-- 	    <script>
 	    	function movelineInsert() {

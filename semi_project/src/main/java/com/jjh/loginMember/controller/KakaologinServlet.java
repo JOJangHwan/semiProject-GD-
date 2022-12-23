@@ -3,11 +3,13 @@ package com.jjh.loginMember.controller;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.mail.Session;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -111,6 +113,8 @@ public class KakaologinServlet extends HttpServlet {
 	}catch(Exception e) {
 		e.printStackTrace();
 	}
+	
+	
 	Member m=Member.builder()
 			.userId(userid)
 			.email(email)
@@ -118,22 +122,58 @@ public class KakaologinServlet extends HttpServlet {
 			.nickName(nickName)
 			.build();
 	
-	int result1= new LoginMemberService().kakaoInsertMember(m);
 	String msg="", loc="";
-	if(result1>0) {
-		msg="회원가입을 축하드립니다!";
-		loc="/";
+	
+	Member mID=new LoginMemberService().searchMemberId(userid);
+	
+	HttpSession session=request.getSession();
+	
+	String csv="";
+	if(mID!=null) {
+		session.setAttribute("loginMember", m);
+		response.sendRedirect(request.getContextPath());
+		
+		csv="1";
+		System.out.println(csv);
+		response.setContentType("text/csv;charset=utf-8");
+		response.getWriter().print(csv);
+
 	}else {
-		msg="회원가입을 실패했습니다. 다시 시도해주세요";
-		loc="/member/enrollMember.do";
 		
-		
+		int result1= new LoginMemberService().kakaoInsertMember(m);
+		if(result1>0) {
+			session.setAttribute("loginMember", m);
+			msg="회원가입을 축하드립니다!";
+			loc="/";
+			request.setAttribute("msg", msg);
+			request.setAttribute("loc", loc);
+			
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+			csv="2";
+			System.out.println(csv);
+			response.setContentType("text/csv;charset=utf-8");
+			response.getWriter().print(csv);
+			return;
+		}else {
+			msg="회원가입을 실패했습니다. 다시 시도해주세요";
+			loc="/login.do";	
+			request.setAttribute("msg", msg);
+			request.setAttribute("loc", loc);
+			request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+			
+			csv="3";
+			System.out.println(csv);
+			response.setContentType("text/csv;charset=utf-8");
+			response.getWriter().print(csv);
+			return;
+		}
 	}
 	
-	request.setAttribute("msg", msg);
-	request.setAttribute("loc", loc);
 	
-	request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
+//	request.setAttribute("msg", msg);
+//	request.setAttribute("loc", loc);
+//	
+//	request.getRequestDispatcher("/views/common/msg.jsp").forward(request, response);
 		
 	}
 

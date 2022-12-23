@@ -70,11 +70,22 @@ public class LoginServlet extends HttpServlet {
 		 */
 		
 		if(m!=null) {
-			//로그인 성공
-			HttpSession session=request.getSession();
-			session.setAttribute("loginMember", m);
-			//응답할 페이지를 구성 -> jsp
-			response.sendRedirect(request.getContextPath());
+			if(m.getUserId().equals("admin")) {
+				//로그인 성공
+				HttpSession session=request.getSession();
+				session.setAttribute("loginMember", m);
+				//응답할 페이지를 구성 -> jsp
+				request.getRequestDispatcher("/views/jjh_adminPage/adminPage.jsp").forward(request, response);
+				
+			}
+			else {
+				//로그인 성공
+				HttpSession session=request.getSession();
+				session.setAttribute("loginMember", m);
+				//응답할 페이지를 구성 -> jsp
+				response.sendRedirect(request.getContextPath());
+			}
+			
 		}else {
 			//로그인 실패
 			request.setAttribute("msg", "아이디나 비밀번호가 일치하지 않습니다");

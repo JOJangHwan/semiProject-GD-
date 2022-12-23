@@ -48,7 +48,13 @@ public class MoveLineInsertServlet extends HttpServlet {
 
 				
 				.build();*/
-		request.getRequestDispatcher("views/psh_moveLine/psh_moveLineView.jsp").forward(request, response);
+		int result=1;//(등록 성공 값)
+		if(result==1) {
+			request.getRequestDispatcher("/views/csk_moveline/movelineList.jsp").forward(request, response);
+		}else {
+			
+		}
+		request.getRequestDispatcher("/views/csk_moveline/moveline.jsp").forward(request, response);
 
 
 	}

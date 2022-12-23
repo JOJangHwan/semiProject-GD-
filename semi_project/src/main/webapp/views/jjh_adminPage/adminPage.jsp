@@ -32,7 +32,7 @@
                         <div class="sidebar-content">
                             <ul class="lists">
                                 <li class="list">
-                                    <a href="<%=request.getContextPath() %>/matter/matterListView.do" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/questions/questionsListView.do" class="nav-link">
                                         <i class="bx bx-home-alt icon"></i>
                                         <span class="link">문의사항</span>
                                         </a>
@@ -50,17 +50,18 @@
                                     </a>
                                     </li>
                                  <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath()%>/travelboard/travelboardmain.do" class="nav-link">
                                         <i class="bx bx-message-rounded icon"></i>
                                         <span class="link">여행지</span>
                                     </a>
                                 </li>
-                                <!--li class="list">
-                                    <a href="#" class="nav-link">
+                                <li class="list">
+                                    <a href="<%=request.getContextPath() %>/admin/memberManage.do" class="nav-link">
                                         <i class="bx bx-pie-chart-alt-2 icon"></i>
-                                        <span class="link">무언가</span>
+                                        <span class="link">회원관리</span>
                                     </a>
                                 </li>
+                                <!--
                                 <li class="list">
                                     <a href="#" class="nav-link">
                                         <i class="bx bx-heart icon"></i>
@@ -77,7 +78,7 @@
                             
                             <div class="bottom-cotent">
                                 <li class="list">
-                                    <a href="#" class="nav-link">
+                                    <a href="<%=request.getContextPath() %>/member/memberinfoview.do" class="nav-link">
                                     <i class="bx bx-cog icon"></i>
                                     <span class="link">마이페이지</span>
                                     </a>
@@ -106,29 +107,29 @@
             <%if(loginMember==null) {%>
             <div id="login"><a href="<%=request.getContextPath()%>/login/loginView.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
             <%}else{ %>
-            <div id="login"><a href="<%=request.getContextPath()%>/member/memberinfo.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
+            <div id="login"><a href="<%=request.getContextPath()%>/login/memberinfoview.do"><img id="loginlogo" src="<%=request.getContextPath()%>/images/로그인.png" alt="마이페이지"></a></div>
             <%} %>
             
         </div>
     </header>
     <script>
           const navBar = document.querySelector("nav"),
-            	menuBtns = document.querySelectorAll(".menu-icon"),
+               menuBtns = document.querySelectorAll(".menu-icon"),
                 overlay = document.querySelector(".overlay");
                         
-	                menuBtns.forEach((menuBtn) => {
-	                	menuBtn.addEventListener("click", () => {
-	                		navBar.classList.toggle("open");
-	               		});
-	         		});
+                   menuBtns.forEach((menuBtn) => {
+                      menuBtn.addEventListener("click", () => {
+                         navBar.classList.toggle("open");
+                        });
+                  });
                         
                     overlay.addEventListener("click", () => {
-                    	navBar.classList.remove("open");
+                       navBar.classList.remove("open");
            });
-	</script>
-	<div class="blank2"></div>
+   </script>
+   <div class="blank2"></div>
 <section id="contentparent">
-	
+   
     <div id="content">
         <!-- 메인화면사진 -->
             <!-- https://cdn.pixabay.com/photo/2016/02/22/08/38/gyeongbok-palace-1214975_960_720.jpg -->
@@ -184,11 +185,11 @@
             <!-- 메인 메뉴 -->
             <div id="snb">
                 <a id="map" href="<%=request.getContextPath()%>/travelboard/travelboardmain.do"><img src="<%=request.getContextPath()%>/images/여행지.png" alt=""><br>여행지</a>
-                <a id="route" ><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
-                <a id="rec"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
-                <a id="like"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
+               	<a id="route" href="<%=request.getContextPath()%>/moveLine/movelineList.do"><img src="<%=request.getContextPath()%>/images/동선저장.png" alt=""><br>내 동선</a>
+               	<a id="rec" href="<%=request.getContextPath()%>/moveLineBoard/moveLineBoardList.do"><img src="<%=request.getContextPath()%>/images/추천 동선.png" alt=""><br>추천 동선</a>
+                <a id="like" href="<%=request.getContextPath()%>/mypick/mypicklist.do"><img src="<%=request.getContextPath()%>/images/찜.png" alt=""><br>찜</a>
             </div>
     </div>
 </section> 
 <div class="blank3"></div>
-<%@ include file="/views/common/footer.jsp" %>		
+<%@ include file="/views/common/footer.jsp" %>      

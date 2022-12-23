@@ -47,8 +47,8 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
                             <input type="password" id="u_pw" placeholder="비밀번호" name="password">
                         </div>
                      <div class="field">
-                     <input type="checkbox" name="saveId" id="saveId"<%=saveId!=null?"checked":"" %>>
-						<label for="saveId">아이디저장</label>
+                     <input type="checkbox" name="saveId" id="saveId"<%=saveId!=null?"checked":"" %>><label for="saveId">아이디저장</label>
+						
                      </div>
                     </div>
                     <input type="submit" value="로그인" class="ui fluid large teal submit button" id = "login_btn">
@@ -61,7 +61,7 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
 								</a>
 								<p id="token-result"></p>
 								<button class="api-btn" onclick="requestUserInfo()" style="visibility:hidden">사용자 정보 가져오기</button>
-								<input type="button" value="아이디찾기" class="ui fluid large teal submit button" id = "login_btn">
+								<input type="button" value="아이디찾기" class="ui fluid large teal submit button" id = "login_btn" onclick="searchId();">
 								<br>
                         		<input type="button" value="비밀번호찾기" class="ui fluid large teal submit button" id = "searchPassword" onclick="search();">
                         		
@@ -138,14 +138,18 @@ integrity="sha384-eKjgHJ9+vwU/FCSUG3nV1RKFolUXLsc6nLQ2R1tD0t4YFPCvRmkcF8saIfOZNW
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <body>
-	<a id="kakao-login-btn">카카오 로그인?</a>
+	<!-- <a id="kakao-login-btn">카카오 로그인?</a>
 	<button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button>
 	
-	<div id="result"></div>
+	<div id="result"></div> -->
 	
 <script type="text/javascript">
 const search=()=>{
 	  location.assign("<%=request.getContextPath()%>/search/searchPassWord.do");
+}
+
+const searchId=()=>{
+	location.assign("<%=request.getContextPath()%>/search/searchId.do");
 }
 
   function unlinkApp() {
@@ -200,10 +204,14 @@ console.log(Kakao.isInitialized());
           $('#result').append(resultdiv);
           console.log("처음");
           console.log(kakao_account);
-          $.ajax({
+          
+          
+          <%-- window.location.href = '<%=request.getContextPath()%>/login/kakaologin.do?"nickName"=nickname&"authObj"=JSON.stringify(authObj)&"result"=JSON.stringify(result)'; --%>
+          
+         $.ajax({
               url: "<%=request.getContextPath()%>/login/kakaologin.do",
               type: "POST",
-              dataType:"json",
+              dataType:"text",
               data:{"nickName":kakao_account.profile.nickname,"authObj":JSON.stringify(authObj),"account":JSON.stringify(kakao_account),"result":JSON.stringify(result)},
 			
               <!--dataType: "json",-->
@@ -211,15 +219,22 @@ console.log(Kakao.isInitialized());
               <!--processData: true,-->
               <!--contentType: "application/json; charset=UTF-8",-->
               <!--data:SON.stringify(result),-->
-              success: function(data) {
-                  if (data == 1) {
-                      alert("등록 성공");
+               success: function(data) {
+            	   console.log("?")
+            	   console.log(data)
+                  if (data = 1) {
+                	  
+                      alert("로그인 성공");
                       location.href="<%=request.getContextPath()%>";
-                  } else {
-                      alert("등록 실패!");
+                  } else if(data=2) {
+                      alert("회원 가입  및 로그인 성공");
+                      location.href="<%=request.getContextPath()%>";
+                  }else if(data=3) {
+                      alert("회원 가입  실패");
+                      location.href="<%=request.getContextPath()%>/login.do";
                   }
-              }
-          });
+              } 
+          }); 
 
         
         },

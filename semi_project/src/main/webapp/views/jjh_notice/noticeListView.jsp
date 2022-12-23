@@ -18,14 +18,14 @@
 
         <div class="ui large form">
                 <div class="ui stacked segment">
-<%if(loginMember1!=null && loginMember1.getUserId().equals("admin")) { %>
+<%if(loginMember1.getUserId().equals("admin")) { %>
                     <a href="<%=request.getContextPath()%>/notice/noticewrite.do"><button class="ui fluid large teal submit button">공지사항 작성하기</button></a>
                   <%}%>
                     <form action="<%=request.getContextPath()%>/notice/noticeListDelete.do" method="get">
                     <table class="ui celled table">
                         <thead>
                             <tr>
-                            	<th>선택</th>
+                            	<th><input type='checkbox' name="open" value='전체선택'onclick='selectAll(this)'/> <b>전체선택 </th>
                                 <th>번호</th>
                 				<th>제목</th>
                 				<th>작성자</th>
@@ -56,20 +56,18 @@
 						  <%} %>          		
         			</td> --%>
             		<td><%=notices.get(i).getNoticeEnroll() %></td>
-            	
-            		
-            		
-            	
-            		
-            		
-            	</tr>
-            <%}%>
+            		 <%}%>
             	<%}%>
+            	
+            	</tr>
+           
                         </thead>
                         <tbody id="list">
                         </tbody>
                     </table>
+                    <%if(loginMember1.getUserId().equals("admin")) { %>
                     <input type="submit" class="ui fluid large teal submit button" value="삭제하기">
+                    <%} %>
                     </form>
                        
                         <div id="pagebat">
@@ -92,3 +90,15 @@
     table#tbl-notice{width:100%; margin:0 auto; border:1px solid black; border-collapse:collapse;}
     table#tbl-notice th, table#tbl-notice td {border:1px solid; padding: 5px 0; text-align:center;} 
     </style>
+    
+     <script>
+    function selectAll(selectAll)  {
+    	  const checkboxes 
+    	       = document.getElementsByName('open');
+    	  
+    	  checkboxes.forEach((checkbox) => {
+    	    checkbox.checked = selectAll.checked;
+    	  })
+    	}
+    
+    </script>

@@ -12,7 +12,7 @@
             <h2 class="ui teal image header">
                 문의사항 작성하기
             </h2>
-            <form class="ui large form" action='<%=request.getContextPath()%>/questions/questionsWriteEnd.do' method="post">
+            <form class="ui large form" action='<%=request.getContextPath()%>/questions/questionsWrite.do' method="post">
                 <div class="ui stacked segment"  >
                     <div class="field">
                         <input type="text" id="b_title" name="title" placeholder="게시글 제목" autocomplete="off" autofocus="autofocus">

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/moveline.css">
+     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300&display=swap" rel="stylesheet">
 	 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b39ac3f3968d9d1ab2abc39538c8b218&libraries=services"></script>
 <%@ include file="/views/common/header.jsp" %>
 <!--캘린더  -->
@@ -15,8 +16,8 @@
 		    	//moveline table
 			    	1. movelineNo(x)
 			    	2. (hidden)userId (hidden) : name=userId o
-			    	3. (hidden)tripdateStart : id,name = tripdateStart (whyrano) o
-			    	4. (hidden)tripdateFinish : id,name = tripdateFinish (whyrano) o
+			    	3. (hidden)tripdateStart : id,name = tripdateStart o
+			    	4. (hidden)tripdateFinish : id,name = tripdateFinish o
 			    	5. moveLineName : name=movelineName
 			    	6. moveLineEnroll(x)
 			    	7. openAndClosed (수화꺼)
@@ -57,33 +58,6 @@
 					<!--지도 공통 코드-->
 					<div id="map" style="width:100%;height:350px;"></div>
 					<br><br><br>
-	
-					<!-- <div>
-						<h2><b>1일차</b></h2>
-						
-						<p>*경로는 최대 5개 설정 가능합니다.</p>
-						<button onclick="fn_reflection();">경로확인</button>
-						<sub>*버튼을 눌러 경로를 확인하세요.</sub>
-						<br><br> -->
-						<!-- <table>
-							<tr style="text-align :center">
-								<th></th>
-								<th>시간</th>
-								<th>장소</th>
-								<th>상세내용</th>
-								<th>비용</th>	
-							</tr>
-							<tr>
-								<td>1</td>
-								<td><input type="time" name="time"></td>
-								<td>🚩<input type="text" name="place1" id="place1" placeholder="주소 또는 키워드를 입력해주세요"></td>
-								<td>🌞<input type="text" name="memo1"></td>
-								<td>💲<input type="text" name="cost1"></td>
-							</tr>
-						</table>
-						<br><br>
-						<button onclick="fn_saveInfo();">저장하기</button>
-					</div> -->
 					<div id="tableContainer"></div>
 
 				</form>
@@ -195,7 +169,7 @@
 						let btnsave=$("<input type='submit' value='등록하기'>").appendTo($("div#tableContainer"));
 						}
 						
-						mapMardkerOverlayReSet();
+						//mapMardkerOverlayReSet();
 
 					});
 
@@ -216,10 +190,7 @@
 					// 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
         			// LatLngBounds 객체에 좌표를 추가합니다
 					var bounds = new kakao.maps.LatLngBounds();
-					// 키워드로 장소를 검색합니다 				
-					
-					//마커를 여러개 설정 가능한지?
-					var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', // 마커이미지의 주소입니다    
+					var imageSrc = '<%=request.getContextPath()%>/images/mark.png', // 마커이미지의 주소입니다    
 					//이미지 보면서 조정하기
 					imageSize = new kakao.maps.Size(40, 40), // 마커이미지의 크기입니다 
 					imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다
@@ -249,14 +220,22 @@
 						let arr = [];
 						//각 일차별 등록된 장소 input가져오기
 						const inputPlaces=inputTable.find("input[id*=place]");
-						console.log(markers);
-						console.log(customOverlays);
+						//console.log(markers);
+						//console.log(customOverlays);
 						//maker초기화하기
-						mapMardkerOverlayReSet();
+						//mapMardkerOverlayReSet();
+						
+						for (let i=0; i<markers.length; i++) {
+							markers[i].setMap(null);		
+							customOverlays[i].setMap(null);
+						}
+						markers=[];
+						customOverlays=[];
 
 						inputPlaces.each((i,v)=>{
 							const place=v.value;
 							if(place.length>0){
+								count; 
 								placeSearch(place);
 							}
 						});
@@ -267,6 +246,7 @@
 						//키워드로 장소를 검색합니다
 						ps.keywordSearch(p, placesSearchCB);
 						count = count + 1;
+
 					}
 
 					function placesSearchCB(data, status, pagination) {
@@ -286,27 +266,21 @@
 							$('input[name=longitude]').val(longitude);
 
 							// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-							// if (count < placeData.length) {
-							// 	placeSearch(placeData[count])
-							// } else if (count == placeData.length) {
-							setBounds();
-							// }
+							 if (count < placeData.length) {
+							 	placeSearch(placeData[count])
+							 } else if (count == placeData.length) {
+								setBounds();
+							 }
 						}
 					}
 
 					function changeDisplayMarker(value){
-						
-						//console.log(value);
-						//document.querySelectorAll("div#tableContainer>input").innerHTML="";
 						day=[];
 						
 						//console.log($('input[name=tripDay]').val());
 
 						for(let i=0; i<$('input[name=tripDay]').val();i++){
-						
-							//day.push(su+=i);
-							console.log("day"+i+":"+day[i]);
-							console.log(value==day[i]);
+			
 							if(value==(i+1)) {
 							// 	클릭일차 마커들만 지도에 표시하도록 설정합니다
 								fn_reflection(i);
@@ -347,7 +321,7 @@
 							'	</a>' +
 							'</div>';
 
-
+						
 						// 커스텀 오버레이를 생성합니다
 						var customOverlay = new kakao.maps.CustomOverlay({
 							map: map,
@@ -357,7 +331,6 @@
 						});
 						customOverlays.push(customOverlay);
 
-						
 						//비동기 끝나고 실행되어야 하므로 위도경도가지고 오는 메소드는 여기에 추가
 						
 						markerPosition.push(marker.getPosition());
@@ -376,7 +349,7 @@
 						console.log("폴리라인 총 거리" + Math.round(polyline.getLength()));		
 
 					}        
-					function mapMardkerOverlayReSet(){
+	/* 				function mapMardkerOverlayReSet(){
 						if(markers.length>0){
 							console.log(markers);
 							for (let i=0; i<markers.length; i++) {
@@ -388,7 +361,7 @@
 							//map.setMap(markers);
 							
 						}
-					}
+					} */
 //여기서부터 지우기
 					//let distance = Math.round(polyline.getLength()); // 선의 총 거리를 계산합니다
 					//let	content = getTimeHTML(distance); // 커스텀오버레이에 추가될 내용입니다

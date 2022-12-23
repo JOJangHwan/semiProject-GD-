@@ -48,6 +48,13 @@ public class LoginMemberService {
 		return m;
 	}
 	
+	public Member searchId(Member m) {
+		Connection conn=getConnection();
+		Member M=loginDao.searchId(conn,m);
+		close(conn);
+		return M;
+	}
+	
 	public int passWordUpdate(String password, String userId) {
 		Connection conn=getConnection();
 		int result=loginDao.passWordUpdate(conn, password,userId);
