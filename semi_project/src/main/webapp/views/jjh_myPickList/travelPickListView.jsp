@@ -23,7 +23,7 @@
 		    	<div id="listContainer">
 		    		<div id="boardTitleArea" name="boardTitleArea">
 		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">
-		    				추천 여행지
+		    				추천 여행지 찜 리스트
 		    			</label>
 		    		</div>
 	    			<div class="lineGray"></div>
