@@ -158,6 +158,7 @@
 			let tx2=tx.split('✕');
 			let tx3=tx2.join(',');
 			console.dir(tx3);
+			console.dir($('#selectedTagsContainer'));
 			$('#selectedTags').val(tx3);
 		});
 		
@@ -179,13 +180,15 @@
 			}else if($('#summernote').val()==""||$('#summernote').val()==" "){
 				alert("본문을 입력해 주세요.");
 				return false;
-			}else if($('#selectedTagsContainer').html()==""&&$('#selectedTags').val()==""||$('#selectedTags').val()==" "){
+			}else if($('#selectedTagsContainer').html()==""||$('#selectedTags').val()==""||$('#selectedTags').val()==" "||$('#selectedTagsContainer').val()==null){
 				alert("태그를 한 개 이상 선택해 주세요.");
 				return false;
 			}else if($("#upFileTitleLabel").html()==""||$("#upFileTitleLabel").html()=='null'&&$('#upFile').val()==""||$('#upFile').val()==" "){
 				alert("섬네일을 설정해 주세요.");
 				return false;
 			}
+			console.log($('#selectedTagsContainer').html());
+			console.dir($('#selectedTagsContainer').html());
 			return true;
 		}
 		

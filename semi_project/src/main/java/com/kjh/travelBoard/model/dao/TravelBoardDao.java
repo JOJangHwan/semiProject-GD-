@@ -405,6 +405,20 @@ public class TravelBoardDao {
 		}return result;
 	}
 	
+	public int deleteTravelBoardPicks(Connection conn, int boardNo) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		try {
+			pstmt=conn.prepareStatement(sql.getProperty("deleteTravelBoardPicks"));
+			pstmt.setInt(1, boardNo);
+			result=pstmt.executeUpdate();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}return result;
+	}
+	
 	private Tag getTag(ResultSet rs) throws SQLException{ //태그 객체 빌더. board_no 포함 X
 		return Tag.builder().tagNo(rs.getInt("tag_no"))
 				.tagTitle(rs.getString("tag_title"))

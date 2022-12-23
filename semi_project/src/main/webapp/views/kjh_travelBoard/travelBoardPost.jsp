@@ -96,6 +96,16 @@
 		 	float:right;
 		 	margin-bottom:40px;
 		 }
+		 
+		 .kjh_boardPostPickOff{
+			width:20px;
+			height:20px;
+		}
+		
+		.kjh_boardPostPickOn{
+			width:20px;
+			height:20px;
+		}
 		
 	</style>
 	<% TravelBoard board=(TravelBoard)request.getAttribute("board"); %>
@@ -124,10 +134,10 @@
 				    	<div id="pickArea"
 				    		onclick="location.href='<%=request.getContextPath()%>/travelboard/travelboardpickcontroll.do?boardNo=<%=board.getBoardNo()%>&pick=<%=board.getTravelPick()%>';"
 	    						style="cursor:pointer;">
-	    					<%if(board.getTravelPick()=='N'){ %>
-	    						<div class="kjh_boardPostPick kjh_colorWhite"></div>
+    						<%if(board.getTravelPick()=='N'){ %>
+	    						<div class="kjh_boardPostPickOff"><img src="<%=request.getContextPath()%>/images/pickoff.png"></div>
 	    					<%}else if(board.getTravelPick()=='Y'){ %>
-	    						<div class="kjh_boardPostPick kjh_colorYellow"></div>
+	    						<div class="kjh_boardPostPickOn"><img src="<%=request.getContextPath()%>/images/pickon.png"></div>
 	    					<%} %>
 				    	</div>
 			    	</div>

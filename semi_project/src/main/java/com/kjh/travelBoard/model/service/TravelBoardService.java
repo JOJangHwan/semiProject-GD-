@@ -335,19 +335,20 @@ public class TravelBoardService {
 	public int deleteTravelBoard(int boardNo) {
 		Connection conn=getConnection();
 		int result=dao.deleteBoardTagAll(conn, boardNo);
-		int result2=dao.deleteTravelBoard(conn,boardNo);
-		int result3=0;
+		int result2=dao.deleteTravelBoardPicks(conn,boardNo);
+		int result3=dao.deleteTravelBoard(conn,boardNo);
+		int result4=0;
 		
-		if(result!=0&&result2==1) {
+		if(result!=0&&result2!=0&&result3==1) {
 			commit(conn);
-			result3=1;
+			result4=1;
 		}else {
 			rollback(conn);
-			result3=0;
+			result4=0;
 		}
 		
 		close(conn);
-		return result3;
+		return result4;
 	}
 	
 	public List<TravelBoard> searchTempBoardList(int cPage, int numPerpage){
