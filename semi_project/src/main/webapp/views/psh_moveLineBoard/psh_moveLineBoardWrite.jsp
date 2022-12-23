@@ -45,7 +45,7 @@
 					   <input name="mlbTitle" type="text" placeholder="제목을 입력하세요">
 				    </div>
 					<div>
-						<p>작성자 <%=ml.getUserId()%></p>  
+						<b>작성자 <%=ml.getUserId()%></b>  
 						<input type="hidden" name="mlbWriter" value="<%=ml.getUserId()%>" readonly>
 						<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" readonly>
 					</div>
@@ -66,27 +66,31 @@
 				   </div>
 				   
 				   <div id="infoBox">
-				   		<div id="info">
 							<%for(int i=0;i<d;i++){%>
+						<div id="info">
+							<button value=<%=i+1%>><%=i+1%>일차</button>
 							<div id="infoTitle">
-								<div><h3><%=i+1%>일차</h3></div>
-								<div><h3>No.</h3></div>
-								<div><h3>장소명</h3></div>
-								<div><h3>주소</h3></div>
-								<div><h3>메모</h3></div>
+								<div value=i><h2><b><%=i+1%>일차</b></h2></div>
+								<div><h2><b>시간</b></h2></div>
+								<div><h2><b>장소명</b></h2></div>
+								<div><h2><b>주소</b></h2></div>
+								<div><h2><b>메모</b></h2></div>
 							</div>
+							<div id="infoContentBox" value=<%=i+1%>>
 							<%for(Marker m: mList){%>
+							
 									<%if(Integer.parseInt(m.getMovelineDay())==i+1){%>
 										<div id="infoContent">
-											<div><h4><%=m.getMarkerNo()%></h4></div>
+											<div><h4><%=m.getMarkerTime()%></h4></div>
 											<div><h4><%=m.getPlaceName()%></h4></div>
 											<div><h4><%=m.getAddress()%></h4></div>
 											<div><h4><%=m.getMemo()%></h4></div>
 										</div>
-									<%}
-							      }
-							}%>
-					   </div>
+									<%}%>
+							<%}%>
+							</div>
+						</div>
+					<%}%>
 					</div>   
 				    <textarea name="mlbContent" id="summernote"></textarea>
 				    

@@ -24,6 +24,9 @@
      <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dfdc04e10d578470d49a9fd29e8c0536"></script>
     <style>
+    	
+    	#mlbbtns{ustify-items: center;justify-content: center;display: flex;flex-direction: row;}
+    	#mainSectionContainer{ustify-items: center;justify-content: center;display: flex;flex-direction: column;}
     	#pickMLB, .pickMLB{width: 15px; height: 15px;}
  		#infobox{justify-items: center;justify-content: center;display: flex;flex-direction: column;} 
 		#infoTitle{justify-items: center;justify-content: center;display: flex;flex-direction: row;}
@@ -44,16 +47,20 @@
 		    <div id="mainSectionContainer">
 					<!-- 제목 -->
 				    <div >
-					   <h1><%=ml.getMovelineName() %></h1>
+					   <h1><b><%=ml.getMovelineName() %></b></h1>
+				    </div >
+					<div id="headerBox">
+					    <div>
+					    	<div>
+					    	<button  onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do?movelineNo=<%=ml.getMovelineNo()%>')">공 유</button>
+					    </div>
+						<div>
+							<p>작성자 <%=ml.getUserId()%></p>  
+							<input type="hidden" name="mlWriter" value="<%=ml.getUserId()%>" >
+							<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" >
+						</div>
 				    </div>
-				    <div>
-				    	<button  onclick="location.assign('<%=request.getContextPath()%>/moveLine/open/and/closed.do?movelineNo=<%=ml.getMovelineNo()%>')">공 유</button>
-				    </div>
-					<div>
-						<p>작성자 <%=ml.getUserId()%></p>  
-						<input type="hidden" name="mlWriter" value="<%=ml.getUserId()%>" >
-						<input type="hidden" name="mlNo" value="<%=ml.getMovelineNo()%>" >
-					</div>
+				    
 					
 				   <hr>
 				   
@@ -73,19 +80,20 @@
 				   <div id="infoBox">
 							<%for(int i=0;i<d;i++){%>
 						<div id="info">
+							<button value=<%=i+1%>><%=i+1%>일차</button>
 							<div id="infoTitle">
-								<div value=i><h3><%=i+1%>일차</h3></div>
-								<div><h3>No.</h3></div>
-								<div><h3>장소명</h3></div>
-								<div><h3>주소</h3></div>
-								<div><h3>메모</h3></div>
+								<div value=i><h2><b><%=i+1%>일차</b></h2></div>
+								<div><h2><b>시간</b></h2></div>
+								<div><h2><b>장소명</b></h2></div>
+								<div><h2><b>주소</b></h2></div>
+								<div><h2><b>메모</b></h2></div>
 							</div>
-							<div id=infoContentBox value=i>
+							<div id="infoContentBox" value=<%=i+1%>>
 							<%for(Marker m: mList){%>
 							
 									<%if(Integer.parseInt(m.getMovelineDay())==i+1){%>
 										<div id="infoContent">
-											<div><h4><%=m.getMarkerNo()%></h4></div>
+											<div><h4><%=m.getMarkerTime()%></h4></div>
 											<div><h4><%=m.getPlaceName()%></h4></div>
 											<div><h4><%=m.getAddress()%></h4></div>
 											<div><h4><%=m.getMemo()%></h4></div>

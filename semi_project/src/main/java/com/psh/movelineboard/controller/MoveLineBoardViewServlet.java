@@ -36,16 +36,20 @@ public class MoveLineBoardViewServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardNo=Integer.parseInt(request.getParameter("boardNo"));
-		int moveLineNo=Integer.parseInt(request.getParameter("moveLineNo"));
+		
 		System.out.println(boardNo);
-		System.out.println(moveLineNo);
+		
+		
 		//추천동선이랑 조인한 마커리스트 불러오기
 		
-		List<Marker> mList=new MarkerService().searchMoveLineBoardMarker(boardNo,moveLineNo);
 		MoveLineBoard mlb=new MoveLineBoardService().searchMoveLineBoard(boardNo);
+		int moveLineNo=mlb.getMovelineNo();
+		List<Marker> mList=new MarkerService().searchMoveLineBoardMarker(boardNo,moveLineNo);
 		List<Comment> cList=new MoveLineBoardService().searchComment(boardNo);
 		
 		//System.out.println(cList);
+		System.out.println(mList);
+		System.out.println(mlb);
 		
 		request.setAttribute("cList", cList);
 		request.setAttribute("moveLineBoard", mlb);

@@ -32,7 +32,7 @@ public class DeleteMoveLineBoardServlet extends HttpServlet {
 		int result=new MoveLineBoardService().deletetMoveLineBoard(boardNo);
 		
 		if(result>0) {
-			request.getRequestDispatcher("/views/psh_moveLineBoard/psh_moveLineBoardList.jsp").forward(request, response);
+			request.getRequestDispatcher("/views/csk_movelineboard/recMoveLineBoard.jsp").forward(request, response);
 		}else {
 			request.getRequestDispatcher("/view/psh_moveLineBoard/psh_moveLineBoardView.jsp").forward(request, response);
 		}
