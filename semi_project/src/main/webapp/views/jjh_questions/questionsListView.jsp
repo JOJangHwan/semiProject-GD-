@@ -17,14 +17,14 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
 
         <div class="ui large form">
                 <div class="ui stacked segment">
-                <%if(loginMember1!=null) { %>
+                <%if(loginMember!=null&&!loginMember.getUserId().equals("admin")) { %>
                     <a href="<%=request.getContextPath()%>/questions/questionsDelete.do"><button class="ui fluid large teal submit button">문의사항 작성하기</button></a>
                     <%}%>
                     <form action="<%=request.getContextPath()%>/questions/questionsListDelete.do" method="get">
                     <table class="ui celled table">
                         <thead>
                             <tr>
-                            	<th>선택</th>
+                            	<th><input type='checkbox' name="open" value='전체선택'onclick='selectAll(this)'/> <b>전체선택 </th>
                                 <th>번호</th>
                 				<th>제목</th>
                 				<th>작성자</th>
@@ -65,13 +65,15 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
             		
             		
             	</tr>
-            <%}%>
-            	<%}%>
-                        </thead>
+              </thead>
                         <tbody id="list">
                         </tbody>
                     </table>
-                    <input type="submit" class="ui fluid large teal submit button" value="삭제하기">
+                   <%--  <%if(loginMember.getUserId().equals("admin")) %> --%>
+                    <!-- <input type="submit" class="ui fluid large teal submit button" value="삭제하기"> -->
+                    <%}%>
+            	<%}%>
+                      
                     </form>
                        
                         <div id="pagebat">
@@ -96,5 +98,13 @@ Member loginMember1=(Member)session.getAttribute("loginMember");
     
     
     <script>
+    function selectAll(selectAll)  {
+    	  const checkboxes 
+    	       = document.getElementsByName('open');
+    	  
+    	  checkboxes.forEach((checkbox) => {
+    	    checkbox.checked = selectAll.checked;
+    	  })
+    	}
     
     </script>

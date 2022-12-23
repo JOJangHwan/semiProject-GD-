@@ -44,7 +44,7 @@
 					    						style="cursor:pointer;">
 					    				</div>
 					    				<div class="kjh_boardPostTitle">
-					    					<a href="<%=request.getContextPath()%>/moveLineBoard/boardlist.do?boardNo=<%=b.getBoardNo()%>">
+					    					<a href="<%=request.getContextPath()%>/moveLineBoard/moveLineBoardView.do?boardNo=<%=b.getBoardNo()%>">
 					    						<%=b.getBoardTitle()%>
 					    					</a>
 				    					</div>

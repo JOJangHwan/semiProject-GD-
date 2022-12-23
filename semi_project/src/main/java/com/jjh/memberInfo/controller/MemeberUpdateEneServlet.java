@@ -56,8 +56,11 @@ public class MemeberUpdateEneServlet extends HttpServlet {
 				.build();
 		
 		int result =new MemberServlce().memerUpdate(m);
+		
+		
 				
-				String msg="", loc="";
+		String msg="", loc="";
+		
 		if(result>0) {
 			msg="회원 정보를 수정합니다.";
 			loc="/member/memberInfo.do";

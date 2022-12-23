@@ -14,21 +14,17 @@
         <div class="ui middle aligned center aligned grid">
         <div class="column">
             <h2 class="ui teal image header">
- 				마이페이지
+ 				내 찜 리스트
             </h2>
-           
                 <div class="ui stacked segment">
-                    
-                            <a href="<%=request.getContextPath()%>/member/memberInfo.do"><button class="ui fluid large teal submit button">내정보 조회하기</button></a>
-                   <br>  
-                     <a href="<%=request.getContextPath()%>/member/memberupdate.do"><button class="ui fluid large teal submit button">내 동선리스트</button></a>
-                     
-                   
+                     <a href="<%=request.getContextPath()%>/mypick/travelpicklist.do?userid=<%=loginMember.getUserId()%>"><button class="ui fluid large teal submit button">찜한 여행지 리스트</button></a>
+                      <br>  
+                     <a href="<%=request.getContextPath()%>/member/memberupdate.do"><button class="ui fluid large teal submit button">찜한 추천 동선 리스트</button></a>
                 </div>
 
 
             <div class="ui message">
-                로그아웃을 하고 싶으면 <a href="<%=request.getContextPath()%>/logout.do">여기</a>를 눌러주세요.
+                메인화면으로 이동 하고 싶으면 <a href="<%=request.getContextPath()%>">여기</a>를 눌러주세요.
             </div>
         </div>
     </div>

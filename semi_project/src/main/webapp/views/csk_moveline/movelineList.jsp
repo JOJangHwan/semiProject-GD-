@@ -12,6 +12,7 @@
 	<section id="mainSection">
 		<div id="leftMarginMain"></div>
 		    <div id="mainSectionContainer">
+
 				<div id="titleArea" name="titleArea">
 		    			<label style="font-size:40px; font-family: 'Do Hyeon', sans-serif;">
 		    				여행계획
@@ -22,7 +23,6 @@
 			    	</div>
 				</div>
 				<div class="lineGray"></div>
-				
 				<table id="tbl-board" style="text-align:center; justify-content: center;">
 					<tr>
 						<th>선택</th>
@@ -35,7 +35,9 @@
 						<tr>
 							<td><input type="checkbox"></td>
 							<td>
-								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?boardNo=<%=ml.getMovelineNo()%>">
+
+								<a href="<%=request.getContextPath()%>/searchMoveLine/searchMoveLine.do?movelineNo=<%=ml.getMovelineNo()%>">
+								
 								<%=ml.getMovelineName() %>
 								</a>
 							</td>
